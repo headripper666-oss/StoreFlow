@@ -21,6 +21,7 @@ import {
   cacheData,
   getCachedData,
   loadSHA,
+  saveETag,
   saveSHA,
 } from "../services/storage";
 import { DEFAULT_RAYONS } from "../constants/defaultRayons";
@@ -89,6 +90,9 @@ export function useShoppingList(
       if (cached) {
         setData(cached);
         shaRef.current = cachedSha;
+      } else {
+        // No cache — clear any stale ETag so we always get fresh data
+        saveETag("");
       }
 
       try {
