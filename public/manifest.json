@@ -1,0 +1,19 @@
+{
+  "name": "StoreFlow",
+  "short_name": "StoreFlow",
+  "description": "Liste de courses intelligente",
+  "start_url": "/storeflow/",
+  "scope": "/storeflow/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#ffffff",
+  "theme_color": "#1976d2",
+  "icons": [
+    {
+      "src": "/storeflow/icons.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

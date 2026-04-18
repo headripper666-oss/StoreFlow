@@ -1,0 +1,672 @@
+{
+  "version": 1,
+  "updatedAt": "2026-04-18T00:00:00.000Z",
+  "updatedBy": "system",
+  "essentials": [
+    {
+      "id": "ess-pain-au-lait",
+      "name": "Pain au lait",
+      "rayonId": "boulangerie",
+      "checked": false
+    },
+    {
+      "id": "ess-pain-mie",
+      "name": "Pain de mie complet",
+      "rayonId": "boulangerie",
+      "checked": false
+    },
+    {
+      "id": "ess-pain-cereales",
+      "name": "Pain aux céréales",
+      "rayonId": "boulangerie",
+      "checked": false
+    },
+    {
+      "id": "ess-pain-diabemix",
+      "name": "Pain diabémix",
+      "rayonId": "boulangerie",
+      "checked": false
+    },
+    {
+      "id": "ess-pancake",
+      "name": "Pancake",
+      "rayonId": "boulangerie",
+      "checked": false
+    },
+
+    {
+      "id": "ess-rillettes",
+      "name": "Rillettes",
+      "rayonId": "viande",
+      "checked": false
+    },
+    {
+      "id": "ess-rillettes-poulet",
+      "name": "Rillettes de Poulet",
+      "rayonId": "viande",
+      "checked": false
+    },
+    {
+      "id": "ess-pastrami",
+      "name": "Pastrami",
+      "rayonId": "viande",
+      "checked": false
+    },
+
+    {
+      "id": "ess-gel-douche",
+      "name": "Gel douche",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-shampoing",
+      "name": "Shampoing",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-deo-marine",
+      "name": "Déo Marine",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-deo-chouchou",
+      "name": "Déo chouchou",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-dentifrice-adulte",
+      "name": "Dentifrice adulte",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-dentifrice-enfant",
+      "name": "Dentifrice enfant",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-serviette-hyg",
+      "name": "Serviette hygiénique",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-protege-slip",
+      "name": "Protège slip",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-tampons",
+      "name": "Tampons",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-coton-tiges",
+      "name": "Coton tiges",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-creme-solaire",
+      "name": "Crème solaire",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-creme-coup-soleil",
+      "name": "Crème coup de soleil",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-lait-corps",
+      "name": "Lait corps",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-eau-micellaire",
+      "name": "Eau micellaire",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-serviette-eva",
+      "name": "Serviette hygiénique Eva",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-shampoing-sec",
+      "name": "Shampoing sec",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+    {
+      "id": "ess-masque-cheveux",
+      "name": "Masque cheveux",
+      "rayonId": "hygiene",
+      "checked": false
+    },
+
+    {
+      "id": "ess-liq-vaisselle",
+      "name": "Liquide vaisselle",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-tablette-lv",
+      "name": "Tablette lave vaisselle",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    { "id": "ess-pq", "name": "PQ", "rayonId": "entretien", "checked": false },
+    {
+      "id": "ess-sopalin",
+      "name": "Sopalin",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-mouchoirs",
+      "name": "Mouchoirs",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-vinaigre-menager",
+      "name": "Vinaigre ménager",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-destop",
+      "name": "Destop",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-lingette-toilette",
+      "name": "Lingette toilette",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-papier-alu",
+      "name": "Papier alu",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-papier-sulfurise",
+      "name": "Papier sulfurisé",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-film-alim",
+      "name": "Film alimentaire",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-sac-congelation",
+      "name": "Sac congélation",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-produit-mouche",
+      "name": "Produit à mouche",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-liq-rincage",
+      "name": "Liquide rinçage lave vaisselle",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-lessive",
+      "name": "Lessive",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-adoucissant",
+      "name": "Adoucissant",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-lingette-decol",
+      "name": "Lingette décolor stop",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-lessive-soie",
+      "name": "Lessive pour soie",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-bloc-wc",
+      "name": "Bloc WC",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-piege-fourmis",
+      "name": "Piège à fourmis",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-sac-poubelle",
+      "name": "Sac poubelle haute",
+      "rayonId": "entretien",
+      "checked": false
+    },
+    {
+      "id": "ess-bougie",
+      "name": "Bougie",
+      "rayonId": "entretien",
+      "checked": false
+    },
+
+    {
+      "id": "ess-huile-olive",
+      "name": "Huile d'olive",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-huile-tournesol",
+      "name": "Huile de tournesol",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-sel",
+      "name": "Sel",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-poivre",
+      "name": "Poivre",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-ail-poudre",
+      "name": "Ail en poudre",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-vinaigre-cidre",
+      "name": "Vinaigre de cidre",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-vinaigre-balsa",
+      "name": "Vinaigre balsamique",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-vinaigre-alcool",
+      "name": "Vinaigre d'alcool",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-fond-veau",
+      "name": "Fond de veau",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-bouillon-cube",
+      "name": "Bouillon cube",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-pates-completes",
+      "name": "Pâtes complètes",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-cassoulet",
+      "name": "Cassoulet chouchou (grosse boite)",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-speculoos",
+      "name": "Spéculoos crunch",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-cafe",
+      "name": "Café",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-confiture",
+      "name": "Confiture",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-pom-potes",
+      "name": "Pom potes",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-benco",
+      "name": "Benco",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-noix-pecans",
+      "name": "Noix de pécans",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-granola",
+      "name": "Granola",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-cereales-tresor",
+      "name": "Céréales Trésor",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-bowlcake",
+      "name": "Bowlcake",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-compote",
+      "name": "Compote sans sucres",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-gateau-elena",
+      "name": "Gateau gouter Elena",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-farine",
+      "name": "Farine",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-sucre-vanille",
+      "name": "Sucre Vanille",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-croquette-chat",
+      "name": "Croquette chat",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-farine-complete",
+      "name": "Farine complète",
+      "rayonId": "conserves",
+      "checked": false
+    },
+    {
+      "id": "ess-pic-nic-elena",
+      "name": "Pic nic Elena",
+      "rayonId": "conserves",
+      "checked": false
+    },
+
+    {
+      "id": "ess-ice-tea",
+      "name": "Ice tea",
+      "rayonId": "boisson",
+      "checked": false
+    },
+    {
+      "id": "ess-coca",
+      "name": "Coca",
+      "rayonId": "boisson",
+      "checked": false
+    },
+    {
+      "id": "ess-freixenet",
+      "name": "Freixenet",
+      "rayonId": "boisson",
+      "checked": false
+    },
+    {
+      "id": "ess-rhum",
+      "name": "Rhum",
+      "rayonId": "boisson",
+      "checked": false
+    },
+    {
+      "id": "ess-vodka",
+      "name": "Vodka",
+      "rayonId": "boisson",
+      "checked": false
+    },
+    {
+      "id": "ess-biere",
+      "name": "Bière",
+      "rayonId": "boisson",
+      "checked": false
+    },
+    {
+      "id": "ess-jus-orange",
+      "name": "Jus d'orange",
+      "rayonId": "boisson",
+      "checked": false
+    },
+    {
+      "id": "ess-pisang",
+      "name": "Pisang",
+      "rayonId": "boisson",
+      "checked": false
+    },
+    {
+      "id": "ess-panache",
+      "name": "Panaché",
+      "rayonId": "boisson",
+      "checked": false
+    },
+    {
+      "id": "ess-vin-rouge",
+      "name": "Vin rouge",
+      "rayonId": "boisson",
+      "checked": false
+    },
+    {
+      "id": "ess-champagne",
+      "name": "Champagne",
+      "rayonId": "boisson",
+      "checked": false
+    },
+
+    {
+      "id": "ess-oeuf",
+      "name": "Oeuf",
+      "rayonId": "lait-oeuf",
+      "checked": false
+    },
+    {
+      "id": "ess-lait-entier",
+      "name": "Lait entier",
+      "rayonId": "lait-oeuf",
+      "checked": false
+    },
+
+    {
+      "id": "ess-beurre",
+      "name": "Beurre",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-beurre-mou",
+      "name": "Beurre mou",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-gruyere",
+      "name": "Gruyère",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-fromages-indiv",
+      "name": "Fromages individuels",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-fromage-tartiner",
+      "name": "Fromage à tartiner",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-mayo-blanche",
+      "name": "Mayonnaise blanche",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-plateau-fromage",
+      "name": "Plateau de fromage",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-mayonnaise",
+      "name": "Mayonnaise",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-yaourt-frigo",
+      "name": "Yaourt",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-jus-citron-vert",
+      "name": "Jus de citron vert",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-babybel",
+      "name": "Babybel",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-pic-croc",
+      "name": "Pic et croc",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-escargolo",
+      "name": "Escargolo",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-plat-renaud",
+      "name": "Plat préparé Renaud",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-plat-marine",
+      "name": "Plat préparé Marine",
+      "rayonId": "frais",
+      "checked": false
+    },
+    {
+      "id": "ess-yaourt-nature",
+      "name": "Yaourt nature",
+      "rayonId": "frais",
+      "checked": false
+    },
+
+    {
+      "id": "ess-echalotes",
+      "name": "Echalotes",
+      "rayonId": "legumes",
+      "checked": false
+    },
+    {
+      "id": "ess-menthe",
+      "name": "Menthe",
+      "rayonId": "legumes",
+      "checked": false
+    },
+    {
+      "id": "ess-citron-vert",
+      "name": "Citron vert",
+      "rayonId": "legumes",
+      "checked": false
+    },
+    {
+      "id": "ess-fruit",
+      "name": "Fruit",
+      "rayonId": "legumes",
+      "checked": false
+    },
+
+    {
+      "id": "ess-legumes-marine",
+      "name": "Légumes Marine",
+      "rayonId": "congeles",
+      "checked": false
+    },
+    {
+      "id": "ess-legumes-chonchons",
+      "name": "Légumes chonchons",
+      "rayonId": "congeles",
+      "checked": false
+    }
+  ],
+  "personalList": []
+}

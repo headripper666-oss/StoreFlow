@@ -1,0 +1,17 @@
+[
+  { "id": "boulangerie", "label": "Boulangerie", "order": 1, "icon": "🥖" },
+  { "id": "viande", "label": "Viande", "order": 2, "icon": "🥩" },
+  { "id": "hygiene", "label": "Hygiène", "order": 3, "icon": "🧴" },
+  { "id": "entretien", "label": "Entretien", "order": 4, "icon": "🧹" },
+  {
+    "id": "conserves",
+    "label": "Conserves / Pâtes / Épices",
+    "order": 5,
+    "icon": "🥫"
+  },
+  { "id": "boisson", "label": "Boisson", "order": 6, "icon": "🥤" },
+  { "id": "lait-oeuf", "label": "Lait & Œufs", "order": 7, "icon": "🥛" },
+  { "id": "frais", "label": "Frais", "order": 8, "icon": "🧊" },
+  { "id": "legumes", "label": "Légumes", "order": 9, "icon": "🥦" },
+  { "id": "congeles", "label": "Congelés", "order": 10, "icon": "❄️" }
+]
