@@ -11,12 +11,12 @@
 
 [[redirects]]
   from = "/storeflow/*"
-  to = "/storeflow/index.html"
+  to = "/index.html"
   status = 200
 
 [[redirects]]
   from = "/*"
-  to = "/storeflow/index.html"
+  to = "/index.html"
   status = 200
 
 [[headers]]
