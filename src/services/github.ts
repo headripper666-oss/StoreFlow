@@ -3,6 +3,7 @@ import type {
   CatalogProduct,
   GitHubFileState,
   Rayon,
+  Recipe,
   ShoppingData,
 } from "../types";
 import { DEFAULT_RAYONS } from "../constants/defaultRayons";
@@ -167,6 +168,60 @@ export async function saveRayons(
   if (!res.ok) throw new Error(`GitHub API error: ${res.status}`);
 }
 
+// Fetch recipes.json
+export async function fetchRecipes(
+  config: AuthConfig,
+): Promise<{ recipes: Recipe[]; sha: string }> {
+  const { pat, dataOwner, dataRepo } = config;
+  const url = contentUrl(dataOwner, dataRepo, "recipes.json");
+
+  try {
+    const res = await fetch(url, { headers: githubHeaders(pat) });
+    if (!res.ok) return { recipes: [], sha: "" };
+    const json = await res.json();
+    return {
+      recipes: decodeContent(json.content) as Recipe[],
+      sha: json.sha as string,
+    };
+  } catch {
+    return { recipes: [], sha: "" };
+  }
+}
+
+// Save recipes.json
+export async function saveRecipes(
+  config: AuthConfig,
+  recipes: Recipe[],
+  currentSha: string,
+): Promise<string> {
+  const { pat, dataOwner, dataRepo } = config;
+  const url = contentUrl(dataOwner, dataRepo, "recipes.json");
+
+  const body: Record<string, unknown> = {
+    message: `chore: update recipes [${new Date().toISOString()}]`,
+    content: encodeContent(recipes),
+  };
+  if (currentSha) {
+    body.sha = currentSha;
+  }
+
+  const res = await fetch(url, {
+    method: "PUT",
+    headers: githubHeaders(pat),
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    if (res.status === 409) {
+      throw new Error("CONFLICT");
+    }
+    throw new Error(`GitHub API error: ${res.status}`);
+  }
+
+  const json = await res.json();
+  return json.content.sha as string;
+}
+
 // Initialize the data repo with default files if they don't exist
 export async function initDataRepo(config: AuthConfig): Promise<void> {
   const { pat, dataOwner, dataRepo } = config;
@@ -202,4 +257,5 @@ export async function initDataRepo(config: AuthConfig): Promise<void> {
   await createFileIfMissing("lists.json", initialData);
   await createFileIfMissing("rayons.json", DEFAULT_RAYONS);
   await createFileIfMissing("products.json", []);
+  await createFileIfMissing("recipes.json", []);
 }

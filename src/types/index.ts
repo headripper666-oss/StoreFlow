@@ -103,3 +103,25 @@ export interface PendingChange {
   payload: unknown;
   timestamp: string;
 }
+
+// Recipes
+export interface RecipeIngredient {
+  name: string;
+  quantity: number; // quantité pour le nombre de personnes de base (servings)
+  unit: string;
+  rayonId: string;
+}
+
+export interface Recipe {
+  id: string;
+  name: string;
+  servings: number; // nombre de personnes de référence
+  ingredients: RecipeIngredient[];
+  createdAt: string;
+}
+
+export interface ParsedRecipe {
+  name: string;
+  servings: number;
+  ingredients: RecipeIngredient[];
+}

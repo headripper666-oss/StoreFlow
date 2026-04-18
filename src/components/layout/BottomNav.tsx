@@ -1,5 +1,6 @@
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ChecklistIcon from "@mui/icons-material/Checklist";
+import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
 import TuneIcon from "@mui/icons-material/Tune";
 import { BottomNavigation, BottomNavigationAction, Paper } from "@mui/material";
@@ -9,6 +10,7 @@ const NAV_ITEMS = [
   { label: "Indispensables", icon: <ChecklistIcon />, path: "/essentials" },
   { label: "Ma Liste", icon: <ShoppingBagIcon />, path: "/list" },
   { label: "Ajouter", icon: <AddCircleIcon />, path: "/add" },
+  { label: "Recettes", icon: <MenuBookIcon />, path: "/recipes" },
   { label: "Rayons", icon: <TuneIcon />, path: "/rayons" },
 ];
 

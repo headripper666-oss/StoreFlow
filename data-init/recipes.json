@@ -1,0 +1,85 @@
+[
+  {
+    "id": "recipe-bolognaise",
+    "name": "Bolognaise",
+    "servings": 4,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bœuf haché",
+        "quantity": 500,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Tomates pelées en boîte",
+        "quantity": 400,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Spaghetti",
+        "quantity": 400,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oignon",
+        "quantity": 1,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Ail",
+        "quantity": 2,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Concentré de tomate",
+        "quantity": 2,
+        "unit": "c. à soupe",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Huile d'olive",
+        "quantity": 2,
+        "unit": "c. à soupe",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-quiche-lorraine",
+    "name": "Quiche Lorraine",
+    "servings": 6,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâte brisée",
+        "quantity": 1,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Lardons fumés",
+        "quantity": 200,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Crème fraîche épaisse",
+        "quantity": 20,
+        "unit": "cL",
+        "rayonId": "cremerie"
+      },
+      { "name": "Œufs", "quantity": 3, "unit": "pcs", "rayonId": "cremerie" },
+      {
+        "name": "Gruyère râpé",
+        "quantity": 100,
+        "unit": "g",
+        "rayonId": "cremerie"
+      }
+    ]
+  }
+]
