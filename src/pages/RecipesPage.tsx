@@ -29,7 +29,11 @@ import type {
   RecipeCategory,
   RecipeIngredient,
 } from "../types";
-import { CATEGORY_LABELS, CATEGORY_ORDER } from "../utils/recipeUtils";
+import {
+  CATEGORY_LABELS,
+  CATEGORY_ORDER,
+  detectCategory,
+} from "../utils/recipeUtils";
 
 interface RecipesPageProps {
   recipes: Recipe[];
@@ -86,7 +90,7 @@ export function RecipesPage({
   const [parsedRecipe, setParsedRecipe] = useState<ParsedRecipe | null>(null);
 
   const availableCategories = useMemo((): RecipeCategory[] => {
-    const used = new Set(recipes.map((r) => r.category ?? "autre"));
+    const used = new Set(recipes.map((r) => r.category ?? detectCategory(r)));
     return CATEGORY_ORDER.filter((c) => used.has(c));
   }, [recipes]);
 
@@ -95,7 +99,7 @@ export function RecipesPage({
       .filter(
         (r) =>
           categoryFilter === "all" ||
-          (r.category ?? "autre") === categoryFilter,
+          (r.category ?? detectCategory(r)) === categoryFilter,
       )
       .filter((r) => {
         if (!searchQuery) return true;

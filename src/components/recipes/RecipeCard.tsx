@@ -16,7 +16,11 @@ import {
 import Button from "@mui/material/Button";
 import { useState } from "react";
 import type { Recipe, RecipeCategory } from "../../types";
-import { CATEGORY_LABELS, CATEGORY_ORDER } from "../../utils/recipeUtils";
+import {
+  CATEGORY_LABELS,
+  CATEGORY_ORDER,
+  detectCategory,
+} from "../../utils/recipeUtils";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -37,7 +41,7 @@ export function RecipeCard({
 }: RecipeCardProps) {
   const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
 
-  const category = recipe.category ?? "autre";
+  const category = recipe.category ?? detectCategory(recipe);
   const { emoji, label } = CATEGORY_LABELS[category];
 
   const handleCategorySelect = async (cat: RecipeCategory) => {
