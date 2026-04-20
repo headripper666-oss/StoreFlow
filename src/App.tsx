@@ -40,6 +40,7 @@ export default function App() {
     toggleItem,
     removeItem,
     clearChecked,
+    migrateData,
   } = useShoppingList(config);
 
   const {
@@ -90,6 +91,7 @@ export default function App() {
               onReset={resetEssentials}
               onAdd={addEssential}
               onDelete={removeEssential}
+              onMigrate={migrateData}
               isLoading={isLoading}
               isSaving={isSaving}
             />

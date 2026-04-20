@@ -1,9 +1,11 @@
 import AddIcon from "@mui/icons-material/Add";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
+import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Alert,
   Box,
   Button,
   CircularProgress,
@@ -16,6 +18,7 @@ import {
   LinearProgress,
   MenuItem,
   Select,
+  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
@@ -32,6 +35,7 @@ interface EssentialsPageProps {
   onReset: () => Promise<void>;
   onAdd: (name: string, rayonId: string) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
+  onMigrate: () => Promise<{ addedEssentials: number }>;
   isLoading: boolean;
   isSaving: boolean;
 }
@@ -43,11 +47,16 @@ export function EssentialsPage({
   onReset,
   onAdd,
   onDelete,
+  onMigrate,
   isLoading,
   isSaving,
 }: EssentialsPageProps) {
   const [resetDialogOpen, setResetDialogOpen] = useState(false);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
+  const [migrateDialogOpen, setMigrateDialogOpen] = useState(false);
+  const [migrateSuccessMsg, setMigrateSuccessMsg] = useState<string | null>(
+    null,
+  );
   const [newName, setNewName] = useState("");
   const [newRayonId, setNewRayonId] = useState("autre");
 
@@ -102,6 +111,16 @@ export function EssentialsPage({
             {checkedCount}/{total} cochés
           </Typography>
         </Box>
+        <Button
+          variant="outlined"
+          size="small"
+          startIcon={<SystemUpdateAltIcon />}
+          onClick={() => setMigrateDialogOpen(true)}
+          disabled={isSaving || isLoading}
+          sx={{ mr: 1 }}
+        >
+          Màj
+        </Button>
         <Button
           variant="outlined"
           size="small"
@@ -262,6 +281,75 @@ export function EssentialsPage({
         }}
         onCancel={() => setResetDialogOpen(false)}
       />
+
+      {/* Migrate dialog */}
+      <Dialog
+        open={migrateDialogOpen}
+        onClose={() => setMigrateDialogOpen(false)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>Mettre à jour les données</DialogTitle>
+        <DialogContent>
+          <Typography variant="body2">Cette action va :</Typography>
+          <Box component="ul" sx={{ mt: 1, pl: 2 }}>
+            <Typography component="li" variant="body2">
+              Ajouter les articles indispensables manquants depuis le template
+            </Typography>
+            <Typography component="li" variant="body2">
+              Remplacer les rayons par ceux du template
+            </Typography>
+          </Box>
+          <Typography variant="body2" sx={{ mt: 1 }}>
+            Tes articles existants et leurs états ne seront pas modifiés.
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2, gap: 1 }}>
+          <Button
+            onClick={() => setMigrateDialogOpen(false)}
+            variant="outlined"
+            color="inherit"
+          >
+            Annuler
+          </Button>
+          <Button
+            onClick={async () => {
+              setMigrateDialogOpen(false);
+              try {
+                const result = await onMigrate();
+                setMigrateSuccessMsg(
+                  result.addedEssentials > 0
+                    ? `${result.addedEssentials} article(s) ajouté(s) avec succès.`
+                    : "Données à jour, aucun nouvel article.",
+                );
+              } catch {
+                // error is handled in the hook
+              }
+            }}
+            variant="contained"
+          >
+            Mettre à jour
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Success snackbar */}
+      <Snackbar
+        open={!!migrateSuccessMsg}
+        autoHideDuration={4000}
+        onClose={() => setMigrateSuccessMsg(null)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        sx={{ bottom: 80 }}
+      >
+        <Alert
+          onClose={() => setMigrateSuccessMsg(null)}
+          severity="success"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {migrateSuccessMsg}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

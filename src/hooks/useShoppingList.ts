@@ -17,6 +17,8 @@ import {
   saveRayons,
   saveShoppingData,
 } from "../services/github";
+import templateListsJson from "../../data-init/lists.json";
+import templateRayonsJson from "../../data-init/rayons.json";
 import {
   cacheData,
   getCachedData,
@@ -48,6 +50,7 @@ interface UseShoppingListReturn {
   toggleItem: (id: string) => Promise<void>;
   removeItem: (id: string) => Promise<void>;
   clearChecked: () => Promise<void>;
+  migrateData: () => Promise<{ addedEssentials: number }>;
 }
 
 function isNetworkError(err: unknown): boolean {
@@ -381,6 +384,31 @@ export function useShoppingList(
     }));
   }, [saveData]);
 
+  const migrateData = useCallback(async (): Promise<{
+    addedEssentials: number;
+  }> => {
+    if (!config) throw new Error("Non authentifié");
+
+    // Merge essentials via saveData — uses shaRef.current, no SHA conflict possible
+    let addedCount = 0;
+    await saveData((current) => {
+      const existingIds = new Set(current.essentials.map((e) => e.id));
+      const newItems = (templateListsJson.essentials as EssentialItem[]).filter(
+        (e) => !existingIds.has(e.id),
+      );
+      addedCount = newItems.length;
+      return {
+        ...current,
+        essentials: [...current.essentials, ...newItems],
+      };
+    });
+
+    // Replace rayons — updateRayons does its own GET for the SHA
+    await updateRayons(templateRayonsJson as Rayon[]);
+
+    return { addedEssentials: addedCount };
+  }, [config, saveData, updateRayons]);
+
   return {
     data,
     rayons,
@@ -400,5 +428,6 @@ export function useShoppingList(
     toggleItem,
     removeItem,
     clearChecked,
+    migrateData,
   };
 }
