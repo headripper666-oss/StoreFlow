@@ -54,21 +54,22 @@ Fichier : `src/utils/recipeUtils.ts`
 
 Analyse le nom de la recette + les noms des ingrédients (tout en minuscules, accents normalisés). Teste les catégories dans cet ordre de priorité :
 
-| Catégorie    | Mots-clés déclencheurs |
-|-------------|------------------------|
-| `poulet`    | poulet, dinde, canard, volaille |
-| `boeuf`     | bœuf, boeuf, steak, veau, bifteck, entrecôte |
-| `porc`      | porc, jambon, lardons, lardon, saucisse, chorizo, bacon |
-| `agneau`    | agneau, mouton |
-| `poisson`   | saumon, thon, cabillaud, crevette, moule, poisson, merlu, sardine |
-| `oeufs`     | œuf, oeuf, quiche, omelette |
-| `soupe`     | soupe, potage, velouté, veloute, bouillon |
-| `dessert`   | gâteau, gateau, tarte, crêpe, crepe, chocolat, brownie, cookie |
-| `pates`     | pâtes, pates, spaghetti, riz, risotto, nouilles, tagliatelle, fettuccine |
-| `vegetarien`| aucun ingrédient viande/poisson détecté (fallback si rien d'autre ne matche) |
-| `autre`     | fallback final |
+| Catégorie    | Mots-clés déclencheurs                                                       |
+| ------------ | ---------------------------------------------------------------------------- |
+| `poulet`     | poulet, dinde, canard, volaille                                              |
+| `boeuf`      | bœuf, boeuf, steak, veau, bifteck, entrecôte                                 |
+| `porc`       | porc, jambon, lardons, lardon, saucisse, chorizo, bacon                      |
+| `agneau`     | agneau, mouton                                                               |
+| `poisson`    | saumon, thon, cabillaud, crevette, moule, poisson, merlu, sardine            |
+| `oeufs`      | œuf, oeuf, quiche, omelette                                                  |
+| `soupe`      | soupe, potage, velouté, veloute, bouillon                                    |
+| `dessert`    | gâteau, gateau, tarte, crêpe, crepe, chocolat, brownie, cookie               |
+| `pates`      | pâtes, pates, spaghetti, riz, risotto, nouilles, tagliatelle, fettuccine     |
+| `vegetarien` | aucun ingrédient viande/poisson détecté (fallback si rien d'autre ne matche) |
+| `autre`      | fallback final                                                               |
 
 **Appelée :**
+
 - À l'import IA (`parse-recipe.mts` ou après confirmation dans `RecipeImportPreview`)
 - À la création manuelle (dans `RecipeImportPreview` au moment du `onConfirm`)
 
@@ -110,13 +111,25 @@ Analyse le nom de la recette + les noms des ingrédients (tout en minuscules, ac
 Les deux filtres se cumulent :
 
 ```typescript
+// normalize : lowercase + suppression des accents
+const normalize = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
 const filtered = recipes
-  .filter(r => categoryFilter === "all" || (r.category ?? "autre") === categoryFilter)
-  .filter(r => {
+  .filter(
+    (r) =>
+      categoryFilter === "all" || (r.category ?? "autre") === categoryFilter,
+  )
+  .filter((r) => {
     if (!searchQuery) return true;
     const q = normalize(searchQuery);
-    return normalize(r.name).includes(q)
-      || r.ingredients.some(i => normalize(i.name).includes(q));
+    return (
+      normalize(r.name).includes(q) ||
+      r.ingredients.some((i) => normalize(i.name).includes(q))
+    );
   });
 ```
 
@@ -148,9 +161,9 @@ interface RecipeCardProps {
   recipe: Recipe;
   onUse: (recipe: Recipe) => void;
   onDelete: (id: string) => void;
-  onUpdateCategory: (recipe: Recipe, category: RecipeCategory) => void;
+  onUpdateRecipe: (recipe: Recipe) => Promise<void>; // réutilise le même callback que RecipesPage
   disabled?: boolean;
-  isSavingCategory?: boolean;
+  isSavingCategory?: boolean; // RecipesPage trace savingCategoryId: string | null
 }
 ```
 
@@ -158,13 +171,13 @@ interface RecipeCardProps {
 
 ## 5. Fichiers modifiés
 
-| Fichier | Modification |
-|---------|-------------|
-| `src/types/index.ts` | Ajout de `RecipeCategory`, champ `category?` sur `Recipe` |
-| `src/utils/recipeUtils.ts` | Ajout de `detectCategory()` |
-| `src/components/recipes/RecipeCard.tsx` | Badge catégorie + menu de modification |
-| `src/components/recipes/RecipeImportPreview.tsx` | Appel `detectCategory()` avant `onConfirm` |
-| `src/pages/RecipesPage.tsx` | Barre de recherche + chips filtre + logique de filtrage |
+| Fichier                                          | Modification                                              |
+| ------------------------------------------------ | --------------------------------------------------------- |
+| `src/types/index.ts`                             | Ajout de `RecipeCategory`, champ `category?` sur `Recipe` |
+| `src/utils/recipeUtils.ts`                       | Ajout de `detectCategory()`                               |
+| `src/components/recipes/RecipeCard.tsx`          | Badge catégorie + menu de modification                    |
+| `src/components/recipes/RecipeImportPreview.tsx` | Appel `detectCategory()` avant `onConfirm`                |
+| `src/pages/RecipesPage.tsx`                      | Barre de recherche + chips filtre + logique de filtrage   |
 
 ---
 
