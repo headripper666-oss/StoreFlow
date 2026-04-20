@@ -5,26 +5,48 @@ import {
   Card,
   CardActions,
   CardContent,
+  Chip,
+  CircularProgress,
   IconButton,
+  Menu,
+  MenuItem,
   Tooltip,
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import type { Recipe } from "../../types";
+import { useState } from "react";
+import type { Recipe, RecipeCategory } from "../../types";
+import { CATEGORY_LABELS, CATEGORY_ORDER } from "../../utils/recipeUtils";
 
 interface RecipeCardProps {
   recipe: Recipe;
   onUse: (recipe: Recipe) => void;
   onDelete: (id: string) => void;
+  onUpdateRecipe: (recipe: Recipe) => Promise<void>;
   disabled?: boolean;
+  isSavingCategory?: boolean;
 }
 
 export function RecipeCard({
   recipe,
   onUse,
   onDelete,
+  onUpdateRecipe,
   disabled = false,
+  isSavingCategory = false,
 }: RecipeCardProps) {
+  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
+
+  const category = recipe.category ?? "autre";
+  const { emoji, label } = CATEGORY_LABELS[category];
+
+  const handleCategorySelect = async (cat: RecipeCategory) => {
+    setMenuAnchor(null);
+    if (cat !== category) {
+      await onUpdateRecipe({ ...recipe, category: cat });
+    }
+  };
+
   return (
     <Card variant="outlined" sx={{ borderRadius: 3, mb: 1.5 }}>
       <CardContent sx={{ pb: 0 }}>
@@ -45,6 +67,41 @@ export function RecipeCard({
               {recipe.ingredients.length} ingrédient
               {recipe.ingredients.length > 1 ? "s" : ""}
             </Typography>
+            <Chip
+              size="small"
+              variant="outlined"
+              label={
+                isSavingCategory ? (
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                    <CircularProgress size={12} />
+                    {label}
+                  </Box>
+                ) : (
+                  `${emoji} ${label}`
+                )
+              }
+              onClick={(e) => {
+                if (!disabled && !isSavingCategory)
+                  setMenuAnchor(e.currentTarget);
+              }}
+              disabled={isSavingCategory}
+              sx={{ mt: 0.75, cursor: "pointer" }}
+            />
+            <Menu
+              anchorEl={menuAnchor}
+              open={Boolean(menuAnchor)}
+              onClose={() => setMenuAnchor(null)}
+            >
+              {CATEGORY_ORDER.map((cat) => (
+                <MenuItem
+                  key={cat}
+                  selected={cat === category}
+                  onClick={() => handleCategorySelect(cat)}
+                >
+                  {CATEGORY_LABELS[cat].emoji} {CATEGORY_LABELS[cat].label}
+                </MenuItem>
+              ))}
+            </Menu>
           </Box>
         </Box>
       </CardContent>

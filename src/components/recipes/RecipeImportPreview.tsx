@@ -20,6 +20,7 @@ import type {
   Recipe,
   RecipeIngredient,
 } from "../../types";
+import { detectCategory } from "../../utils/recipeUtils";
 
 interface RecipeImportPreviewProps {
   parsed: ParsedRecipe;
@@ -73,12 +74,14 @@ export function RecipeImportPreview({
   };
 
   const handleConfirm = async () => {
+    const partial = { name: name.trim() || "Recette sans nom", ingredients };
     const recipe: Recipe = {
       id: `recipe-${uuidv4()}`,
-      name: name.trim() || "Recette sans nom",
+      name: partial.name,
       servings: Math.max(1, servings),
       ingredients,
       createdAt: new Date().toISOString(),
+      category: detectCategory(partial),
     };
     await onConfirm(recipe);
   };

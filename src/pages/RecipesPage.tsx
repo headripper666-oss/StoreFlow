@@ -1,24 +1,35 @@
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import AddIcon from "@mui/icons-material/Add";
+import ClearIcon from "@mui/icons-material/Clear";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
+import SearchIcon from "@mui/icons-material/Search";
 import {
   Alert,
   Box,
   Button,
+  Chip,
   CircularProgress,
   Container,
+  InputAdornment,
   Tab,
   Tabs,
   TextField,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { RecipeCard } from "../components/recipes/RecipeCard";
 import { RecipeImportPreview } from "../components/recipes/RecipeImportPreview";
 import { RecipeUsageDialog } from "../components/recipes/RecipeUsageDialog";
 import { ConfirmDialog } from "../components/shared/ConfirmDialog";
 import { parseRecipeFromText } from "../services/mistral";
-import type { ParsedRecipe, Rayon, Recipe, RecipeIngredient } from "../types";
+import type {
+  ParsedRecipe,
+  Rayon,
+  Recipe,
+  RecipeCategory,
+  RecipeIngredient,
+} from "../types";
+import { CATEGORY_LABELS, CATEGORY_ORDER } from "../utils/recipeUtils";
 
 interface RecipesPageProps {
   recipes: Recipe[];
@@ -37,6 +48,13 @@ const EMPTY_RECIPE: ParsedRecipe = {
   ingredients: [],
 };
 
+function normalize(s: string): string {
+  return s
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
 export function RecipesPage({
   recipes,
   rayons,
@@ -53,12 +71,43 @@ export function RecipesPage({
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const [usageDialogOpen, setUsageDialogOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<Recipe | null>(null);
+  const [savingCategoryId, setSavingCategoryId] = useState<string | null>(null);
+
+  // Filter state
+  const [searchQuery, setSearchQuery] = useState("");
+  const [categoryFilter, setCategoryFilter] = useState<RecipeCategory | "all">(
+    "all",
+  );
 
   // Import tab state
   const [importText, setImportText] = useState("");
   const [isParsing, setIsParsing] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
   const [parsedRecipe, setParsedRecipe] = useState<ParsedRecipe | null>(null);
+
+  const availableCategories = useMemo((): RecipeCategory[] => {
+    const used = new Set(recipes.map((r) => r.category ?? "autre"));
+    return CATEGORY_ORDER.filter((c) => used.has(c));
+  }, [recipes]);
+
+  const filteredRecipes = useMemo(() => {
+    return recipes
+      .filter(
+        (r) =>
+          categoryFilter === "all" ||
+          (r.category ?? "autre") === categoryFilter,
+      )
+      .filter((r) => {
+        if (!searchQuery) return true;
+        const q = normalize(searchQuery);
+        return (
+          normalize(r.name).includes(q) ||
+          r.ingredients.some((i) => normalize(i.name).includes(q))
+        );
+      });
+  }, [recipes, categoryFilter, searchQuery]);
+
+  const hasActiveFilter = searchQuery !== "" || categoryFilter !== "all";
 
   const handleUseRecipe = (recipe: Recipe) => {
     setSelectedRecipe(recipe);
@@ -74,6 +123,15 @@ export function RecipesPage({
     if (!deleteTarget) return;
     await onDeleteRecipe(deleteTarget.id);
     setDeleteTarget(null);
+  };
+
+  const handleUpdateRecipeCategory = async (recipe: Recipe) => {
+    setSavingCategoryId(recipe.id);
+    try {
+      await onUpdateRecipe(recipe);
+    } finally {
+      setSavingCategoryId(null);
+    }
   };
 
   const handleAnalyzeRecipe = async () => {
@@ -102,6 +160,11 @@ export function RecipesPage({
   const handleOpenManualCreate = () => {
     setParsedRecipe(EMPTY_RECIPE);
     setTab(1);
+  };
+
+  const handleClearFilters = () => {
+    setSearchQuery("");
+    setCategoryFilter("all");
   };
 
   return (
@@ -172,15 +235,102 @@ export function RecipesPage({
           </Box>
         ) : (
           <Box>
-            {recipes.map((recipe) => (
-              <RecipeCard
-                key={recipe.id}
-                recipe={recipe}
-                onUse={handleUseRecipe}
-                onDelete={handleDeleteRequest}
-                disabled={isSavingRecipes || isSavingList}
-              />
-            ))}
+            {/* Search bar */}
+            <TextField
+              fullWidth
+              size="small"
+              placeholder="Rechercher une recette…"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              sx={{ mb: 1.5 }}
+              slotProps={{
+                input: {
+                  startAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon fontSize="small" color="action" />
+                    </InputAdornment>
+                  ),
+                  endAdornment: searchQuery ? (
+                    <InputAdornment position="end">
+                      <ClearIcon
+                        fontSize="small"
+                        color="action"
+                        sx={{ cursor: "pointer" }}
+                        onClick={() => setSearchQuery("")}
+                      />
+                    </InputAdornment>
+                  ) : null,
+                },
+              }}
+            />
+
+            {/* Category chips */}
+            {availableCategories.length > 0 && (
+              <Box
+                sx={{
+                  display: "flex",
+                  gap: 0.75,
+                  overflowX: "auto",
+                  pb: 1,
+                  mb: 1.5,
+                  "&::-webkit-scrollbar": { display: "none" },
+                }}
+              >
+                <Chip
+                  label="Toutes"
+                  size="small"
+                  variant={categoryFilter === "all" ? "filled" : "outlined"}
+                  color={categoryFilter === "all" ? "primary" : "default"}
+                  onClick={() => setCategoryFilter("all")}
+                  sx={{ flexShrink: 0 }}
+                />
+                {availableCategories.map((cat) => (
+                  <Chip
+                    key={cat}
+                    label={`${CATEGORY_LABELS[cat].emoji} ${CATEGORY_LABELS[cat].label}`}
+                    size="small"
+                    variant={categoryFilter === cat ? "filled" : "outlined"}
+                    color={categoryFilter === cat ? "primary" : "default"}
+                    onClick={() => setCategoryFilter(cat)}
+                    sx={{ flexShrink: 0 }}
+                  />
+                ))}
+              </Box>
+            )}
+
+            {/* Recipe list or empty state */}
+            {filteredRecipes.length === 0 ? (
+              <Box
+                sx={{
+                  py: 4,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 1.5,
+                  color: "text.secondary",
+                }}
+              >
+                <Typography variant="body1">Aucune recette trouvée.</Typography>
+                {hasActiveFilter && (
+                  <Button size="small" onClick={handleClearFilters}>
+                    Effacer les filtres
+                  </Button>
+                )}
+              </Box>
+            ) : (
+              filteredRecipes.map((recipe) => (
+                <RecipeCard
+                  key={recipe.id}
+                  recipe={recipe}
+                  onUse={handleUseRecipe}
+                  onDelete={handleDeleteRequest}
+                  onUpdateRecipe={handleUpdateRecipeCategory}
+                  disabled={isSavingRecipes || isSavingList}
+                  isSavingCategory={savingCategoryId === recipe.id}
+                />
+              ))
+            )}
+
             <Box sx={{ display: "flex", gap: 1, mt: 1, flexWrap: "wrap" }}>
               <Button
                 variant="outlined"
