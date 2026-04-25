@@ -31,10 +31,16 @@ export function AppShell({
     <Box sx={{ display: "flex", flexDirection: "column", height: "100dvh" }}>
       <AppBar position="fixed" elevation={1}>
         <Toolbar sx={{ minHeight: 56, gap: 1 }}>
-          <ShoppingCartIcon sx={{ fontSize: 22 }} />
+          <ShoppingCartIcon sx={{ fontSize: 20, opacity: 0.85 }} />
           <Typography
-            variant="h6"
-            sx={{ flex: 1, fontWeight: 700, letterSpacing: -0.3 }}
+            sx={{
+              flex: 1,
+              fontFamily: '"Playfair Display", Georgia, serif',
+              fontWeight: 700,
+              fontSize: "1.2rem",
+              letterSpacing: 0.2,
+              color: "#FFFDF8",
+            }}
           >
             StoreFlow
           </Typography>

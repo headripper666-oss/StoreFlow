@@ -17,10 +17,10 @@ function formatLastSync(date: Date | null): string {
 }
 
 const statusConfig: Record<SyncStatusType, { color: string; label: string }> = {
-  synced: { color: "#4CAF50", label: "Synchronisé" },
-  saving: { color: "#FF8F00", label: "Sauvegarde..." },
-  offline: { color: "#F44336", label: "Hors ligne" },
-  error: { color: "#F44336", label: "Erreur de sync" },
+  synced: { color: "#6BBF8A", label: "Synchronisé" },
+  saving: { color: "#D9916A", label: "Sauvegarde..." },
+  offline: { color: "#E07070", label: "Hors ligne" },
+  error: { color: "#E07070", label: "Erreur de sync" },
 };
 
 export function SyncStatus({ status, lastSyncAt }: SyncStatusProps) {
@@ -38,7 +38,7 @@ export function SyncStatus({ status, lastSyncAt }: SyncStatusProps) {
         }}
       >
         {status === "saving" ? (
-          <CircularProgress size={10} sx={{ color: "#FF8F00" }} />
+          <CircularProgress size={10} sx={{ color: "#D9916A" }} />
         ) : (
           <Box
             sx={{

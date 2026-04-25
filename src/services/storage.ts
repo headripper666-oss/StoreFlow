@@ -62,15 +62,15 @@ export function loadSHA(): string | null {
   return localStorage.getItem(SHA_KEY);
 }
 
-// --- Auth config (sessionStorage — cleared on tab/window close) ---
+// --- Auth config (localStorage — persists across sessions) ---
 
 export function saveAuthConfig(config: AuthConfig): void {
-  sessionStorage.setItem(AUTH_KEY, JSON.stringify(config));
+  localStorage.setItem(AUTH_KEY, JSON.stringify(config));
 }
 
 export function loadAuthConfig(): AuthConfig | null {
   try {
-    const raw = sessionStorage.getItem(AUTH_KEY);
+    const raw = localStorage.getItem(AUTH_KEY);
     if (!raw) return null;
     return JSON.parse(raw) as AuthConfig;
   } catch {
@@ -79,7 +79,7 @@ export function loadAuthConfig(): AuthConfig | null {
 }
 
 export function clearAuthConfig(): void {
-  sessionStorage.removeItem(AUTH_KEY);
+  localStorage.removeItem(AUTH_KEY);
 }
 
 // --- Pending changes queue (offline support) ---

@@ -15,6 +15,7 @@ interface RayonSectionProps {
   items: DisplayItem[];
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
+  onUpdateQuantity?: (id: string, quantity: number, unit: string) => void;
   disabled?: boolean;
 }
 
@@ -23,6 +24,7 @@ export function RayonSection({
   items,
   onToggle,
   onDelete,
+  onUpdateQuantity,
   disabled,
 }: RayonSectionProps) {
   const uncheckedCount = items.filter((i) => !i.checked).length;
@@ -81,6 +83,11 @@ export function RayonSection({
             item={item}
             onToggle={() => onToggle(item.id)}
             onDelete={() => onDelete(item.id)}
+            onUpdateQuantity={
+              onUpdateQuantity
+                ? (qty, unit) => onUpdateQuantity(item.id, qty, unit)
+                : undefined
+            }
             disabled={disabled}
             isLast={idx === sorted.length - 1}
           />

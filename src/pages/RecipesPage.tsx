@@ -26,14 +26,9 @@ import type {
   ParsedRecipe,
   Rayon,
   Recipe,
-  RecipeCategory,
   RecipeIngredient,
 } from "../types";
-import {
-  CATEGORY_LABELS,
-  CATEGORY_ORDER,
-  detectCategory,
-} from "../utils/recipeUtils";
+import { DEFAULT_TAGS, tagDisplay } from "../utils/recipeUtils";
 
 interface RecipesPageProps {
   recipes: Recipe[];
@@ -44,6 +39,7 @@ interface RecipesPageProps {
   onSaveRecipe: (recipe: Recipe) => Promise<void>;
   onUpdateRecipe: (recipe: Recipe) => Promise<void>;
   onDeleteRecipe: (id: string) => Promise<void>;
+  onDesktopSelect?: (recipe: Recipe) => void;
 }
 
 const EMPTY_RECIPE: ParsedRecipe = {
@@ -56,7 +52,7 @@ function normalize(s: string): string {
   return s
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
+    .replace(/[̀-ͯ]/g, "");
 }
 
 export function RecipesPage({
@@ -68,6 +64,7 @@ export function RecipesPage({
   onSaveRecipe,
   onUpdateRecipe,
   onDeleteRecipe,
+  onDesktopSelect,
 }: RecipesPageProps) {
   const [tab, setTab] = useState(0);
 
@@ -75,31 +72,36 @@ export function RecipesPage({
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const [usageDialogOpen, setUsageDialogOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<Recipe | null>(null);
-  const [savingCategoryId, setSavingCategoryId] = useState<string | null>(null);
 
   // Filter state
   const [searchQuery, setSearchQuery] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState<RecipeCategory | "all">(
-    "all",
-  );
+  const [activeTags, setActiveTags] = useState<string[]>([]);
 
   // Import tab state
   const [importText, setImportText] = useState("");
   const [isParsing, setIsParsing] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
   const [parsedRecipe, setParsedRecipe] = useState<ParsedRecipe | null>(null);
+  const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null);
 
-  const availableCategories = useMemo((): RecipeCategory[] => {
-    const used = new Set(recipes.map((r) => r.category ?? detectCategory(r)));
-    return CATEGORY_ORDER.filter((c) => used.has(c));
+  const allTags = useMemo((): string[] => {
+    const tags = new Set<string>(DEFAULT_TAGS);
+    recipes.forEach((r) => (r.tags ?? []).forEach((t) => tags.add(t)));
+    return [...tags].sort();
   }, [recipes]);
+
+  const availableTags = useMemo((): string[] => {
+    const used = new Set<string>();
+    recipes.forEach((r) => (r.tags ?? []).forEach((t) => used.add(t)));
+    return allTags.filter((t) => used.has(t));
+  }, [recipes, allTags]);
 
   const filteredRecipes = useMemo(() => {
     return recipes
       .filter(
         (r) =>
-          categoryFilter === "all" ||
-          (r.category ?? detectCategory(r)) === categoryFilter,
+          activeTags.length === 0 ||
+          (r.tags ?? []).some((t) => activeTags.includes(t)),
       )
       .filter((r) => {
         if (!searchQuery) return true;
@@ -109,13 +111,23 @@ export function RecipesPage({
           r.ingredients.some((i) => normalize(i.name).includes(q))
         );
       });
-  }, [recipes, categoryFilter, searchQuery]);
+  }, [recipes, activeTags, searchQuery]);
 
-  const hasActiveFilter = searchQuery !== "" || categoryFilter !== "all";
+  const hasActiveFilter = searchQuery !== "" || activeTags.length > 0;
+
+  const toggleTag = (tag: string) => {
+    setActiveTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+    );
+  };
 
   const handleUseRecipe = (recipe: Recipe) => {
-    setSelectedRecipe(recipe);
-    setUsageDialogOpen(true);
+    if (onDesktopSelect) {
+      onDesktopSelect(recipe);
+    } else {
+      setSelectedRecipe(recipe);
+      setUsageDialogOpen(true);
+    }
   };
 
   const handleDeleteRequest = (id: string) => {
@@ -127,15 +139,6 @@ export function RecipesPage({
     if (!deleteTarget) return;
     await onDeleteRecipe(deleteTarget.id);
     setDeleteTarget(null);
-  };
-
-  const handleUpdateRecipeCategory = async (recipe: Recipe) => {
-    setSavingCategoryId(recipe.id);
-    try {
-      await onUpdateRecipe(recipe);
-    } finally {
-      setSavingCategoryId(null);
-    }
   };
 
   const handleAnalyzeRecipe = async () => {
@@ -161,14 +164,37 @@ export function RecipesPage({
     setTab(0);
   };
 
+  const handleEditRecipe = (recipe: Recipe) => {
+    setEditingRecipe(recipe);
+    setParsedRecipe({
+      name: recipe.name,
+      servings: recipe.servings,
+      ingredients: recipe.ingredients,
+    });
+    setTab(1);
+  };
+
+  const handleConfirmEdit = async (recipe: Recipe) => {
+    if (!editingRecipe) return;
+    await onUpdateRecipe({
+      ...recipe,
+      id: editingRecipe.id,
+      createdAt: editingRecipe.createdAt,
+    });
+    setEditingRecipe(null);
+    setParsedRecipe(null);
+    setTab(0);
+  };
+
   const handleOpenManualCreate = () => {
+    setEditingRecipe(null);
     setParsedRecipe(EMPTY_RECIPE);
     setTab(1);
   };
 
   const handleClearFilters = () => {
     setSearchQuery("");
-    setCategoryFilter("all");
+    setActiveTags([]);
   };
 
   return (
@@ -183,6 +209,7 @@ export function RecipesPage({
           setTab(v);
           setParsedRecipe(null);
           setParseError(null);
+          setEditingRecipe(null);
         }}
         sx={{ mb: 3, borderBottom: 1, borderColor: "divider" }}
       >
@@ -195,6 +222,24 @@ export function RecipesPage({
 
       {/* Tab 0 — Mes recettes */}
       <Box hidden={tab !== 0}>
+        <Box sx={{ display: "flex", gap: 1, mb: 2, flexWrap: "wrap" }}>
+          <Button
+            variant="contained"
+            startIcon={<AutoAwesomeIcon />}
+            onClick={() => setTab(1)}
+            size="small"
+          >
+            Importer avec l'IA
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={handleOpenManualCreate}
+            size="small"
+          >
+            Créer manuellement
+          </Button>
+        </Box>
         {recipes.length === 0 ? (
           <Box
             sx={{
@@ -213,29 +258,6 @@ export function RecipesPage({
             <Typography variant="body2" align="center" sx={{ opacity: 0.7 }}>
               Importez une recette avec l'IA ou créez-en une manuellement.
             </Typography>
-            <Box
-              sx={{
-                display: "flex",
-                gap: 1,
-                flexWrap: "wrap",
-                justifyContent: "center",
-              }}
-            >
-              <Button
-                variant="contained"
-                startIcon={<AutoAwesomeIcon />}
-                onClick={() => setTab(1)}
-              >
-                Importer avec l'IA
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<AddIcon />}
-                onClick={handleOpenManualCreate}
-              >
-                Créer manuellement
-              </Button>
-            </Box>
           </Box>
         ) : (
           <Box>
@@ -268,8 +290,8 @@ export function RecipesPage({
               }}
             />
 
-            {/* Category chips */}
-            {availableCategories.length > 0 && (
+            {/* Tag filter chips */}
+            {availableTags.length > 0 && (
               <Box
                 sx={{
                   display: "flex",
@@ -283,19 +305,19 @@ export function RecipesPage({
                 <Chip
                   label="Toutes"
                   size="small"
-                  variant={categoryFilter === "all" ? "filled" : "outlined"}
-                  color={categoryFilter === "all" ? "primary" : "default"}
-                  onClick={() => setCategoryFilter("all")}
+                  variant={activeTags.length === 0 ? "filled" : "outlined"}
+                  color={activeTags.length === 0 ? "primary" : "default"}
+                  onClick={() => setActiveTags([])}
                   sx={{ flexShrink: 0 }}
                 />
-                {availableCategories.map((cat) => (
+                {availableTags.map((tag) => (
                   <Chip
-                    key={cat}
-                    label={`${CATEGORY_LABELS[cat].emoji} ${CATEGORY_LABELS[cat].label}`}
+                    key={tag}
+                    label={tagDisplay(tag)}
                     size="small"
-                    variant={categoryFilter === cat ? "filled" : "outlined"}
-                    color={categoryFilter === cat ? "primary" : "default"}
-                    onClick={() => setCategoryFilter(cat)}
+                    variant={activeTags.includes(tag) ? "filled" : "outlined"}
+                    color={activeTags.includes(tag) ? "primary" : "default"}
+                    onClick={() => toggleTag(tag)}
                     sx={{ flexShrink: 0 }}
                   />
                 ))}
@@ -327,32 +349,12 @@ export function RecipesPage({
                   key={recipe.id}
                   recipe={recipe}
                   onUse={handleUseRecipe}
+                  onEdit={handleEditRecipe}
                   onDelete={handleDeleteRequest}
-                  onUpdateRecipe={handleUpdateRecipeCategory}
                   disabled={isSavingRecipes || isSavingList}
-                  isSavingCategory={savingCategoryId === recipe.id}
                 />
               ))
             )}
-
-            <Box sx={{ display: "flex", gap: 1, mt: 1, flexWrap: "wrap" }}>
-              <Button
-                variant="outlined"
-                startIcon={<AutoAwesomeIcon />}
-                onClick={() => setTab(1)}
-                size="small"
-              >
-                Importer avec l'IA
-              </Button>
-              <Button
-                variant="outlined"
-                startIcon={<AddIcon />}
-                onClick={handleOpenManualCreate}
-                size="small"
-              >
-                Créer manuellement
-              </Button>
-            </Box>
           </Box>
         )}
       </Box>
@@ -364,8 +366,17 @@ export function RecipesPage({
             parsed={parsedRecipe}
             rayons={rayons}
             isSaving={isSavingRecipes}
-            onConfirm={handleConfirmImport}
-            onCancel={() => setParsedRecipe(null)}
+            allTags={allTags}
+            initialTags={editingRecipe?.tags}
+            title={editingRecipe ? "Modifier la recette" : undefined}
+            confirmLabel={
+              editingRecipe ? "Enregistrer les modifications" : undefined
+            }
+            onConfirm={editingRecipe ? handleConfirmEdit : handleConfirmImport}
+            onCancel={() => {
+              setParsedRecipe(null);
+              setEditingRecipe(null);
+            }}
           />
         ) : (
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>

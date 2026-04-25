@@ -1,6 +1,7 @@
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
 import {
+  Autocomplete,
   Box,
   Button,
   Card,
@@ -20,12 +21,16 @@ import type {
   Recipe,
   RecipeIngredient,
 } from "../../types";
-import { detectCategory } from "../../utils/recipeUtils";
+import { detectTags } from "../../utils/recipeUtils";
 
 interface RecipeImportPreviewProps {
   parsed: ParsedRecipe;
   rayons: Rayon[];
   isSaving: boolean;
+  allTags: string[];
+  initialTags?: string[];
+  title?: string;
+  confirmLabel?: string;
   onConfirm: (recipe: Recipe) => Promise<void>;
   onCancel: () => void;
 }
@@ -34,15 +39,30 @@ export function RecipeImportPreview({
   parsed,
   rayons,
   isSaving,
+  allTags,
+  initialTags,
+  title = "Recette détectée",
+  confirmLabel = "Sauvegarder la recette",
   onConfirm,
   onCancel,
 }: RecipeImportPreviewProps) {
   const [name, setName] = useState(parsed.name);
   const [servings, setServings] = useState(parsed.servings);
+  const defaultRayonId = rayons[0]?.id ?? "autre";
   const [ingredients, setIngredients] = useState<RecipeIngredient[]>(
-    parsed.ingredients,
+    parsed.ingredients.map((ing) => ({
+      ...ing,
+      rayonId: ing.rayonId ?? defaultRayonId,
+    })),
   );
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
+  const [tags, setTags] = useState<string[]>(() => {
+    if (initialTags !== undefined) return initialTags;
+    return detectTags(
+      { name: parsed.name, ingredients: parsed.ingredients },
+      allTags,
+    );
+  });
 
   const updateField = (
     idx: number,
@@ -74,14 +94,13 @@ export function RecipeImportPreview({
   };
 
   const handleConfirm = async () => {
-    const partial = { name: name.trim() || "Recette sans nom", ingredients };
     const recipe: Recipe = {
       id: `recipe-${uuidv4()}`,
-      name: partial.name,
+      name: name.trim() || "Recette sans nom",
       servings: Math.max(1, servings),
       ingredients,
       createdAt: new Date().toISOString(),
-      category: detectCategory(partial),
+      tags,
     };
     await onConfirm(recipe);
   };
@@ -95,7 +114,7 @@ export function RecipeImportPreview({
           justifyContent: "space-between",
         }}
       >
-        <Typography variant="h6">Recette détectée</Typography>
+        <Typography variant="h6">{title}</Typography>
         <Button
           variant="text"
           size="small"
@@ -124,6 +143,21 @@ export function RecipeImportPreview({
           size="small"
           sx={{ width: 200 }}
           slotProps={{ htmlInput: { min: 1, max: 100 } }}
+        />
+        <Autocomplete
+          multiple
+          freeSolo
+          options={allTags}
+          value={tags}
+          onChange={(_, newValue) => setTags(newValue as string[])}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              size="small"
+              label="Tags"
+              placeholder={tags.length === 0 ? "Ajouter un tag..." : ""}
+            />
+          )}
         />
       </Box>
 
@@ -264,7 +298,7 @@ export function RecipeImportPreview({
         disabled={isSaving || ingredients.length === 0 || !name.trim()}
         fullWidth
       >
-        {isSaving ? "Sauvegarde..." : "Sauvegarder la recette"}
+        {isSaving ? "Sauvegarde..." : confirmLabel}
       </Button>
     </Box>
   );

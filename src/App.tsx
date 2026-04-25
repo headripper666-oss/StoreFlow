@@ -1,6 +1,11 @@
-import { useCallback } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { useCallback, useMemo, useState } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 import { AppShell } from "./components/layout/AppShell";
+import { AppShellDesktop } from "./components/layout/AppShellDesktop";
+import { ListOverviewPane } from "./components/desktop/ListOverviewPane";
+import { RecipeDetailPanel } from "./components/desktop/RecipeDetailPanel";
 import { useAuth } from "./hooks/useAuth";
 import { useRecipes } from "./hooks/useRecipes";
 import { useShoppingList } from "./hooks/useShoppingList";
@@ -10,9 +15,14 @@ import { ListPage } from "./pages/ListPage";
 import { LoginPage } from "./pages/LoginPage";
 import { RayonSettingsPage } from "./pages/RayonSettingsPage";
 import { RecipesPage } from "./pages/RecipesPage";
-import type { RecipeIngredient } from "./types";
+import type { Recipe, RecipeIngredient } from "./types";
+import { DEFAULT_TAGS } from "./utils/recipeUtils";
 
 export default function App() {
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("lg"));
+  const location = useLocation();
+
   const {
     config,
     isAuthenticated,
@@ -21,6 +31,7 @@ export default function App() {
     login,
     logout,
   } = useAuth();
+
   const {
     data,
     rayons,
@@ -34,10 +45,14 @@ export default function App() {
     resetEssentials,
     addEssential,
     removeEssential,
+    updateEssentialQuantity,
+    updateEssentialRayon,
     updateRayons,
     addItems,
     addFromParsed,
     toggleItem,
+    updateItemQuantity,
+    toggleAllItems,
     removeItem,
     clearChecked,
     migrateData,
@@ -50,6 +65,15 @@ export default function App() {
     updateRecipe,
     deleteRecipe,
   } = useRecipes(config);
+
+  const [desktopSelectedRecipe, setDesktopSelectedRecipe] =
+    useState<Recipe | null>(null);
+
+  const allTags = useMemo((): string[] => {
+    const tags = new Set<string>(DEFAULT_TAGS);
+    recipes.forEach((r) => (r.tags ?? []).forEach((t) => tags.add(t)));
+    return [...tags].sort();
+  }, [recipes]);
 
   const handleAddIngredientsToList = useCallback(
     async (ingredients: RecipeIngredient[]) => {
@@ -66,9 +90,150 @@ export default function App() {
     [addItems],
   );
 
+  const listOverviewPane = (
+    <ListOverviewPane
+      items={data?.personalList ?? []}
+      essentials={data?.essentials ?? []}
+      rayons={rayons}
+      onToggle={toggleItem}
+      onDelete={removeItem}
+      onToggleEssential={toggleEssential}
+      isSaving={isSaving}
+    />
+  );
+
+  const desktopRightPane: React.ReactNode | null = isDesktop
+    ? (() => {
+        switch (location.pathname) {
+          case "/essentials":
+          case "/add":
+            return listOverviewPane;
+          case "/recipes":
+            return (
+              <RecipeDetailPanel
+                recipe={desktopSelectedRecipe}
+                rayons={rayons}
+                allTags={allTags}
+                isSaving={isSaving || isSavingRecipes}
+                onAddToList={handleAddIngredientsToList}
+                onUpdateRecipe={updateRecipe}
+              />
+            );
+          default:
+            return null;
+        }
+      })()
+    : null;
+
+  const splitStorageKey =
+    {
+      "/essentials": "storeflow-split-essentials",
+      "/add": "storeflow-split-add",
+      "/recipes": "storeflow-split-recipes",
+    }[location.pathname] ?? "storeflow-split-default";
+
   if (!isAuthenticated) {
     return (
       <LoginPage onLogin={login} isLoading={authLoading} error={authError} />
+    );
+  }
+
+  const routes = (
+    <Routes>
+      <Route path="/" element={<Navigate to="/essentials" replace />} />
+      <Route
+        path="/essentials"
+        element={
+          <EssentialsPage
+            essentials={data?.essentials ?? []}
+            rayons={rayons}
+            onToggle={toggleEssential}
+            onReset={resetEssentials}
+            onAdd={addEssential}
+            onDelete={removeEssential}
+            onUpdateQuantity={updateEssentialQuantity}
+            onUpdateRayon={updateEssentialRayon}
+            onMigrate={migrateData}
+            isLoading={isLoading}
+            isSaving={isSaving}
+          />
+        }
+      />
+      <Route
+        path="/list"
+        element={
+          <ListPage
+            items={data?.personalList ?? []}
+            essentials={data?.essentials ?? []}
+            rayons={rayons}
+            onToggle={toggleItem}
+            onDelete={removeItem}
+            onClearChecked={clearChecked}
+            onToggleEssential={toggleEssential}
+            onUpdateQuantity={updateItemQuantity}
+            onUpdateEssentialQuantity={updateEssentialQuantity}
+            onToggleAll={toggleAllItems}
+            isLoading={isLoading}
+            isSaving={isSaving}
+          />
+        }
+      />
+      <Route
+        path="/add"
+        element={
+          <AddItemsPage
+            rayons={rayons}
+            catalog={catalog}
+            onAdd={addItems}
+            onAddFromParsed={addFromParsed}
+            isSaving={isSaving}
+          />
+        }
+      />
+      <Route
+        path="/rayons"
+        element={
+          <RayonSettingsPage
+            rayons={rayons}
+            essentials={data?.essentials ?? []}
+            listItems={data?.personalList ?? []}
+            onSave={updateRayons}
+            isSaving={isSaving}
+          />
+        }
+      />
+      <Route
+        path="/recipes"
+        element={
+          <RecipesPage
+            recipes={recipes}
+            rayons={rayons}
+            isSavingList={isSaving}
+            isSavingRecipes={isSavingRecipes}
+            onAddToList={handleAddIngredientsToList}
+            onSaveRecipe={saveRecipe}
+            onUpdateRecipe={updateRecipe}
+            onDeleteRecipe={deleteRecipe}
+            onDesktopSelect={isDesktop ? setDesktopSelectedRecipe : undefined}
+          />
+        }
+      />
+      <Route path="*" element={<Navigate to="/essentials" replace />} />
+    </Routes>
+  );
+
+  if (isDesktop) {
+    return (
+      <AppShellDesktop
+        syncStatus={syncStatus}
+        lastSyncAt={lastSyncAt}
+        error={error}
+        onLogout={logout}
+        rightPane={desktopRightPane}
+        splitStorageKey={splitStorageKey}
+      >
+        {routes}
+      </AppShellDesktop>
     );
   }
 
@@ -79,81 +244,7 @@ export default function App() {
       error={error}
       onLogout={logout}
     >
-      <Routes>
-        <Route path="/" element={<Navigate to="/essentials" replace />} />
-        <Route
-          path="/essentials"
-          element={
-            <EssentialsPage
-              essentials={data?.essentials ?? []}
-              rayons={rayons}
-              onToggle={toggleEssential}
-              onReset={resetEssentials}
-              onAdd={addEssential}
-              onDelete={removeEssential}
-              onMigrate={migrateData}
-              isLoading={isLoading}
-              isSaving={isSaving}
-            />
-          }
-        />
-        <Route
-          path="/list"
-          element={
-            <ListPage
-              items={data?.personalList ?? []}
-              essentials={data?.essentials ?? []}
-              rayons={rayons}
-              onToggle={toggleItem}
-              onDelete={removeItem}
-              onClearChecked={clearChecked}
-              onToggleEssential={toggleEssential}
-              isLoading={isLoading}
-              isSaving={isSaving}
-            />
-          }
-        />
-        <Route
-          path="/add"
-          element={
-            <AddItemsPage
-              rayons={rayons}
-              catalog={catalog}
-              onAdd={addItems}
-              onAddFromParsed={addFromParsed}
-              isSaving={isSaving}
-            />
-          }
-        />
-        <Route
-          path="/rayons"
-          element={
-            <RayonSettingsPage
-              rayons={rayons}
-              essentials={data?.essentials ?? []}
-              listItems={data?.personalList ?? []}
-              onSave={updateRayons}
-              isSaving={isSaving}
-            />
-          }
-        />
-        <Route
-          path="/recipes"
-          element={
-            <RecipesPage
-              recipes={recipes}
-              rayons={rayons}
-              isSavingList={isSaving}
-              isSavingRecipes={isSavingRecipes}
-              onAddToList={handleAddIngredientsToList}
-              onSaveRecipe={saveRecipe}
-              onUpdateRecipe={updateRecipe}
-              onDeleteRecipe={deleteRecipe}
-            />
-          }
-        />
-        <Route path="*" element={<Navigate to="/essentials" replace />} />
-      </Routes>
+      {routes}
     </AppShell>
   );
 }

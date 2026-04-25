@@ -1,6 +1,27 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { AuthConfig, Recipe } from "../types";
 import { fetchRecipes, saveRecipes } from "../services/github";
+import { DEFAULT_TAGS, detectTags } from "../utils/recipeUtils";
+
+const MIGRATION_KEY = "storeflow_tags_migrated_v1";
+
+function getAllKnownTags(recipes: Recipe[]): string[] {
+  const tags = new Set<string>(DEFAULT_TAGS);
+  recipes.forEach((r) => (r.tags ?? []).forEach((t) => tags.add(t)));
+  return [...tags];
+}
+
+function silentMigrate(recipes: Recipe[]): Recipe[] {
+  return recipes.map((r) => {
+    const legacy = r as Recipe & { category?: string };
+    if (!r.tags && legacy.category) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { category: _cat, ...rest } = legacy;
+      return { ...rest, tags: [legacy.category] };
+    }
+    return r;
+  });
+}
 
 interface UseRecipesReturn {
   recipes: Recipe[];
@@ -19,7 +40,6 @@ export function useRecipes(config: AuthConfig | null): UseRecipesReturn {
   const [error, setError] = useState<string | null>(null);
   const shaRef = useRef<string>("");
 
-  // Load recipes on mount / config change
   useEffect(() => {
     if (!config) return;
 
@@ -30,12 +50,42 @@ export function useRecipes(config: AuthConfig | null): UseRecipesReturn {
     fetchRecipes(config)
       .then(({ recipes: loaded, sha }) => {
         if (cancelled) return;
-        setRecipes(loaded);
+
+        const seen = new Set<string>();
+        const deduped = loaded.filter((r) => {
+          if (seen.has(r.id)) return false;
+          seen.add(r.id);
+          return true;
+        });
+
+        // Silent migration: category → tags
+        const migrated = silentMigrate(deduped);
         shaRef.current = sha;
+
+        if (!localStorage.getItem(MIGRATION_KEY)) {
+          // Retroactive migration: re-detect tags and merge with existing
+          const knownTags = getAllKnownTags(migrated);
+          const retroactive = migrated.map((r) => {
+            const detected = detectTags(r, knownTags);
+            const existing = r.tags ?? [];
+            const merged = [...new Set([...existing, ...detected])];
+            return { ...r, tags: merged };
+          });
+          setRecipes(retroactive);
+          saveRecipes(config, retroactive, sha)
+            .then((newSha) => {
+              shaRef.current = newSha;
+              localStorage.setItem(MIGRATION_KEY, "1");
+            })
+            .catch(() => {
+              // Non-blocking, will retry next load
+            });
+        } else {
+          setRecipes(migrated);
+        }
       })
       .catch(() => {
         if (cancelled) return;
-        // Non-blocking: recipes stay empty on error
       })
       .finally(() => {
         if (!cancelled) setIsLoading(false);

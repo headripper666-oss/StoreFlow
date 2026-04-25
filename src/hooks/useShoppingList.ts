@@ -17,6 +17,7 @@ import {
   saveRayons,
   saveShoppingData,
 } from "../services/github";
+import { normalize, normalizeUnit } from "../utils/recipeUtils";
 import templateListsJson from "../../data-init/lists.json";
 import templateRayonsJson from "../../data-init/rayons.json";
 import {
@@ -42,12 +43,16 @@ interface UseShoppingListReturn {
   resetEssentials: () => Promise<void>;
   addEssential: (name: string, rayonId: string) => Promise<void>;
   removeEssential: (id: string) => Promise<void>;
+  updateEssentialQuantity: (id: string, quantity: number, unit: string) => Promise<void>;
+  updateEssentialRayon: (id: string, rayonId: string) => Promise<void>;
   updateRayons: (rayons: Rayon[]) => Promise<void>;
   addItems: (
     items: Omit<ListItem, "id" | "addedAt" | "checked">[],
   ) => Promise<void>;
   addFromParsed: (parsed: ParsedProduct[]) => Promise<void>;
   toggleItem: (id: string) => Promise<void>;
+  updateItemQuantity: (id: string, quantity: number, unit: string) => Promise<void>;
+  toggleAllItems: (checked: boolean) => Promise<void>;
   removeItem: (id: string) => Promise<void>;
   clearChecked: () => Promise<void>;
   migrateData: () => Promise<{ addedEssentials: number }>;
@@ -98,15 +103,16 @@ export function useShoppingList(
         saveETag("");
       }
 
+      const [fetchedRayons, fetchedCatalog] = await Promise.all([
+        fetchRayons(config),
+        fetchCatalog(config),
+      ]);
+      setRayons(fetchedRayons);
+      setCatalog(fetchedCatalog);
+
       try {
-        const [fileState, fetchedRayons, fetchedCatalog] = await Promise.all([
-          fetchShoppingData(config),
-          fetchRayons(config),
-          fetchCatalog(config),
-        ]);
+        const fileState = await fetchShoppingData(config);
         setData(fileState.content);
-        setRayons(fetchedRayons);
-        setCatalog(fetchedCatalog);
         shaRef.current = fileState.sha;
         cacheData(fileState.content);
         setSyncStatus("synced");
@@ -295,18 +301,33 @@ export function useShoppingList(
 
   const addItems = useCallback(
     async (items: Omit<ListItem, "id" | "addedAt" | "checked">[]) => {
-      await saveData((current) => ({
-        ...current,
-        personalList: [
-          ...current.personalList,
-          ...items.map((item) => ({
-            ...item,
-            id: uuidv4(),
-            addedAt: new Date().toISOString(),
-            checked: false,
-          })),
-        ],
-      }));
+      await saveData((current) => {
+        const newList = [...current.personalList];
+        for (const item of items) {
+          const normalizedName = normalize(item.name.trim());
+          const normalizedUnit = normalizeUnit(item.unit);
+          const existingIdx = newList.findIndex(
+            (e) =>
+              normalize(e.name.trim()) === normalizedName &&
+              normalizeUnit(e.unit) === normalizedUnit &&
+              !e.checked,
+          );
+          if (existingIdx >= 0) {
+            newList[existingIdx] = {
+              ...newList[existingIdx],
+              quantity: newList[existingIdx].quantity + item.quantity,
+            };
+          } else {
+            newList.push({
+              ...item,
+              id: uuidv4(),
+              addedAt: new Date().toISOString(),
+              checked: false,
+            });
+          }
+        }
+        return { ...current, personalList: newList };
+      });
     },
     [saveData],
   );
@@ -337,6 +358,56 @@ export function useShoppingList(
               }
             : item,
         ),
+      }));
+    },
+    [saveData],
+  );
+
+  const updateItemQuantity = useCallback(
+    async (id: string, quantity: number, unit: string) => {
+      await saveData((current) => ({
+        ...current,
+        personalList: current.personalList.map((item: ListItem) =>
+          item.id === id ? { ...item, quantity, unit } : item,
+        ),
+      }));
+    },
+    [saveData],
+  );
+
+  const updateEssentialQuantity = useCallback(
+    async (id: string, quantity: number, unit: string) => {
+      await saveData((current) => ({
+        ...current,
+        essentials: current.essentials.map((e: EssentialItem) =>
+          e.id === id ? { ...e, quantity, unit } : e,
+        ),
+      }));
+    },
+    [saveData],
+  );
+
+  const updateEssentialRayon = useCallback(
+    async (id: string, rayonId: string) => {
+      await saveData((current) => ({
+        ...current,
+        essentials: current.essentials.map((e: EssentialItem) =>
+          e.id === id ? { ...e, rayonId } : e,
+        ),
+      }));
+    },
+    [saveData],
+  );
+
+  const toggleAllItems = useCallback(
+    async (checked: boolean) => {
+      await saveData((current) => ({
+        ...current,
+        personalList: current.personalList.map((item: ListItem) => ({
+          ...item,
+          checked,
+          checkedAt: checked ? new Date().toISOString() : undefined,
+        })),
       }));
     },
     [saveData],
@@ -422,10 +493,14 @@ export function useShoppingList(
     resetEssentials,
     addEssential,
     removeEssential,
+    updateEssentialQuantity,
+    updateEssentialRayon,
     updateRayons,
     addItems,
     addFromParsed,
     toggleItem,
+    updateItemQuantity,
+    toggleAllItems,
     removeItem,
     clearChecked,
     migrateData,

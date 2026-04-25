@@ -3,11 +3,7 @@ import type { ParsedProduct, ParsedRecipe } from "../types";
 export async function parseProductsFromText(
   rawText: string,
 ): Promise<ParsedProduct[]> {
-  const url = import.meta.env.VITE_NETLIFY_FUNCTION_URL;
-
-  if (!url) {
-    throw new Error("VITE_NETLIFY_FUNCTION_URL est non configuré");
-  }
+  const url = import.meta.env.VITE_NETLIFY_FUNCTION_URL || "/api/parse-products";
 
   const res = await fetch(url, {
     method: "POST",
@@ -26,12 +22,7 @@ export async function parseProductsFromText(
 export async function parseRecipeFromText(
   rawText: string,
 ): Promise<ParsedRecipe> {
-  const baseUrl = import.meta.env.VITE_NETLIFY_FUNCTION_URL;
-
-  if (!baseUrl) {
-    throw new Error("VITE_NETLIFY_FUNCTION_URL est non configuré");
-  }
-
+  const baseUrl = import.meta.env.VITE_NETLIFY_FUNCTION_URL || "/api/parse-products";
   const url = baseUrl.replace(/\/[^/]+$/, "/parse-recipe");
 
   const res = await fetch(url, {

@@ -39,6 +39,8 @@ export interface ListItem {
 export interface EssentialItem {
   id: string;
   name: string;
+  quantity?: number;
+  unit?: string;
   rayonId: string;
   checked: boolean;
 }
@@ -104,20 +106,6 @@ export interface PendingChange {
   timestamp: string;
 }
 
-// Recipe categories
-export type RecipeCategory =
-  | "poulet"
-  | "boeuf"
-  | "porc"
-  | "agneau"
-  | "poisson"
-  | "vegetarien"
-  | "pates"
-  | "soupe"
-  | "oeufs"
-  | "dessert"
-  | "autre";
-
 // Recipes
 export interface RecipeIngredient {
   name: string;
@@ -132,7 +120,7 @@ export interface Recipe {
   servings: number; // nombre de personnes de référence
   ingredients: RecipeIngredient[];
   createdAt: string;
-  category?: RecipeCategory;
+  tags?: string[];
 }
 
 export interface ParsedRecipe {

@@ -6,50 +6,30 @@ import {
   CardActions,
   CardContent,
   Chip,
-  CircularProgress,
   IconButton,
-  Menu,
-  MenuItem,
   Tooltip,
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import { useState } from "react";
-import type { Recipe, RecipeCategory } from "../../types";
-import {
-  CATEGORY_LABELS,
-  CATEGORY_ORDER,
-  detectCategory,
-} from "../../utils/recipeUtils";
+import type { Recipe } from "../../types";
+import { tagDisplay } from "../../utils/recipeUtils";
 
 interface RecipeCardProps {
   recipe: Recipe;
   onUse: (recipe: Recipe) => void;
+  onEdit: (recipe: Recipe) => void;
   onDelete: (id: string) => void;
-  onUpdateRecipe: (recipe: Recipe) => Promise<void>;
   disabled?: boolean;
-  isSavingCategory?: boolean;
 }
 
 export function RecipeCard({
   recipe,
   onUse,
+  onEdit,
   onDelete,
-  onUpdateRecipe,
   disabled = false,
-  isSavingCategory = false,
 }: RecipeCardProps) {
-  const [menuAnchor, setMenuAnchor] = useState<null | HTMLElement>(null);
-
-  const category = recipe.category ?? detectCategory(recipe);
-  const { emoji, label } = CATEGORY_LABELS[category];
-
-  const handleCategorySelect = async (cat: RecipeCategory) => {
-    setMenuAnchor(null);
-    if (cat !== category) {
-      await onUpdateRecipe({ ...recipe, category: cat });
-    }
-  };
+  const tags = recipe.tags ?? [];
 
   return (
     <Card variant="outlined" sx={{ borderRadius: 3, mb: 1.5 }}>
@@ -71,55 +51,50 @@ export function RecipeCard({
               {recipe.ingredients.length} ingrédient
               {recipe.ingredients.length > 1 ? "s" : ""}
             </Typography>
-            <Chip
-              size="small"
-              variant="outlined"
-              label={
-                isSavingCategory ? (
-                  <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                    <CircularProgress size={12} />
-                    {label}
-                  </Box>
-                ) : (
-                  `${emoji} ${label}`
-                )
-              }
-              onClick={(e) => {
-                if (!disabled && !isSavingCategory)
-                  setMenuAnchor(e.currentTarget);
-              }}
-              disabled={isSavingCategory}
-              sx={{ mt: 0.75, cursor: "pointer" }}
-            />
-            <Menu
-              anchorEl={menuAnchor}
-              open={Boolean(menuAnchor)}
-              onClose={() => setMenuAnchor(null)}
-            >
-              {CATEGORY_ORDER.map((cat) => (
-                <MenuItem
-                  key={cat}
-                  selected={cat === category}
-                  onClick={() => handleCategorySelect(cat)}
-                >
-                  {CATEGORY_LABELS[cat].emoji} {CATEGORY_LABELS[cat].label}
-                </MenuItem>
-              ))}
-            </Menu>
+            {tags.length > 0 && (
+              <Box
+                sx={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 0.5,
+                  mt: 0.75,
+                }}
+              >
+                {tags.map((tag) => (
+                  <Chip
+                    key={tag}
+                    size="small"
+                    variant="outlined"
+                    label={tagDisplay(tag)}
+                    sx={{ height: 22, fontSize: "0.7rem" }}
+                  />
+                ))}
+              </Box>
+            )}
           </Box>
         </Box>
       </CardContent>
       <CardActions
         sx={{ px: 2, pb: 1.5, pt: 0.5, justifyContent: "space-between" }}
       >
-        <Button
-          variant="contained"
-          size="small"
-          onClick={() => onUse(recipe)}
-          disabled={disabled}
-        >
-          Utiliser
-        </Button>
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => onUse(recipe)}
+            disabled={disabled}
+          >
+            Utiliser
+          </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => onEdit(recipe)}
+            disabled={disabled}
+          >
+            Modifier
+          </Button>
+        </Box>
         <Tooltip title="Supprimer la recette">
           <IconButton
             size="small"

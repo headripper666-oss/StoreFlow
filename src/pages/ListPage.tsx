@@ -1,11 +1,14 @@
 import AddIcon from "@mui/icons-material/Add";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
+import DoneAllIcon from "@mui/icons-material/DoneAll";
+import RemoveDoneIcon from "@mui/icons-material/RemoveDone";
 import {
   Box,
   Button,
   CircularProgress,
   Container,
   Fab,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
@@ -22,6 +25,9 @@ interface ListPageProps {
   onDelete: (id: string) => Promise<void>;
   onClearChecked: () => Promise<void>;
   onToggleEssential: (id: string) => Promise<void>;
+  onUpdateQuantity: (id: string, quantity: number, unit: string) => Promise<void>;
+  onUpdateEssentialQuantity: (id: string, quantity: number, unit: string) => Promise<void>;
+  onToggleAll: (checked: boolean) => Promise<void>;
   isLoading: boolean;
   isSaving: boolean;
 }
@@ -34,6 +40,9 @@ export function ListPage({
   onDelete,
   onClearChecked,
   onToggleEssential,
+  onUpdateQuantity,
+  onUpdateEssentialQuantity,
+  onToggleAll,
   isLoading,
   isSaving,
 }: ListPageProps) {
@@ -46,6 +55,8 @@ export function ListPage({
     .map((e) => ({
       id: e.id,
       name: e.name,
+      quantity: e.quantity,
+      unit: e.unit,
       rayonId: e.rayonId,
       checked: false, // shown as "to buy" in the list
       isEssential: true,
@@ -64,11 +75,24 @@ export function ListPage({
   const allItems: DisplayItem[] = [...essentialItems, ...listItems];
 
   const checkedCount = items.filter((i) => i.checked).length;
+  const allPersonalChecked = items.length > 0 && items.every((i) => i.checked);
+  const hasPersonalItems = items.length > 0;
 
-  const grouped = rayons
+  const knownRayonIds = new Set(rayons.map((r) => r.id));
+  const fallbackRayon: Rayon = rayons.find((r) => r.id === "autre") ?? {
+    id: "autre",
+    label: "Autre",
+    order: 999,
+    icon: "📦",
+  };
+  const normalizedItems = allItems.map((i) =>
+    knownRayonIds.has(i.rayonId) ? i : { ...i, rayonId: fallbackRayon.id },
+  );
+
+  const grouped = [...rayons, ...(knownRayonIds.has(fallbackRayon.id) ? [] : [fallbackRayon])]
     .map((rayon) => ({
       rayon,
-      items: allItems.filter((i) => i.rayonId === rayon.id),
+      items: normalizedItems.filter((i) => i.rayonId === rayon.id),
     }))
     .filter((g) => g.items.length > 0);
 
@@ -84,6 +108,15 @@ export function ListPage({
   const handleDelete = async (id: string) => {
     const isEssential = essentialItems.some((e) => e.id === id);
     if (!isEssential) await onDelete(id);
+  };
+
+  const handleUpdateQuantity = async (id: string, quantity: number, unit: string) => {
+    const isEssential = essentialItems.some((e) => e.id === id);
+    if (isEssential) {
+      await onUpdateEssentialQuantity(id, quantity, unit);
+    } else {
+      await onUpdateQuantity(id, quantity, unit);
+    }
   };
 
   if (isLoading) {
@@ -102,8 +135,8 @@ export function ListPage({
   }
 
   return (
-    <Container maxWidth="sm" sx={{ py: 2, pb: 10 }}>
-      <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
+    <Container maxWidth="sm" sx={{ py: 2, pb: { xs: 10, lg: 3 } }}>
+      <Box sx={{ display: "flex", alignItems: "center", mb: 2, gap: 1, flexWrap: "wrap" }}>
         <Typography variant="h6" sx={{ fontWeight: 700, flex: 1 }}>
           Liste de courses
           {allItems.length > 0 && (
@@ -117,6 +150,23 @@ export function ListPage({
             </Typography>
           )}
         </Typography>
+        {hasPersonalItems && (
+          <Tooltip title={allPersonalChecked ? "Tout décocher" : "Tout cocher"}>
+            <span>
+              <Button
+                variant="outlined"
+                size="small"
+                startIcon={allPersonalChecked ? <RemoveDoneIcon /> : <DoneAllIcon />}
+                onClick={() => onToggleAll(!allPersonalChecked)}
+                disabled={isSaving}
+                color="inherit"
+                sx={{ borderColor: "divider" }}
+              >
+                {allPersonalChecked ? "Décocher tout" : "Cocher tout"}
+              </Button>
+            </span>
+          </Tooltip>
+        )}
         {checkedCount > 0 && (
           <Button
             variant="outlined"
@@ -127,7 +177,7 @@ export function ListPage({
             color="inherit"
             sx={{ borderColor: "divider" }}
           >
-            Vider les cochés ({checkedCount})
+            Vider ({checkedCount})
           </Button>
         )}
       </Box>
@@ -139,6 +189,7 @@ export function ListPage({
           items={rayonItems}
           onToggle={handleToggle}
           onDelete={handleDelete}
+          onUpdateQuantity={handleUpdateQuantity}
           disabled={isSaving}
         />
       ))}
@@ -159,7 +210,7 @@ export function ListPage({
         color="primary"
         aria-label="Ajouter des articles"
         onClick={() => navigate("/add")}
-        sx={{ position: "fixed", bottom: 80, right: 20 }}
+        sx={{ position: "fixed", bottom: { xs: 80, lg: 24 }, right: 20 }}
       >
         <AddIcon />
       </Fab>

@@ -35,6 +35,8 @@ interface EssentialsPageProps {
   onReset: () => Promise<void>;
   onAdd: (name: string, rayonId: string) => Promise<void>;
   onDelete: (id: string) => Promise<void>;
+  onUpdateQuantity: (id: string, quantity: number, unit: string) => Promise<void>;
+  onUpdateRayon: (id: string, rayonId: string) => Promise<void>;
   onMigrate: () => Promise<{ addedEssentials: number }>;
   isLoading: boolean;
   isSaving: boolean;
@@ -47,6 +49,8 @@ export function EssentialsPage({
   onReset,
   onAdd,
   onDelete,
+  onUpdateQuantity,
+  onUpdateRayon,
   onMigrate,
   isLoading,
   isSaving,
@@ -59,6 +63,7 @@ export function EssentialsPage({
   );
   const [newName, setNewName] = useState("");
   const [newRayonId, setNewRayonId] = useState("autre");
+  const [rayonEditItem, setRayonEditItem] = useState<EssentialItem | null>(null);
 
   const checkedCount = essentials.filter((e) => e.checked).length;
   const total = essentials.length;
@@ -100,7 +105,7 @@ export function EssentialsPage({
   }
 
   return (
-    <Container maxWidth="sm" sx={{ py: 2, pb: 10 }}>
+    <Container maxWidth="sm" sx={{ py: 2, pb: { xs: 10, lg: 3 } }}>
       {/* Header */}
       <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
         <Box sx={{ flex: 1 }}>
@@ -181,6 +186,8 @@ export function EssentialsPage({
                   item={item}
                   onToggle={() => onToggle(item.id)}
                   onDelete={() => onDelete(item.id)}
+                  onUpdateQuantity={(qty, unit) => onUpdateQuantity(item.id, qty, unit)}
+                  onChangeRayon={() => setRayonEditItem(item)}
                   disabled={isSaving}
                   isLast={idx === sorted.length - 1}
                 />
@@ -208,7 +215,7 @@ export function EssentialsPage({
         aria-label="Ajouter un indispensable"
         onClick={handleOpenAdd}
         disabled={isSaving}
-        sx={{ position: "fixed", bottom: 80, right: 20 }}
+        sx={{ position: "fixed", bottom: { xs: 80, lg: 24 }, right: 20 }}
       >
         <AddIcon />
       </Fab>
@@ -329,6 +336,42 @@ export function EssentialsPage({
             variant="contained"
           >
             Mettre à jour
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Change rayon dialog */}
+      <Dialog
+        open={rayonEditItem !== null}
+        onClose={() => setRayonEditItem(null)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>Changer le rayon</DialogTitle>
+        <DialogContent sx={{ pt: "8px !important" }}>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1.5 }}>
+            {rayonEditItem?.name}
+          </Typography>
+          <Select
+            value={rayonEditItem?.rayonId ?? ""}
+            onChange={async (e) => {
+              if (!rayonEditItem) return;
+              const newRayon = e.target.value;
+              setRayonEditItem(null);
+              await onUpdateRayon(rayonEditItem.id, newRayon);
+            }}
+            fullWidth
+          >
+            {rayons.map((r) => (
+              <MenuItem key={r.id} value={r.id}>
+                {r.icon} {r.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2 }}>
+          <Button onClick={() => setRayonEditItem(null)} variant="outlined" color="inherit">
+            Annuler
           </Button>
         </DialogActions>
       </Dialog>
