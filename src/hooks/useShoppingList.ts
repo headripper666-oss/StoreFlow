@@ -45,6 +45,7 @@ interface UseShoppingListReturn {
   removeEssential: (id: string) => Promise<void>;
   updateEssentialQuantity: (id: string, quantity: number, unit: string) => Promise<void>;
   updateEssentialRayon: (id: string, rayonId: string) => Promise<void>;
+  reorderEssential: (id: string, direction: -1 | 1) => Promise<void>;
   updateRayons: (rayons: Rayon[]) => Promise<void>;
   addItems: (
     items: Omit<ListItem, "id" | "addedAt" | "checked">[],
@@ -276,13 +277,41 @@ export function useShoppingList(
 
   const addEssential = useCallback(
     async (name: string, rayonId: string) => {
-      await saveData((current) => ({
-        ...current,
-        essentials: [
-          ...current.essentials,
-          { id: uuidv4(), name: name.trim(), rayonId, checked: false },
-        ],
-      }));
+      await saveData((current) => {
+        const rayonItems = current.essentials.filter((e) => e.rayonId === rayonId);
+        const maxOrder = rayonItems.reduce((max, e) => Math.max(max, e.order ?? 0), 0);
+        return {
+          ...current,
+          essentials: [
+            ...current.essentials,
+            { id: uuidv4(), name: name.trim(), rayonId, checked: false, order: maxOrder + 1 },
+          ],
+        };
+      });
+    },
+    [saveData],
+  );
+
+  const reorderEssential = useCallback(
+    async (id: string, direction: -1 | 1) => {
+      await saveData((current) => {
+        const item = current.essentials.find((e) => e.id === id);
+        if (!item) return current;
+        const rayonUnchecked = current.essentials
+          .filter((e) => e.rayonId === item.rayonId && !e.checked)
+          .sort((a, b) => (a.order ?? 0) - (b.order ?? 0))
+          .map((e, i) => ({ ...e, order: i + 1 }));
+        const idx = rayonUnchecked.findIndex((e) => e.id === id);
+        const next = idx + direction;
+        if (next < 0 || next >= rayonUnchecked.length) return current;
+        [rayonUnchecked[idx], rayonUnchecked[next]] = [rayonUnchecked[next], rayonUnchecked[idx]];
+        const reordered = rayonUnchecked.map((e, i) => ({ ...e, order: i + 1 }));
+        const reorderedMap = new Map(reordered.map((e) => [e.id, e]));
+        return {
+          ...current,
+          essentials: current.essentials.map((e) => reorderedMap.get(e.id) ?? e),
+        };
+      });
     },
     [saveData],
   );
@@ -495,6 +524,7 @@ export function useShoppingList(
     removeEssential,
     updateEssentialQuantity,
     updateEssentialRayon,
+    reorderEssential,
     updateRayons,
     addItems,
     addFromParsed,

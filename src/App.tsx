@@ -47,6 +47,7 @@ export default function App() {
     removeEssential,
     updateEssentialQuantity,
     updateEssentialRayon,
+    reorderEssential,
     updateRayons,
     addItems,
     addFromParsed,
@@ -153,6 +154,7 @@ export default function App() {
             onDelete={removeEssential}
             onUpdateQuantity={updateEssentialQuantity}
             onUpdateRayon={updateEssentialRayon}
+            onReorder={reorderEssential}
             onMigrate={migrateData}
             isLoading={isLoading}
             isSaving={isSaving}

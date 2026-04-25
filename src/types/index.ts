@@ -43,6 +43,7 @@ export interface EssentialItem {
   unit?: string;
   rayonId: string;
   checked: boolean;
+  order?: number;
 }
 
 // Root data structure stored in lists.json

@@ -1,4 +1,6 @@
 import AddIcon from "@mui/icons-material/Add";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import SystemUpdateAltIcon from "@mui/icons-material/SystemUpdateAlt";
 import {
@@ -15,6 +17,7 @@ import {
   DialogContent,
   DialogTitle,
   Fab,
+  IconButton,
   LinearProgress,
   MenuItem,
   Select,
@@ -37,6 +40,7 @@ interface EssentialsPageProps {
   onDelete: (id: string) => Promise<void>;
   onUpdateQuantity: (id: string, quantity: number, unit: string) => Promise<void>;
   onUpdateRayon: (id: string, rayonId: string) => Promise<void>;
+  onReorder: (id: string, direction: -1 | 1) => Promise<void>;
   onMigrate: () => Promise<{ addedEssentials: number }>;
   isLoading: boolean;
   isSaving: boolean;
@@ -51,6 +55,7 @@ export function EssentialsPage({
   onDelete,
   onUpdateQuantity,
   onUpdateRayon,
+  onReorder,
   onMigrate,
   isLoading,
   isSaving,
@@ -81,6 +86,8 @@ export function EssentialsPage({
     await onAdd(newName, newRayonId);
   };
 
+  const knownRayonIds = new Set(rayons.map((r) => r.id));
+
   // Group essentials by rayon, sorted by rayon order
   const grouped = rayons
     .map((rayon) => ({
@@ -88,6 +95,10 @@ export function EssentialsPage({
       items: essentials.filter((e) => e.rayonId === rayon.id),
     }))
     .filter((g) => g.items.length > 0);
+
+  // Items whose rayonId no longer exists in the rayon list
+  const orphanItems = essentials.filter((e) => !knownRayonIds.has(e.rayonId));
+  const orphanRayon: Rayon = { id: "__orphan__", label: "Rayon inconnu", order: 9999, icon: "⚠️" };
 
   if (isLoading) {
     return (
@@ -149,10 +160,11 @@ export function EssentialsPage({
       {/* Grouped by rayon */}
       {grouped.map(({ rayon, items }) => {
         const uncheckedCount = items.filter((i) => !i.checked).length;
-        const sorted = [
-          ...items.filter((i) => !i.checked),
-          ...items.filter((i) => i.checked),
-        ];
+        const unchecked = items
+          .filter((i) => !i.checked)
+          .sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+        const checked = items.filter((i) => i.checked);
+        const sorted = [...unchecked, ...checked];
 
         return (
           <Accordion
@@ -180,22 +192,97 @@ export function EssentialsPage({
               </Box>
             </AccordionSummary>
             <AccordionDetails sx={{ p: 0 }}>
-              {sorted.map((item, idx) => (
-                <EssentialItemComponent
-                  key={item.id}
-                  item={item}
-                  onToggle={() => onToggle(item.id)}
-                  onDelete={() => onDelete(item.id)}
-                  onUpdateQuantity={(qty, unit) => onUpdateQuantity(item.id, qty, unit)}
-                  onChangeRayon={() => setRayonEditItem(item)}
-                  disabled={isSaving}
-                  isLast={idx === sorted.length - 1}
-                />
-              ))}
+              {sorted.map((item, idx) => {
+                const isUnchecked = !item.checked;
+                const uncheckedIdx = isUnchecked ? unchecked.findIndex((i) => i.id === item.id) : -1;
+                return (
+                  <Box key={item.id} sx={{ display: "flex", alignItems: "center" }}>
+                    <Box sx={{ flex: 1 }}>
+                      <EssentialItemComponent
+                        item={item}
+                        onToggle={() => onToggle(item.id)}
+                        onDelete={() => onDelete(item.id)}
+                        onUpdateQuantity={(qty, unit) => onUpdateQuantity(item.id, qty, unit)}
+                        onChangeRayon={() => setRayonEditItem(item)}
+                        disabled={isSaving}
+                        isLast={idx === sorted.length - 1}
+                      />
+                    </Box>
+                    {isUnchecked && (
+                      <Box sx={{ display: "flex", flexDirection: "column", pr: 0.5 }}>
+                        <IconButton
+                          size="small"
+                          onClick={() => onReorder(item.id, -1)}
+                          disabled={isSaving || uncheckedIdx === 0}
+                          sx={{ p: 0.25 }}
+                        >
+                          <ArrowUpwardIcon fontSize="small" />
+                        </IconButton>
+                        <IconButton
+                          size="small"
+                          onClick={() => onReorder(item.id, 1)}
+                          disabled={isSaving || uncheckedIdx === unchecked.length - 1}
+                          sx={{ p: 0.25 }}
+                        >
+                          <ArrowDownwardIcon fontSize="small" />
+                        </IconButton>
+                      </Box>
+                    )}
+                  </Box>
+                );
+              })}
             </AccordionDetails>
           </Accordion>
         );
       })}
+
+      {/* Orphaned items — rayonId doesn't match any known rayon */}
+      {orphanItems.length > 0 && (
+        <Accordion
+          key="__orphan__"
+          defaultExpanded
+          disableGutters
+          sx={{
+            mb: 0.5,
+            borderRadius: "12px !important",
+            overflow: "hidden",
+            border: "1px solid rgba(255,160,0,0.4)",
+            boxShadow: "none",
+            "&:before": { display: "none" },
+          }}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            sx={{ minHeight: 52, px: 2, "&.Mui-expanded": { minHeight: 52 } }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+              <Typography sx={{ fontSize: "1.3rem", lineHeight: 1 }}>
+                {orphanRayon.icon}
+              </Typography>
+              <Typography variant="subtitle1" color="warning.main">
+                {orphanRayon.label}
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                — assignez un rayon via le crayon
+              </Typography>
+            </Box>
+          </AccordionSummary>
+          <AccordionDetails sx={{ p: 0 }}>
+            {orphanItems.map((item, idx) => (
+              <EssentialItemComponent
+                key={item.id}
+                item={item}
+                onToggle={() => onToggle(item.id)}
+                onDelete={() => onDelete(item.id)}
+                onUpdateQuantity={(qty, unit) => onUpdateQuantity(item.id, qty, unit)}
+                onChangeRayon={() => setRayonEditItem(item)}
+                disabled={isSaving}
+                isLast={idx === orphanItems.length - 1}
+              />
+            ))}
+          </AccordionDetails>
+        </Accordion>
+      )}
 
       {essentials.length === 0 && !isLoading && (
         <Box sx={{ textAlign: "center", py: 6, color: "text.secondary" }}>
