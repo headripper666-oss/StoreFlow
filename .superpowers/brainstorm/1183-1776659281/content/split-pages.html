@@ -1,0 +1,261 @@
+<h2>Quelles pages en double panneau ?</h2>
+<p class="subtitle">
+  Certaines pages gagnent à être côte à côte, d'autres non. Sélectionne toutes
+  les combinaisons qui t'intéressent (multi-choix).
+</p>
+
+<style>
+  .mockup-mini {
+    background: #f5f7f5;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    font-size: 10px;
+    margin-top: 10px;
+    height: 150px;
+  }
+  .mm-topbar {
+    background: #2e7d32;
+    color: white;
+    padding: 4px 8px;
+    font-weight: 700;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+  }
+  .mm-body {
+    display: flex;
+    height: calc(100% - 22px);
+  }
+  .mm-sidebar {
+    background: white;
+    width: 90px;
+    padding: 6px 5px;
+    border-right: 1px solid #eee;
+    flex-shrink: 0;
+  }
+  .mm-nav-item {
+    padding: 4px 6px;
+    border-radius: 5px;
+    margin-bottom: 2px;
+    color: #777;
+    font-size: 9px;
+  }
+  .mm-nav-item.active {
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-weight: 700;
+  }
+  .mm-pane {
+    flex: 1;
+    padding: 6px 8px;
+    overflow: hidden;
+  }
+  .mm-pane + .mm-pane {
+    border-left: 1px solid #eee;
+    background: #fafafa;
+  }
+  .mm-title {
+    font-weight: 700;
+    color: #333;
+    font-size: 9px;
+    margin-bottom: 4px;
+  }
+  .mm-row {
+    background: white;
+    border-radius: 4px;
+    padding: 3px 6px;
+    margin-bottom: 3px;
+    border: 1px solid #eee;
+    font-size: 9px;
+    color: #333;
+  }
+  .mm-row.orange {
+    background: #fff8e1;
+  }
+  .mm-recipe-card {
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #eee;
+    padding: 5px 7px;
+    margin-bottom: 4px;
+  }
+  .mm-recipe-title {
+    font-weight: 700;
+    color: #2e7d32;
+    font-size: 9px;
+  }
+  .mm-recipe-sub {
+    color: #888;
+    font-size: 8px;
+  }
+  .mm-detail-title {
+    font-size: 10px;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 4px;
+  }
+  .mm-ing {
+    font-size: 8px;
+    color: #555;
+    padding: 2px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .mm-chip {
+    display: inline-block;
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-radius: 10px;
+    padding: 2px 6px;
+    font-size: 8px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .mm-add-section {
+    margin-bottom: 5px;
+  }
+  .mm-add-label {
+    font-size: 8px;
+    color: #888;
+    margin-bottom: 2px;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .mm-textarea {
+    width: 100%;
+    height: 28px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    box-sizing: border-box;
+    padding: 3px;
+    font-size: 8px;
+    color: #999;
+  }
+  .mm-btn {
+    background: #2e7d32;
+    color: white;
+    border-radius: 4px;
+    padding: 3px 7px;
+    font-size: 8px;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 3px;
+  }
+</style>
+
+<div class="options" data-multiselect>
+  <!-- Option 1 : Indispensables | Ma Liste -->
+  <div class="option" data-choice="1" onclick="toggleSelect(this)">
+    <div class="letter">1</div>
+    <div class="content" style="flex: 1">
+      <h3>Indispensables | Ma Liste</h3>
+      <p>
+        Voir les 2 listes en simultané — pratique pour faire les courses sans
+        switcher d'onglet.
+      </p>
+      <div class="mockup-mini">
+        <div class="mm-topbar">🛒 StoreFlow</div>
+        <div class="mm-body">
+          <div class="mm-sidebar">
+            <div class="mm-nav-item active">✅ Indispens.</div>
+            <div class="mm-nav-item">🛍 Ma Liste</div>
+            <div class="mm-nav-item">➕ Ajouter</div>
+            <div class="mm-nav-item">📖 Recettes</div>
+            <div class="mm-nav-item">🔧 Rayons</div>
+          </div>
+          <div class="mm-pane">
+            <div class="mm-title">✅ Indispensables</div>
+            <div class="mm-row">🥕 Carottes</div>
+            <div class="mm-row">🥛 Lait</div>
+            <div class="mm-row">🍞 Pain</div>
+          </div>
+          <div class="mm-pane">
+            <div class="mm-title">🛍 Ma Liste</div>
+            <div class="mm-row orange">🥩 Bœuf haché</div>
+            <div class="mm-row orange">🍝 Pâtes</div>
+            <div class="mm-row orange">🫒 Huile olive</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option 2 : Recettes | Détail recette -->
+  <div class="option" data-choice="2" onclick="toggleSelect(this)">
+    <div class="letter">2</div>
+    <div class="content" style="flex: 1">
+      <h3>Recettes | Détail de la recette</h3>
+      <p>
+        Liste des recettes à gauche, ingrédients + actions à droite au clic —
+        plus besoin de dialog.
+      </p>
+      <div class="mockup-mini">
+        <div class="mm-topbar">🛒 StoreFlow</div>
+        <div class="mm-body">
+          <div class="mm-sidebar">
+            <div class="mm-nav-item">✅ Indispens.</div>
+            <div class="mm-nav-item">🛍 Ma Liste</div>
+            <div class="mm-nav-item">➕ Ajouter</div>
+            <div class="mm-nav-item active">📖 Recettes</div>
+            <div class="mm-nav-item">🔧 Rayons</div>
+          </div>
+          <div class="mm-pane">
+            <div class="mm-recipe-card" style="border-color: #2e7d32">
+              <div class="mm-recipe-title">🍝 Bolognaise</div>
+              <div class="mm-recipe-sub">4 pers. • 8 ingrédients</div>
+            </div>
+            <div class="mm-recipe-card">
+              <div class="mm-recipe-title">🥗 Salade César</div>
+              <div class="mm-recipe-sub">2 pers. • 6 ingrédients</div>
+            </div>
+          </div>
+          <div class="mm-pane">
+            <div class="mm-chip">4 personnes</div>
+            <div class="mm-detail-title">🍝 Bolognaise</div>
+            <div class="mm-ing">🥩 Bœuf haché — 400g</div>
+            <div class="mm-ing">🍅 Tomates — 500g</div>
+            <div class="mm-ing">🧅 Oignon — 1</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option 3 : Ajouter | Ma Liste (preview) -->
+  <div class="option" data-choice="3" onclick="toggleSelect(this)">
+    <div class="letter">3</div>
+    <div class="content" style="flex: 1">
+      <h3>Ajouter | Aperçu liste en direct</h3>
+      <p>
+        Coller/saisir des produits à gauche, voir la liste se mettre à jour à
+        droite en temps réel.
+      </p>
+      <div class="mockup-mini">
+        <div class="mm-topbar">🛒 StoreFlow</div>
+        <div class="mm-body">
+          <div class="mm-sidebar">
+            <div class="mm-nav-item">✅ Indispens.</div>
+            <div class="mm-nav-item">🛍 Ma Liste</div>
+            <div class="mm-nav-item active">➕ Ajouter</div>
+            <div class="mm-nav-item">📖 Recettes</div>
+            <div class="mm-nav-item">🔧 Rayons</div>
+          </div>
+          <div class="mm-pane">
+            <div class="mm-add-section">
+              <div class="mm-add-label">Coller une liste</div>
+              <div class="mm-textarea">500g de bœuf haché, 2 tomates…</div>
+              <div class="mm-btn">Analyser IA</div>
+            </div>
+          </div>
+          <div class="mm-pane">
+            <div class="mm-title">🛍 Liste actuelle</div>
+            <div class="mm-row orange">🥩 Bœuf haché — 500g</div>
+            <div class="mm-row orange">🍅 Tomates — 2</div>
+            <div class="mm-row orange">🍝 Pâtes — 200g</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

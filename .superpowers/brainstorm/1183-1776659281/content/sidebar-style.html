@@ -1,0 +1,300 @@
+<h2>La sidebar : quel comportement ?</h2>
+<p class="subtitle">
+  Sur ton écran ultrawide, comment la barre de navigation latérale doit-elle se
+  comporter ?
+</p>
+
+<style>
+  .mockup-mini {
+    background: #f5f7f5;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    font-size: 10px;
+    margin-top: 10px;
+    height: 160px;
+  }
+  .mm-topbar {
+    background: #2e7d32;
+    color: white;
+    padding: 5px 10px;
+    font-weight: 700;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mm-body {
+    display: flex;
+    height: calc(100% - 24px);
+  }
+  .mm-sidebar-wide {
+    background: white;
+    width: 160px;
+    padding: 8px 6px;
+    border-right: 1px solid #eee;
+    flex-shrink: 0;
+  }
+  .mm-sidebar-icons {
+    background: white;
+    width: 38px;
+    padding: 6px 4px;
+    border-right: 1px solid #eee;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .mm-sidebar-narrow {
+    background: white;
+    width: 110px;
+    padding: 6px 5px;
+    border-right: 1px solid #eee;
+    flex-shrink: 0;
+  }
+  .mm-nav-item {
+    padding: 5px 8px;
+    border-radius: 6px;
+    margin-bottom: 3px;
+    color: #777;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .mm-nav-item.active {
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-weight: 700;
+  }
+  .mm-icon-item {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+  }
+  .mm-icon-item.active {
+    background: #e8f5e9;
+  }
+  .mm-main {
+    flex: 1;
+    padding: 8px 10px;
+    overflow: hidden;
+  }
+  .mm-pane {
+    flex: 1;
+    padding: 6px 8px;
+    overflow: hidden;
+  }
+  .mm-pane + .mm-pane {
+    border-left: 1px solid #eee;
+    background: #fafafa;
+  }
+  .mm-title {
+    font-weight: 700;
+    color: #333;
+    font-size: 9px;
+    margin-bottom: 4px;
+  }
+  .mm-row {
+    background: white;
+    border-radius: 4px;
+    padding: 3px 6px;
+    margin-bottom: 3px;
+    border: 1px solid #eee;
+    font-size: 9px;
+    color: #333;
+  }
+  .mm-toggle {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    margin-left: auto;
+    cursor: pointer;
+    color: #888;
+  }
+  .mm-section-header {
+    font-size: 8px;
+    color: #aaa;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 0 8px;
+    margin: 6px 0 3px;
+  }
+  .mm-logo {
+    font-weight: 900;
+    font-size: 12px;
+    color: #2e7d32;
+    padding: 4px 8px 8px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 4px;
+  }
+</style>
+
+<div class="cards">
+  <!-- Option A : Sidebar fixe large avec labels -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup-mini">
+        <div class="mm-body" style="height: 100%">
+          <div class="mm-sidebar-wide">
+            <div class="mm-logo">🛒 StoreFlow</div>
+            <div class="mm-nav-item active">✅ Indispensables</div>
+            <div class="mm-nav-item">🛍 Ma Liste</div>
+            <div class="mm-nav-item">➕ Ajouter</div>
+            <div class="mm-nav-item">📖 Recettes</div>
+            <div class="mm-section-header">Paramètres</div>
+            <div class="mm-nav-item">🔧 Rayons</div>
+          </div>
+          <div class="mm-main">
+            <div class="mm-title">✅ Indispensables</div>
+            <div class="mm-row">🥕 Carottes</div>
+            <div class="mm-row">🥛 Lait</div>
+            <div class="mm-row">🍞 Pain</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Sidebar fixe, toujours étendue</h3>
+      <p>
+        Labels toujours visibles, largeur fixe (~200px). Simple, lisible, mais
+        prend plus de place horizontale.
+      </p>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pour</h4>
+          <ul>
+            <li>Toujours clair où on est</li>
+            <li>Zéro interaction nécessaire</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Contre</h4>
+          <ul>
+            <li>Consomme de la largeur en permanence</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B : Sidebar collapsible icônes/labels -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup-mini">
+        <div class="mm-body" style="height: 100%">
+          <div class="mm-sidebar-icons">
+            <div class="mm-icon-item active">✅</div>
+            <div class="mm-icon-item">🛍</div>
+            <div class="mm-icon-item">➕</div>
+            <div class="mm-icon-item">📖</div>
+            <div style="flex: 1"></div>
+            <div class="mm-icon-item">🔧</div>
+          </div>
+          <div class="mm-main">
+            <div class="mm-title">✅ Indispensables</div>
+            <div class="mm-row">🥕 Carottes</div>
+            <div class="mm-row">🥛 Lait</div>
+            <div class="mm-row">🍞 Pain</div>
+            <div class="mm-row">🧈 Beurre</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Sidebar réduite (icônes) / étendue (labels) au clic</h3>
+      <p>
+        Un bouton ☰ bascule entre mode icônes compact (~50px) et mode étendu
+        avec labels (~200px). Maximise l'espace contenu.
+      </p>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pour</h4>
+          <ul>
+            <li>Plein écran quand on veut</li>
+            <li>Pattern connu (VS Code, Slack)</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Contre</h4>
+          <ul>
+            <li>Un clic de plus pour voir les labels</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C : Sidebar avec sections + sous-labels -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup-mini">
+        <div class="mm-body" style="height: 100%">
+          <div class="mm-sidebar-narrow">
+            <div
+              style="
+                padding: 4px 8px 6px;
+                font-weight: 900;
+                font-size: 11px;
+                color: #2e7d32;
+                border-bottom: 1px solid #eee;
+                margin-bottom: 4px;
+              "
+            >
+              🛒 SF
+            </div>
+            <div class="mm-section-header">Courses</div>
+            <div class="mm-nav-item active" style="font-size: 8px">
+              ✅ Indispensables
+            </div>
+            <div class="mm-nav-item" style="font-size: 8px">🛍 Ma Liste</div>
+            <div class="mm-nav-item" style="font-size: 8px">➕ Ajouter</div>
+            <div class="mm-section-header">Cuisine</div>
+            <div class="mm-nav-item" style="font-size: 8px">📖 Recettes</div>
+            <div class="mm-section-header">Config</div>
+            <div class="mm-nav-item" style="font-size: 8px">🔧 Rayons</div>
+          </div>
+          <div class="mm-main">
+            <div class="mm-title">✅ Indispensables</div>
+            <div class="mm-row">🥕 Carottes</div>
+            <div class="mm-row">🥛 Lait</div>
+            <div class="mm-row">🍞 Pain</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Sidebar fixe avec groupes sémantiques</h3>
+      <p>
+        Même largeur fixe, mais les items sont groupés par thème : "Courses",
+        "Cuisine", "Config". Donne une hiérarchie visuelle sans interaction
+        supplémentaire.
+      </p>
+      <div class="pros-cons">
+        <div class="pros">
+          <h4>Pour</h4>
+          <ul>
+            <li>Organisation claire à la lecture</li>
+            <li>Scalable si l'app grandit</li>
+          </ul>
+        </div>
+        <div class="cons">
+          <h4>Contre</h4>
+          <ul>
+            <li>Plus verbeux pour 5 items seulement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

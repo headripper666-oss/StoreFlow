@@ -1,0 +1,490 @@
+<h2>Simplifier le flux "Utiliser une recette"</h2>
+<p class="subtitle">
+  3 approches pour réduire les écrans intermédiaires — clique sur celle qui
+  t'attire.
+</p>
+
+<style>
+  .options {
+    flex-direction: column;
+  }
+  .option {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .option .letter {
+    width: 48px;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+    flex-shrink: 0;
+    background: #f5f5f5;
+  }
+  .option .content {
+    flex: 1;
+    padding: 16px 18px;
+  }
+
+  .mockup-inline {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+
+  /* Phone */
+  .ph {
+    width: 200px;
+    border: 2px solid #ccc;
+    border-radius: 16px;
+    overflow: hidden;
+    font-size: 11px;
+    font-family: sans-serif;
+    background: white;
+    flex-shrink: 0;
+  }
+  .ph-bar {
+    background: #2e7d32;
+    color: white;
+    padding: 7px 10px;
+    font-weight: 700;
+    font-size: 11px;
+  }
+  .ph-body {
+    padding: 8px 10px;
+  }
+  .ph-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  .ph-card-head {
+    padding: 7px 9px 4px;
+  }
+  .ph-title {
+    font-weight: 700;
+    margin: 0 0 1px;
+    font-size: 11px;
+  }
+  .ph-sub {
+    color: #999;
+    font-size: 10px;
+    margin: 0;
+  }
+  .ph-actions {
+    padding: 5px 9px 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ph-btn {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .ph-btn-out {
+    background: white;
+    color: #2e7d32;
+    border: 1px solid #2e7d32;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 10px;
+    font-weight: 600;
+  }
+  .ph-btn-ghost {
+    background: #f5f5f5;
+    color: #666;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  /* Counter */
+  .ctr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .ctr-label {
+    font-size: 10px;
+    color: #555;
+  }
+  .ctr-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .ctr-btn {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #e8f5e9;
+    border: none;
+    font-size: 14px;
+    line-height: 1;
+    font-weight: 700;
+    color: #2e7d32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ctr-val {
+    font-weight: 700;
+    font-size: 12px;
+    width: 16px;
+    text-align: center;
+  }
+
+  /* Ingredients */
+  .ing {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 10px;
+  }
+  .ing-n {
+    font-weight: 500;
+  }
+  .ing-q {
+    color: #999;
+  }
+  .more {
+    font-size: 10px;
+    color: #bbb;
+    font-style: italic;
+    padding: 3px 0;
+  }
+  .hint {
+    font-size: 10px;
+    color: #888;
+    margin-bottom: 4px;
+  }
+
+  /* Expansion zone */
+  .expand-zone {
+    background: #f1f8e9;
+    border-top: 1px solid #dcedc8;
+    padding: 8px 9px;
+  }
+
+  /* Bottom sheet */
+  .bsheet {
+    background: white;
+    border-radius: 10px 10px 0 0;
+    padding: 8px 10px;
+    box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.12);
+  }
+  .bhandle {
+    width: 28px;
+    height: 3px;
+    background: #ddd;
+    border-radius: 2px;
+    margin: 0 auto 7px;
+  }
+
+  /* Flow badges */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 4px;
+  }
+  .fstep {
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 10px;
+    text-align: center;
+    font-weight: 500;
+  }
+  .fstep.ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+  }
+  .fstep.gone {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+    text-decoration: line-through;
+  }
+  .farrow {
+    text-align: center;
+    font-size: 10px;
+    color: #aaa;
+    line-height: 1;
+  }
+
+  .badge {
+    display: inline-block;
+    border-radius: 5px;
+    padding: 1px 7px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .bg {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+  .bb {
+    background: #e3f2fd;
+    color: #1565c0;
+  }
+  .bp {
+    background: #f3e5f5;
+    color: #6a1b9a;
+  }
+
+  .desc {
+    font-size: 13px;
+    color: #555;
+    margin: 0 0 6px;
+    line-height: 1.5;
+  }
+  .tag {
+    display: inline-block;
+    font-size: 11px;
+    color: #777;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1px 8px;
+    margin-top: 4px;
+  }
+
+  h3 {
+    margin: 0 0 4px;
+    font-size: 15px;
+  }
+</style>
+
+<div class="options">
+  <!-- OPTION A -->
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <span class="badge bg">Recommandé · le plus simple à coder</span>
+      <h3>Dialogue unifié — tout en un écran</h3>
+      <p class="desc">
+        Le popup actuel en 2 étapes devient un seul écran : sélecteur de
+        personnes en haut + liste d'ingrédients ajustée en direct en dessous. Un
+        clic pour ouvrir, un clic pour ajouter.
+      </p>
+
+      <div class="mockup-inline">
+        <div class="ph">
+          <div class="ph-bar">Bœuf bourguignon</div>
+          <div class="ph-body">
+            <div class="ctr">
+              <span class="ctr-label">Personnes</span>
+              <div class="ctr-ctrl">
+                <div class="ctr-btn">−</div>
+                <div class="ctr-val">6</div>
+                <div class="ctr-btn">+</div>
+              </div>
+            </div>
+            <div class="hint">Base 4 pers. · ×1.5</div>
+            <div class="ing">
+              <span class="ing-n">Bœuf</span><span class="ing-q">1.5 kg</span>
+            </div>
+            <div class="ing">
+              <span class="ing-n">Carottes</span
+              ><span class="ing-q">5 pcs</span>
+            </div>
+            <div class="ing">
+              <span class="ing-n">Vin rouge</span
+              ><span class="ing-q">1 btl</span>
+            </div>
+            <div class="ing">
+              <span class="ing-n">Champignons</span
+              ><span class="ing-q">375 g</span>
+            </div>
+            <div class="more">+ 4 autres ingrédients…</div>
+            <div
+              style="
+                margin-top: 8px;
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+              "
+            >
+              <button class="ph-btn" style="width: 100%">
+                Ajouter à la liste
+              </button>
+              <button class="ph-btn-out" style="width: 100%; font-size: 9px">
+                Ajouter + sauvegarder
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow">
+          <div class="fstep ok">Clic "Utiliser"</div>
+          <div class="farrow">▼</div>
+          <div class="fstep ok">Dialogue (1 seul écran)</div>
+          <div class="farrow">▼</div>
+          <div class="fstep ok">✓ Ajouté à la liste</div>
+          <div style="margin-top: 6px">
+            <span class="tag">−1 écran</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION B -->
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <span class="badge bb">Zéro popup</span>
+      <h3>Expansion inline — dans la liste</h3>
+      <p class="desc">
+        Cliquer "Utiliser" déplie la recette directement dans la page, sans
+        modal. Le sélecteur et les ingrédients s'affichent sous la carte. Idéal
+        pour rester dans le contexte.
+      </p>
+
+      <div class="mockup-inline">
+        <div class="ph">
+          <div class="ph-bar">Mes recettes</div>
+          <div class="ph-body">
+            <div class="ph-card" style="border: 1.5px solid #2e7d32">
+              <div class="ph-card-head">
+                <p class="ph-title">🍽 Bœuf bourguignon</p>
+                <p class="ph-sub">4 personnes · 8 ingrédients</p>
+              </div>
+              <div class="expand-zone">
+                <div class="ctr">
+                  <span class="ctr-label" style="font-weight: 600"
+                    >Personnes</span
+                  >
+                  <div class="ctr-ctrl">
+                    <div class="ctr-btn">−</div>
+                    <div class="ctr-val">4</div>
+                    <div class="ctr-btn">+</div>
+                  </div>
+                </div>
+                <div class="ing">
+                  <span class="ing-n">Bœuf</span><span class="ing-q">1 kg</span>
+                </div>
+                <div class="ing">
+                  <span class="ing-n">Carottes</span
+                  ><span class="ing-q">3 pcs</span>
+                </div>
+                <div class="more">+ 6 autres…</div>
+                <div style="margin-top: 6px; display: flex; gap: 4px">
+                  <button class="ph-btn" style="flex: 1">Ajouter</button>
+                  <button class="ph-btn-ghost">✕</button>
+                </div>
+              </div>
+            </div>
+            <div class="ph-card" style="opacity: 0.4">
+              <div class="ph-card-head">
+                <p class="ph-title">🍽 Tarte aux pommes</p>
+                <p class="ph-sub">6 personnes · 6 ingrédients</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow">
+          <div class="fstep ok">Clic "Utiliser"</div>
+          <div class="farrow">▼</div>
+          <div class="fstep ok">Dépliage inline</div>
+          <div class="farrow">▼</div>
+          <div class="fstep ok">✓ Ajouté à la liste</div>
+          <div style="margin-top: 6px">
+            <span class="tag">−1 écran</span>
+            <br /><span class="tag" style="margin-top: 3px">pas de popup</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OPTION C -->
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <span class="badge bp">Mobile-natif</span>
+      <h3>Bottom sheet — panneau glissant</h3>
+      <p class="desc">
+        Un panneau remonte depuis le bas de l'écran (comme les apps iOS/Android
+        natives). Même contenu que A mais en format "tiroir" tactile — plus
+        immersif, sans cacher toute la liste.
+      </p>
+
+      <div class="mockup-inline">
+        <div class="ph" style="position: relative">
+          <div class="ph-bar">Mes recettes</div>
+          <div class="ph-body" style="padding-bottom: 0">
+            <div class="ph-card" style="opacity: 0.35">
+              <div class="ph-card-head">
+                <p class="ph-title">🍽 Bœuf bourguignon</p>
+                <p class="ph-sub">4 personnes</p>
+              </div>
+              <div class="ph-actions">
+                <button class="ph-btn">Utiliser</button>
+              </div>
+            </div>
+            <div class="bsheet">
+              <div class="bhandle"></div>
+              <div
+                style="font-weight: 700; font-size: 11px; margin-bottom: 6px"
+              >
+                Bœuf bourguignon
+              </div>
+              <div class="ctr">
+                <span class="ctr-label">Personnes</span>
+                <div class="ctr-ctrl">
+                  <div class="ctr-btn">−</div>
+                  <div class="ctr-val">4</div>
+                  <div class="ctr-btn">+</div>
+                </div>
+              </div>
+              <div class="ing">
+                <span class="ing-n">Bœuf</span><span class="ing-q">1 kg</span>
+              </div>
+              <div class="ing">
+                <span class="ing-n">Carottes</span
+                ><span class="ing-q">3 pcs</span>
+              </div>
+              <div class="more" style="margin-bottom: 6px">+ 6 autres…</div>
+              <button class="ph-btn" style="width: 100%">
+                Ajouter à la liste
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow">
+          <div class="fstep ok">Clic "Utiliser"</div>
+          <div class="farrow">▼</div>
+          <div class="fstep ok">Panneau bas (1 écran)</div>
+          <div class="farrow">▼</div>
+          <div class="fstep ok">✓ Ajouté à la liste</div>
+          <div style="margin-top: 6px">
+            <span class="tag">−1 écran</span>
+            <br /><span class="tag" style="margin-top: 3px"
+              >geste swipe down</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

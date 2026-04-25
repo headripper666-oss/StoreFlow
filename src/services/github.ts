@@ -118,7 +118,7 @@ export async function fetchRayons(config: AuthConfig): Promise<Rayon[]> {
   const url = contentUrl(dataOwner, dataRepo, "rayons.json");
 
   try {
-    const res = await fetch(url, { headers: githubHeaders(pat) });
+    const res = await fetch(url, { headers: githubHeaders(pat), cache: "no-store" });
     if (!res.ok) return DEFAULT_RAYONS;
     const json = await res.json();
     return decodeContent(json.content) as Rayon[];

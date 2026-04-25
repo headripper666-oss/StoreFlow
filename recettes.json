@@ -1,0 +1,7576 @@
+[
+  {
+    "id": "recipe-poulet-aux-poivrons-riz",
+    "name": "Poulet aux poivrons riz",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "poivron",
+        "quantity": 0.66,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-risotto-saucisse",
+    "name": "Risotto saucisse",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "riz risotto",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "saucisse fumée",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "échalotte",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "vin blanc",
+        "quantity": 2.0,
+        "unit": "cL",
+        "rayonId": "boissons"
+      },
+      {
+        "name": "comté",
+        "quantity": 20.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "bouillon de volaille",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-blanquette-de-poulet",
+    "name": "Blanquette de poulet",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "vin blanc",
+        "quantity": 4.0,
+        "unit": "cL",
+        "rayonId": "boissons"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "poireaux",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Champignon",
+        "quantity": 100.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-ravioli",
+    "name": "Ravioli",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Ravioli",
+        "quantity": 300.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Gruyère",
+        "quantity": 40.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-hot-dog",
+    "name": "Hot dog",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Gruyère",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pain hot dog",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Oignons frit",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Ketchup",
+        "quantity": 3.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Mayonnaise",
+        "quantity": 3.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Moutarde",
+        "quantity": 3.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "saucisse de strasbourg",
+        "quantity": 1.5,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-roti-de-porc-flageolet-riz",
+    "name": "Roti de porc Flageolet riz",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "poivron",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Roti de porc",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Flageolet",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Fond de veau",
+        "quantity": 5.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-one-pasta-au-poulet-tomates-cerise-et-basilic",
+    "name": "One pasta au poulet tomates cerise et basilic",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "ail",
+        "quantity": 1.0,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Parmesan",
+        "quantity": 25.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Tomates cerises",
+        "quantity": 125.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Feuilles de basilic",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Spaghetti",
+        "quantity": 62.5,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-huevos-rotos-jow",
+    "name": "Huevos rotos (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Chorizo",
+        "quantity": 20.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tomates-mozzarella",
+    "name": "Tomates mozzarella",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Tomates cerises",
+        "quantity": 175.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Mozzarella",
+        "quantity": 0.5,
+        "unit": "bille",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-saucisse",
+    "name": "Saucisse",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Saucisse",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-merguez",
+    "name": "Merguez",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Merguez",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-grillades",
+    "name": "Grillades",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Grillades",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-cotes-de-boeuf",
+    "name": "Côtes de boeuf",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Côte de boeuf",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-ribs",
+    "name": "Ribs",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Ribs",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pilons-de-poulet",
+    "name": "Pilons de poulet",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pilons de poulet",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-brochette-de-boeuf",
+    "name": "Brochette de boeuf",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Brochette de boeuf",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-brochette-de-poulet",
+    "name": "Brochette de poulet",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Brochette de poulet",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-brochette-d-agneau",
+    "name": "Brochette d'agneau",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Brochette d'agneau",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-cuisse-de-poulet",
+    "name": "Cuisse de poulet",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Cuisse de poulet",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-salade-de-pates",
+    "name": "Salade de Pâtes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Mayonnaise",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Thon",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Tomates cerises",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-vrai-pate-carbo",
+    "name": "Vrai pâte carbo",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Linguine",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Parmesan",
+        "quantity": 30.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pancetta",
+        "quantity": 2.5,
+        "unit": "u",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-frites",
+    "name": "Frites",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Frites",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      }
+    ]
+  },
+  {
+    "id": "recipe-poivre",
+    "name": "Poivre",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Poivre",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-ail-en-poudre",
+    "name": "Ail en poudre",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Ail en poudre",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-fond-de-veau",
+    "name": "Fond de veau",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Fond de veau",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-bouillon-cube",
+    "name": "Bouillon cube",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bouillon cube",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-oeuf",
+    "name": "Oeuf",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-ice-tea",
+    "name": "Ice tea",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Ice tea",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boissons"
+      }
+    ]
+  },
+  {
+    "id": "recipe-coca",
+    "name": "Coca",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Coca",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boissons"
+      }
+    ]
+  },
+  {
+    "id": "recipe-jus-d-orange",
+    "name": "Jus d'orange",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Jus d'orange",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boissons"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pisang",
+    "name": "Pisang",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pisang",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boissons"
+      }
+    ]
+  },
+  {
+    "id": "recipe-deo-marine",
+    "name": "Déo Marine",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Déo Marine",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "hygiene"
+      }
+    ]
+  },
+  {
+    "id": "recipe-deo-chouchou",
+    "name": "Déo chouchou",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Déo chouchou",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "hygiene"
+      }
+    ]
+  },
+  {
+    "id": "recipe-coton-tiges",
+    "name": "Coton tiges",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Coton tiges",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "hygiene"
+      }
+    ]
+  },
+  {
+    "id": "recipe-adoucissant",
+    "name": "Adoucissant",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Adoucissant",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-liquide-vaisselle",
+    "name": "Liquide vaisselle",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Liquide vaisselle",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tablette-lave-vaisselle",
+    "name": "Tablette lave vaisselle",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Tablette lave vaisselle",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-destop",
+    "name": "Destop",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Destop",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-film-alimentaire",
+    "name": "Film alimentaire",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Film alimentaire",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sac-congelation",
+    "name": "Sac congelation",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sac congelation",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-farine",
+    "name": "Farine",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Farine",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-lait-entier",
+    "name": "Lait entier",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Lait entier",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-lait-demi-ecreme",
+    "name": "Lait demi écrémé",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Lait demi écrémé",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sucre-vanille",
+    "name": "Sucre Vanille",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sucre Vanille",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-yaourt-nature",
+    "name": "Yaourt nature",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Yaourt nature",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pain-au-lait",
+    "name": "Pain au lait",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain au lait",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-speculoos-crunch",
+    "name": "Spéculoos crunch",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Spéculoos crunch",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-cafe",
+    "name": "Café",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Café",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boissons"
+      }
+    ]
+  },
+  {
+    "id": "recipe-confiture",
+    "name": "Confiture",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Confiture",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sucre-en-morceau",
+    "name": "Sucre en morceau",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sucre en morceau",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pom-potes",
+    "name": "Pom potes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pom potes",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-benco",
+    "name": "Benco",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Benco",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-beurre",
+    "name": "Beurre",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Beurre",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-beurre-mou",
+    "name": "Beurre mou",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Beurre mou",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-gruyere",
+    "name": "Gruyère",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Gruyère",
+        "quantity": 1.0,
+        "unit": "sachet",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-fromages-individuels",
+    "name": "Fromages individuels",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Fromages individuels",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tartine-raclette",
+    "name": "Tartine Raclette",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "creme fraiche",
+        "quantity": 20.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pain brushetta",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Fromage raclette",
+        "quantity": 4.0,
+        "unit": "tranches",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Lardons",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-fromage-a-tartiner",
+    "name": "Fromage à tartiner",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Fromage à tartiner",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-rillettes",
+    "name": "Rillettes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Rillettes",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-rillettes-de-poulet",
+    "name": "Rillettes de Poulet",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Rillettes de Poulet",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pain-de-mie-complet",
+    "name": "Pain de mie complet",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain de mie complet",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-fausse-pate-cardo",
+    "name": "Fausse pâte cardo",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Linguine",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 30.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Lardons",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pate-saucisse",
+    "name": "Pâte saucisse",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "saucisse de strasbourg",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pate-steack",
+    "name": "Pâte steack",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "steack haché",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pate-cordon-bleu",
+    "name": "Pâte Cordon bleu",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Cordon bleu",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "surgeles"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pate-jambon",
+    "name": "Pâte jambon",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Jambon",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pate-bolognaise",
+    "name": "Pâte bolognaise",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Sauce bolognaise",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Viande hachée",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pate-oeuf",
+    "name": "Pâte oeuf",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pates-poulet-chorizo",
+    "name": "Pâtes poulet chorizo",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 20.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Chorizo",
+        "quantity": 25.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-poulet-champignons-pates",
+    "name": "Poulet champignons pâtes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 20.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Champignon",
+        "quantity": 30.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tagliatelles-cremeuse-a-la-dinde-et-tomates-cerises-jow",
+    "name": "Tagliatelles crémeuse à la dinde et tomates cerises (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 120.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.5,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Fromage à tartiner",
+        "quantity": 30.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Tomates cerises",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Feuilles de basilic",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tagliatelles",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-one-pot-pasta-aux-legumes",
+    "name": "One pot pasta aux légumes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "poivron",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Coulis de tomates",
+        "quantity": 37.5,
+        "unit": "ml",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Huile d'olive",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pâtes coude",
+        "quantity": 75.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-one-pot-pasta-cremeuse-fa-on-carobonara",
+    "name": "One pot pasta crémeuse façon carobonara",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Huile d'olive",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 75.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Parmesan",
+        "quantity": 25.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Lardons",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Spaghetti",
+        "quantity": 62.5,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-one-pot-pasta-au-poulet-et-sauce-au-fromage",
+    "name": "One pot pasta au poulet et sauce au fromage",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Huile d'olive",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "crème fraiche liquide",
+        "quantity": 7.5,
+        "unit": "cl",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.5,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gruyère",
+        "quantity": 5.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Parmesan",
+        "quantity": 7.5,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Feuilles de basilic",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Spaghetti",
+        "quantity": 62.5,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-one-pot-pasta-courgette-jambon-cookeo",
+    "name": "One pot pasta courgette jambon cookeo",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "courgettes",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Jambon",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Huile d'olive",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Bouillon cube",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "conchiglie",
+        "quantity": 87.5,
+        "unit": "pâte",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-one-pot-pasta-fa-on-pizza",
+    "name": "One pot pasta façon pizza",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Jambon sec",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Coulis de tomate",
+        "quantity": 87.5,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Huile d'olive",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Mozzarella",
+        "quantity": 0.5,
+        "unit": "boule",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Champignon",
+        "quantity": 50.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "conchiglie",
+        "quantity": 62.5,
+        "unit": "pâte",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pasta-and-ragu-jow",
+    "name": "pasta and ragu (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Tomates pelées",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Chair à saucisse",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Parmesan",
+        "quantity": 20.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Feuilles de basilic",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-poisson-pane-riz-carotte-epinard",
+    "name": "Poisson pané riz carotte/ épinard",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "carottes",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Epinards",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Poisson Pané",
+        "quantity": 3.0,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      }
+    ]
+  },
+  {
+    "id": "recipe-plat-prepare-renaud",
+    "name": "Plat préparé Renaud",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Plat préparé Renaud",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "autre"
+      }
+    ]
+  },
+  {
+    "id": "recipe-riz-et-courgette-farcies",
+    "name": "Riz et courgette Farcies",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain de mie",
+        "quantity": 0.5,
+        "unit": "tr",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Persil",
+        "quantity": 0.1,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "courgettes",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Chair à saucisse",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Lait demi écrémé",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "échalotte",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-riz-et-tomates-farcies",
+    "name": "Riz et tomates farcies",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain de mie",
+        "quantity": 0.5,
+        "unit": "tr",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Persil",
+        "quantity": 0.1,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Chair à saucisse",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Lait demi écrémé",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "échalotte",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sushi",
+    "name": "Sushi",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sushi",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "autre"
+      }
+    ]
+  },
+  {
+    "id": "recipe-cote-de-porc-flageolet-pdt",
+    "name": "Côte de porc - flageolet - PDT",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Flageolet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Côte de Porc",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-frite-oeuf-salade",
+    "name": "Frite oeuf Salade",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Frites",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Salade",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sandwich",
+    "name": "Sandwich",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain de mie complet",
+        "quantity": 3.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Trucs à sandwichs",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-grilled-cheese-dinde-et-comte-jow",
+    "name": "Grilled cheese dinde et comté (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain de mie",
+        "quantity": 4.0,
+        "unit": "tr",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "comté",
+        "quantity": 40.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Fromage frais",
+        "quantity": 60.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Concombre",
+        "quantity": 0.25,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "dinde",
+        "quantity": 1.0,
+        "unit": "escalope",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "curry",
+        "quantity": 1.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-fruit",
+    "name": "Fruit",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Fruit",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-chili-con-carne",
+    "name": "Chili con carné",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Viande hachée",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 15.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Chair de tomates",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Origan",
+        "quantity": 1.0,
+        "unit": "pincée",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Tabasco",
+        "quantity": 0.5,
+        "unit": "cac",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oignon rouge",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Epices à chili",
+        "quantity": 1.0,
+        "unit": "cac",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Coriandre",
+        "quantity": 1.0,
+        "unit": "feuilles",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Haricots rouges",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-blanquette-de-veau",
+    "name": "Blanquette de veau",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Beurre",
+        "quantity": 10.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.5,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.33,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 0.66,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "poireaux",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Champignon",
+        "quantity": 50.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Veau",
+        "quantity": 166.66,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Bouquet garnie",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Citron jaune",
+        "quantity": 0.166,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Ciboulette",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pain-aux-cereales",
+    "name": "Pain aux céréales",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain aux céréales",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-melanges-de-noix",
+    "name": "Mélanges de noix",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Mélanges de noix",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-noix-de-pecans",
+    "name": "Noix de pécans",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Noix de pécans",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-blanquette-de-poulet-express-jow",
+    "name": "Blanquette de poulet express (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Fond de veau",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "crème fraiche liquide",
+        "quantity": 10.0,
+        "unit": "cl",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "carottes",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "poireaux",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Champignon",
+        "quantity": 50.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-boeuf-poivre-et-sel-jow",
+    "name": "Boeuf poivre et sel (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "poivron",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.5,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates cerises",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Coriandre",
+        "quantity": 2.0,
+        "unit": "feuilles",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Steak",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Sauce soja salée",
+        "quantity": 1.0,
+        "unit": "CAS",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Sucre en poudre",
+        "quantity": 0.5,
+        "unit": "CAS",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Gingembre",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-riz-fa-on-grand-mere-jow",
+    "name": "Riz façon grand mère (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "crème fraiche liquide",
+        "quantity": 5.0,
+        "unit": "cl",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Lardons",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Champignon",
+        "quantity": 80.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-riz-poulet-chorizo",
+    "name": "Riz poulet chorizo",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 30.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Chorizo",
+        "quantity": 30.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-rougail-saucisse",
+    "name": "Rougail saucisse",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Tomates pelées",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "saucisse fumée",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.5,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gingembre",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "curcuma",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-steack-bowl-tomate-avocat-et-riz-jow",
+    "name": "Steack bowl tomate avocat et riz (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Persil",
+        "quantity": 0.1,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Bavette",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Avocat",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Feta",
+        "quantity": 15.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Citron vert",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-one-pot-riz-aux-legumes-et-poulets-jow",
+    "name": "One pot riz aux légumes et poulets (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "bouillon de volaille",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "poireaux",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-one-pan-poulet-riz-a-la-tomate-jow",
+    "name": "One pan poulet & riz à la tomate (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Persil",
+        "quantity": 0.1,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.5,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "bouillon de volaille",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pilons de poulet",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "concentré de tomate",
+        "quantity": 0.5,
+        "unit": "CAS",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-poulet-au-beurre-citronee-haricot-vert-jow",
+    "name": "Poulet au beurre citronée haricot vert (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Farine",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Beurre",
+        "quantity": 40.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "bouillon de volaille",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Citron jaune",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Haricot vert",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-riz-et-poireaux-a-la-bechamel",
+    "name": "riz et poireaux à la béchamel",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Farine",
+        "quantity": 10.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Lait demi écrémé",
+        "quantity": 150.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "poireaux",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Muscade",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-filet-de-limande-riz-epinard-carotte",
+    "name": "Filet de limande - riz -épinard/ carotte",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 5.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "carottes",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Epinards",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Filet de limande",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-escalope-normande",
+    "name": "Escalope normande",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 5.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Champignon",
+        "quantity": 100.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "dinde",
+        "quantity": 1.0,
+        "unit": "escalope",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Ciboulette",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-cote-de-porc-riz-carotte",
+    "name": "Côte de porc - riz - carotte",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 5.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "carottes",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Côte de Porc",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-puree-jambon-ppc",
+    "name": "Purée - Jambon - PPC",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Jambon",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Purée",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Petit pois carotte",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-oeuf-mollet-et-pdt-a-l-italienne-jow",
+    "name": "Oeuf mollet et PDT à l'italienne (Jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates cerises",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Feuilles de basilic",
+        "quantity": 4.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Parmesan copeaux",
+        "quantity": 20.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-saucisse-puree",
+    "name": "Saucisse purée",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "saucisse de strasbourg",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Purée",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-poelee-gnocchi-tomate-mozza-picard",
+    "name": "Poêlée Gnocchi tomate mozza (Picard)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Poêlée Gnocchi tomate mozza",
+        "quantity": 0.25,
+        "unit": "Picard",
+        "rayonId": "surgeles"
+      }
+    ]
+  },
+  {
+    "id": "recipe-gnocchi-saucisse-salade",
+    "name": "Gnocchi saucisse Salade",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "saucisse de strasbourg",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Salade",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "gnocchi",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-chipolatas-puree",
+    "name": "Chipolatas - purée",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Saucisse",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Purée",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-steack-hache-puree-haricot-vert",
+    "name": "Steack haché - purée - Haricot vert",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "steack haché",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Haricot vert",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Purée",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-puree-et-saucisse-aux-oignons-jow",
+    "name": "Purée et saucisse aux oignons (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "saucisse fumée",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Purée",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Moutarde à l'ancienne",
+        "quantity": 1.0,
+        "unit": "CAC",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-poulet-a-la-moutarde-pommes-de-terre-jow",
+    "name": "Poulet à la moutarde & pommes de terre jow",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Moutarde",
+        "quantity": 0.1,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pomme de terre grenailles",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-semoule-dinde-et-ratatouille",
+    "name": "Semoule dinde et ratatouille",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "dinde",
+        "quantity": 1.0,
+        "unit": "escalope",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "semoule",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "ratatouille",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-couscous",
+    "name": "Couscous",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Merguez",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Cuisse de poulet",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Chair de tomates",
+        "quantity": 40.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "semoule",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Légume à couscous",
+        "quantity": 0.25,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pois chiche",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-poulet-semoule-et-carotte",
+    "name": "Poulet semoule et carotte",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Bouillon cube",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 5.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "carottes",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "semoule",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-saucisses-epices-aux-tomates-et-semoules-jow",
+    "name": "Saucisses épicés aux tomates et semoules (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bouillon cube",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "saucisse fumée",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Chair de tomates",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "semoule",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Ras el hanout",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Harissa",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-semoule-a-la-tomate-et-poulet-jow",
+    "name": "Semoule à la tomate et poulet (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Persil",
+        "quantity": 0.1,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "concentré de tomate",
+        "quantity": 0.5,
+        "unit": "CAS",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "semoule",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pois chiche",
+        "quantity": 60.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Ras el hanout",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-salade-de-lentilles",
+    "name": "Salade de lentilles",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Salade de lentille",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-salade-de-pomme-de-terre",
+    "name": "Salade de Pomme de terre",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Huile de tournesol",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Vinaigre d'alcool",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "échalotte",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 350.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Haricot vert",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-salade-de-riz",
+    "name": "Salade de riz",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "riz",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Vinaigre d'alcool",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Mayonnaise",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Thon",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Tomates cerises",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-salade-caesar",
+    "name": "Salade caesar",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Huile de tournesol",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Moutarde",
+        "quantity": 5.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Salade",
+        "quantity": 0.5,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Parmesan copeaux",
+        "quantity": 20.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pain de campagne",
+        "quantity": 1.0,
+        "unit": "tranche",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-salade-de-pates-fa-on-cesar",
+    "name": "Salade de pâtes façon césar",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Filet de poulet",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Huile de tournesol",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Moutarde",
+        "quantity": 5.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Salade",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Parmesan copeaux",
+        "quantity": 15.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pain de campagne",
+        "quantity": 1.0,
+        "unit": "tranche",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-steah-hache-pdt-carre-haricot-vert",
+    "name": "Steah haché - PDT carré - Haricot vert",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "steack haché",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Haricot vert",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pomme de terre carrée",
+        "quantity": 250.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-omelette-pdt-carre-haricot-vert",
+    "name": "Omelette - PDT carré - Haricot vert",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Haricot vert",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pomme de terre carrée",
+        "quantity": 250.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-steack-frite-haricot-vert-salade",
+    "name": "Steack - frite - haricot vert/salade",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Frites",
+        "quantity": 250.0,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      },
+      {
+        "name": "Salade",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Steak",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Haricot vert",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-poulet-roti-frites",
+    "name": "Poulet roti - Frites",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "poivron",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Frites",
+        "quantity": 250.0,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Poulet",
+        "quantity": 0.25,
+        "unit": "u",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-cote-a-l-os-frite-salade",
+    "name": "Côte à l'os frite salade",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Frites",
+        "quantity": 250.0,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      },
+      {
+        "name": "échalotte",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Côte de boeuf",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Salade",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-carpaccio-frite",
+    "name": "Carpaccio frite",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Frites",
+        "quantity": 250.0,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      },
+      {
+        "name": "Carpaccio",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-croque-monsieur-x2",
+    "name": "Croque monsieur (x2)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain de mie",
+        "quantity": 4.0,
+        "unit": "tr",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Jambon",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 15.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Gruyère",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-grilled-cheese-raclette-et-jambon-jow",
+    "name": "Grilled cheese raclette et jambon  (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain de mie",
+        "quantity": 4.0,
+        "unit": "tr",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Jambon",
+        "quantity": 2.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Fromage raclette",
+        "quantity": 3.0,
+        "unit": "tranches",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Fromage frais",
+        "quantity": 30.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Moutarde à l'ancienne",
+        "quantity": 2.0,
+        "unit": "CAC",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-grilled-cheese-peperonni-jow",
+    "name": "Grilled cheese peperonni (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain de mie",
+        "quantity": 4.0,
+        "unit": "tr",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "sauce tomate basilic",
+        "quantity": 4.0,
+        "unit": "CAS",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Mozzarella râpée",
+        "quantity": 60.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Chorizo en tranches",
+        "quantity": 8.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-grilled-cheese-tomate-et-bacon-jow",
+    "name": "Grilled cheese tomate et bacon (jow)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain de mie",
+        "quantity": 4.0,
+        "unit": "tr",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Mayonnaise",
+        "quantity": 5.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Lard en tranches",
+        "quantity": 4.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Cheddar râpé",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-oeuf-a-la-coque",
+    "name": "oeuf à la coque",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pain de campagne",
+        "quantity": 2.0,
+        "unit": "tranche",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-bagel-au-bacon-et-au-cheddar",
+    "name": "Bagel au bacon et au cheddar",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Salade",
+        "quantity": 0.15,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Cheddar râpé",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pain à bagels",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Bacon",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-bagel-a-l-italienne-au-pesto",
+    "name": "Bagel à l'italienne au pesto",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Tomates",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Mozzarella",
+        "quantity": 0.5,
+        "unit": "boule",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Salade",
+        "quantity": 0.1,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pain à bagels",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Pesto vert",
+        "quantity": 1.0,
+        "unit": "cas",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-bagels-legers-au-poulet-crudites-et-sauce-au-yaourt",
+    "name": "Bagels légers au poulet, crudités et sauce au yaourt",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Yaourt nature",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Moutarde",
+        "quantity": 5.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Concombre",
+        "quantity": 0.2,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Ciboulette",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Avocat",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pain à bagels",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Fromage blanc",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-bagel-au-jambon-et-fromage-frais",
+    "name": "Bagel au jambon et fromage frais",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Persil",
+        "quantity": 0.1,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Fromage frais",
+        "quantity": 20.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Ciboulette",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pain à bagels",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Jambon fumé",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-lasagnes-a-la-bolognaise",
+    "name": "Lasagnes à la bolognaise",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Coulis de tomate",
+        "quantity": 800.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Farine",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Beurre",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 3.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gruyère",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Muscade",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pâtes à lasagne",
+        "quantity": 1.0,
+        "unit": "paquet",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "thym",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "feuille de laurier",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Vin rouge",
+        "quantity": 20.0,
+        "unit": "cl",
+        "rayonId": "boissons"
+      }
+    ]
+  },
+  {
+    "id": "recipe-raclette",
+    "name": "Raclette",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pommes de terre",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Fromage raclette",
+        "quantity": 6.0,
+        "unit": "tranches",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Salade",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Oignon rouge",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Charcuterie",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-quiche-lorraine",
+    "name": "Quiche lorraine",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 3.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Lait demi écrémé",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Lardons",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Pâtes brisée",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-plat-prepare-marine",
+    "name": "Plat préparé Marine",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Plat préparé Marine",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      }
+    ]
+  },
+  {
+    "id": "recipe-riz-boulettes-petits-legumes-picard",
+    "name": "Riz boulettes petits légumes (Picard)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Riz boulette petits légumes",
+        "quantity": 0.25,
+        "unit": "Picard",
+        "rayonId": "surgeles"
+      }
+    ]
+  },
+  {
+    "id": "recipe-buritto",
+    "name": "Buritto",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bœuf haché",
+        "quantity": 125.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Oignon rouge",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Cheddar râpé",
+        "quantity": 40.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Kit Burrito",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-legumes-marine",
+    "name": "Légumes Marine",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Légumes Marine",
+        "quantity": 1.0,
+        "unit": "part",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-macedoine-boite",
+    "name": "Macédoine (boite)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "macédoine",
+        "quantity": 1.0,
+        "unit": "boite",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-menthe",
+    "name": "Menthe",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Menthe",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-citron-vert",
+    "name": "Citron vert",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Citron vert",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-produit-a-mouche",
+    "name": "Produit à mouche",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Produit à mouche",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-liquide-rin-age-lave-vaissellle",
+    "name": "Liquide rinçage lave vaissellle",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Liquide rinçage lave vaisselle",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-mayonnaise-blanche",
+    "name": "Mayonnaise blanche",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Mayonnaise blanche",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pastrami",
+    "name": "Pastrami",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pastrami",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-fondue-de-poireaux",
+    "name": "Fondue de Poireaux",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "creme fraiche",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "poireaux",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Lardons",
+        "quantity": 75.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Boulghour",
+        "quantity": 60.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pates-completes",
+    "name": "Pâtes complètes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pâtes complètes",
+        "quantity": 80.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-concombre",
+    "name": "Concombre",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Concombre",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pates-completes-viandes-et-concombre",
+    "name": "Pâtes complètes, viandes et concombre",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Concombre",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pastrami",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Pâtes complètes",
+        "quantity": 80.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-frite-de-courgettes",
+    "name": "Frite de courgettes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "courgettes",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Chapelure",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-crepe-jambon-fromage-salade",
+    "name": "Crêpe jambon fromage salade",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Salade",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Crêpe jambon fromage",
+        "quantity": 4.0,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      }
+    ]
+  },
+  {
+    "id": "recipe-brushetta",
+    "name": "Brushetta",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Jambon sec",
+        "quantity": 2.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Tomates cerises",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pain brushetta",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Pesto vert",
+        "quantity": 2.0,
+        "unit": "cas",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Tomate séchées",
+        "quantity": 20.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Mozzarella cuisine",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Herbes de provences",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-farine-complete",
+    "name": "Farine complète",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Farine complète",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-granola",
+    "name": "Granola",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Noix de pécans",
+        "quantity": 30.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Flocon d'avoine",
+        "quantity": 160.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Amandes concassées",
+        "quantity": 30.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pignon de pin",
+        "quantity": 30.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pépites de chocolat",
+        "quantity": 20.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Sirop d'agave",
+        "quantity": 0.4,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-gateau-au-skyr",
+    "name": "Gâteau au skyr",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 3.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Farine complète",
+        "quantity": 100.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "skyr",
+        "quantity": 250.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Levure chimique",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "sucre sans sucre",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Extrait de vanille",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Compote de pomme",
+        "quantity": 50.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-yaourt-vanille",
+    "name": "Yaourt vanille",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Lait entier",
+        "quantity": 1.5,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Sucre Vanille",
+        "quantity": 70.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Yaourt nature",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-vin-rouge",
+    "name": "Vin rouge",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Vin rouge",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boissons"
+      }
+    ]
+  },
+  {
+    "id": "recipe-echalotes",
+    "name": "Echalotes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "échalotte",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-verrine-pomme-speculoos",
+    "name": "Verrine pomme spéculoos",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sucre en poudre",
+        "quantity": 1.0,
+        "unit": "CAS",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Fromage blanc",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "pomme",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Spéculoos",
+        "quantity": 3.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-madeleine-de-thon-a-la-tomate",
+    "name": "Madeleine de thon à la tomate",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 4.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 60.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Gruyère",
+        "quantity": 90.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Thon",
+        "quantity": 180.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "concentré de tomate",
+        "quantity": 0.5,
+        "unit": "CAS",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Herbes de provences",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Levure chimique",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-boulghour-a-la-turque",
+    "name": "Boulghour à la turque",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "poivron",
+        "quantity": 0.25,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Boulghour",
+        "quantity": 37.5,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Paprika",
+        "quantity": 0.1,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tourtes-aux-poirreaux",
+    "name": "Tourtes aux poirreaux",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 30.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "poireaux",
+        "quantity": 500.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Lardons",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Pâte Feuilletée",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-fajitas",
+    "name": "Fajitas",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 125.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "poivron",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Oignon rouge",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Kit fajitas",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-travers-de-porc-haricot-et-carottes-p20-poele",
+    "name": "Travers de porc haricot et carottes (p20 poele)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "oignon",
+        "quantity": 0.75,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Chair de tomates",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "thym",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Travers de Porc",
+        "quantity": 175.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Haricots blancs",
+        "quantity": 200.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-galette-pdt-comte-salade-p132-casserole",
+    "name": "Galette pdt comté salade (p132 casserole)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "comté",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Graisse de canard",
+        "quantity": 5.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-curry-de-pois-chiche-et-legume-p140-cookeo",
+    "name": "Curry de pois-chiche et légume (p140 cookéo)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "courgettes",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Coulis de tomates",
+        "quantity": 100.0,
+        "unit": "ml",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Bouillon cube",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Coriandre",
+        "quantity": 1.0,
+        "unit": "feuilles",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pois chiche",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pate de curry rouge",
+        "quantity": 0.25,
+        "unit": "càs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Lait de coco",
+        "quantity": 5.0,
+        "unit": "cL",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-risotto-jambon-fume-et-petit-pois-p70-poele",
+    "name": "Risotto jambon fumé et petit pois (p70 poele)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bouillon cube",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "riz risotto",
+        "quantity": 75.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "échalotte",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "vin blanc",
+        "quantity": 5.0,
+        "unit": "cL",
+        "rayonId": "boissons"
+      },
+      {
+        "name": "Parmesan",
+        "quantity": 25.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Oignon rouge",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Jambon fumé",
+        "quantity": 2.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Petits pois",
+        "quantity": 37.5,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Crème fraiche liquide",
+        "quantity": 2.5,
+        "unit": "cl",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-salade-de-tomates-cerise",
+    "name": "Salade de tomates cerise",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Tomates cerises",
+        "quantity": 125.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Origan",
+        "quantity": 1.0,
+        "unit": "pincée",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-carottes-rapees-maison",
+    "name": "Carottes rapées maison",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "échalotte",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-riz-et-lentille-aux-epices-a-la-libanaise-p46-poele",
+    "name": "Riz et lentille aux épices à la libanaise (P46 poêle)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "riz",
+        "quantity": 37.5,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Ail en poudre",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Bouillon cube",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oignons frit",
+        "quantity": 7.5,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Coriandre",
+        "quantity": 1.0,
+        "unit": "feuilles",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "curcuma",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Lentilles blondes",
+        "quantity": 37.5,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Coriandre poudre",
+        "quantity": 0.25,
+        "unit": "cc",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "canelle poudre",
+        "quantity": 0.125,
+        "unit": "cc",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Yaourt brassé nature",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tortilla-p144-casserole",
+    "name": "Tortilla (p144 casserole)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Persil",
+        "quantity": 0.25,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "poivron",
+        "quantity": 0.25,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Huile d'olive",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 1.5,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gruyère",
+        "quantity": 12.5,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 0.25,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Chorizo",
+        "quantity": 25.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Ciboulette",
+        "quantity": 3.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Oignon nouveau",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-boeuf-saute-ux-oignons-et-nouilles-p14-poele",
+    "name": "Boeuf sauté ux oignons et nouilles (p14 poêle)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.75,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Sauce soja salée",
+        "quantity": 1.0,
+        "unit": "CAS",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oignon nouveau",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Emincé de boeuf",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Nouilles de riz",
+        "quantity": 75.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Maizena",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Huile d'arachide",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-boulghour-a-la-tomate-et-a-l-oignon-cookeo-p-146",
+    "name": "Boulghour à la tomate et à l'oignon (Cookeo p 146)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Persil",
+        "quantity": 0.25,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Bouillon cube",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Tomates cerises",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Chair de tomates",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oignon rouge",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "curcuma",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Boulghour",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Cumin",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-quiche-a-la-ratatouille-et-mozza",
+    "name": "Quiche à la ratatouille et mozza",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 3.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Lait demi écrémé",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Mozzarella",
+        "quantity": 1.0,
+        "unit": "boule",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ratatouille",
+        "quantity": 300.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Herbes de provences",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pâte Feuilletée",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-piege-a-fourmis",
+    "name": "piège à fourmis",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "piège à fourmis",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-cereales-tresor",
+    "name": "Céréales Trésor",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Céréales Trésor",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sauce-salsa",
+    "name": "Sauce salsa",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sauce salsa",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-bananes",
+    "name": "Bananes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bananes",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pain-diabemix",
+    "name": "Pain diabémix",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Diabémix",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "hygiene"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pain-fromage",
+    "name": "Pain fromage",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Comté sandwich",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Tome sandwich",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Fromage Marine",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-glaces",
+    "name": "Glaces",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Glaces",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      }
+    ]
+  },
+  {
+    "id": "recipe-legumes-chonchons",
+    "name": "Légumes chonchons",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sucrines chonchon",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Laitue romaine chonchon",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Fenouil chonchon",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Céléri chonchon",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Poivron chonchon",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "concombre chonchon",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-laitue",
+    "name": "Laitue",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Salade",
+        "quantity": 1.0,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-soupes-marine",
+    "name": "Soupes Marine",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Soupes Marine",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "croutons",
+        "quantity": 0.33,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pic-nic-elena",
+    "name": "Pic nic Elena",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pain de mie",
+        "quantity": 4.0,
+        "unit": "tr",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "Jambon",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Pastrami",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Fruit shoot",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boissons"
+      },
+      {
+        "name": "Gâteau pic nic Elena",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "petit paquet de chips Elena",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "autre"
+      }
+    ]
+  },
+  {
+    "id": "recipe-petit-pois-carotte",
+    "name": "Petit pois carotte",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Petit pois carotte",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-haricot-vert",
+    "name": "Haricot vert",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Haricot vert",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-carottes",
+    "name": "Carottes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "carottes",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-lasagnes",
+    "name": "Lasagnes",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sauce bolognaise",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gruyère",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Salade",
+        "quantity": 0.25,
+        "unit": "sachet",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Bœuf haché",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Pâtes à lasagne",
+        "quantity": 0.3,
+        "unit": "paquet",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Béchamel",
+        "quantity": 125.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-gateau-anniversaire",
+    "name": "Gâteau anniversaire",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Gâteau anniversaire",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sac-poubelle-haute",
+    "name": "Sac poubelle haute",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sac poubelle haute",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-soupe-a-l-oignon",
+    "name": "Soupe à l'oignon",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bouillon cube",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Farine",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "oignon",
+        "quantity": 6.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-flammeukuche",
+    "name": "Flammeukuche",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Flammeukuche",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      }
+    ]
+  },
+  {
+    "id": "recipe-petits-fours",
+    "name": "Petits fours",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Petits fours",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-aperi-cube",
+    "name": "Apéri cube",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Apéri cube",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-bougie",
+    "name": "Bougie",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bougie",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "autre"
+      }
+    ]
+  },
+  {
+    "id": "recipe-plateau-de-fromage",
+    "name": "Plateau de fromage",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Plateau de fromage",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-mayonnaise",
+    "name": "Mayonnaise",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Mayonnaise",
+        "quantity": 1.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-banzai-noodles",
+    "name": "Banzai noodles",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Banzai noodles",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-curry-de-poulet-p102-casserole",
+    "name": "Curry de poulet (p102 casserole)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "riz",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "bouillon de volaille",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "curry",
+        "quantity": 0.25,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Coriandre",
+        "quantity": 1.0,
+        "unit": "feuilles",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gingembre",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pois chiche",
+        "quantity": 25.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Lait de coco",
+        "quantity": 10.0,
+        "unit": "cL",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-riz-a-l-espagnol-p69-poele",
+    "name": "Riz à l'espagnol (p69 poele)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "poivron",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "riz",
+        "quantity": 125.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "ail",
+        "quantity": 1.0,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "bouillon de volaille",
+        "quantity": 8.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Chorizo",
+        "quantity": 0.125,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Chair de tomates",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "feuille de laurier",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Paprika",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tortilla-aux-poivrons-grilles-p97-poele",
+    "name": "Tortilla aux poivrons grillés (p97 poele)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "poivron",
+        "quantity": 0.75,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Ail en poudre",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "thym",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-chakalaka",
+    "name": "Chakalaka",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "poivron",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 0.66,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "curry",
+        "quantity": 0.5,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Gingembre",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pois chiche",
+        "quantity": 65.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Paprika",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Haricots blancs",
+        "quantity": 65.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-poulet-roti-pdt-au-beurre-petit-pois-carotte",
+    "name": "Poulet roti - pdt au beurre - petit pois/carotte",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "poivron",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 250.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Petit pois carotte",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Poulet",
+        "quantity": 0.25,
+        "unit": "u",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-salade-de-concombre",
+    "name": "salade de concombre",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Concombre",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-soupe-a-la-courgette",
+    "name": "Soupe à la courgette",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "courgettes",
+        "quantity": 2.0,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Vache qui rit",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-puree-saucisse-haricot-vert",
+    "name": "Purée - saucisse - haricot vert",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "saucisse de strasbourg",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Haricot vert",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Purée",
+        "quantity": 0.3,
+        "unit": "sachet",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tartiflette",
+    "name": "Tartiflette",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 250.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Lard en tranches",
+        "quantity": 60.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Reblochon",
+        "quantity": 0.25,
+        "unit": "u",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-cheetos",
+    "name": "Cheetos",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Cheetos",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-boeuf-carottes-pomme-de-terres",
+    "name": "Boeuf carottes pomme de terres",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bouillon cube",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 2.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Boeuf (plat mijoté)",
+        "quantity": 250.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-complement-alimentaire-marine",
+    "name": "Complément alimentaire Marine",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Complément alimentaire Marine",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "hygiene"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pizza",
+    "name": "Pizza",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pizza",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "surgeles"
+      }
+    ]
+  },
+  {
+    "id": "recipe-masque-cheveux",
+    "name": "Masque cheveux",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Masque cheveux",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "hygiene"
+      }
+    ]
+  },
+  {
+    "id": "recipe-dhal-de-lentille-corail-p100-casserole",
+    "name": "Dhal de lentille corail (p100 casserole)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "ail",
+        "quantity": 0.5,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gingembre",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "concentré de tomate",
+        "quantity": 0.5,
+        "unit": "CAS",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Lait de coco",
+        "quantity": 5.0,
+        "unit": "cL",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Lentille corail",
+        "quantity": 75.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "piment rouge",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "cardamone",
+        "quantity": 1.0,
+        "unit": "gousses",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "garam massala",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pot-au-feu-p108-casserole",
+    "name": "Pot au feu (p108 casserole)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "carottes",
+        "quantity": 1.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "poireaux",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gingembre",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "thym",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "feuille de laurier",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oignon nouveau",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Boeuf (plat mijoté)",
+        "quantity": 250.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Céléri",
+        "quantity": 0.25,
+        "unit": "branche",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Clou de girofles",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "grain de poivre",
+        "quantity": 2.5,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tartine-jambon-cru-et-mozarella-p83-cuisine-tradition",
+    "name": "Tartine jambon cru et mozarella (p83 cuisine tradition)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Mozzarella",
+        "quantity": 0.5,
+        "unit": "boule",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pain de campagne",
+        "quantity": 2.0,
+        "unit": "tranche",
+        "rayonId": "boulangerie"
+      },
+      {
+        "name": "jambon de parme",
+        "quantity": 2.0,
+        "unit": "tranches",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "câpres",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-soupe-tomates-vermicelles-p86-casserole",
+    "name": "Soupe tomates-vermicelles (p86 casserole)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bouillon cube",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "crème fraiche liquide",
+        "quantity": 10.0,
+        "unit": "cl",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "oignon",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 4.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Feuilles de basilic",
+        "quantity": 4.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "concentré de tomate",
+        "quantity": 2.0,
+        "unit": "CAS",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Vermicelles",
+        "quantity": 50.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pasta-jambon-mimolette-p32-casserole",
+    "name": "Pasta jambon mimolette (p32 casserole)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Jambon",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Bouillon cube",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Lait demi écrémé",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Ciboulette",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Vache qui rit",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pipé rigaté",
+        "quantity": 80.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Mimolette râpée",
+        "quantity": 20.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-riz-jambon-tomate-et-mozza-p56-casserole",
+    "name": "Riz jambon tomate et mozza (p56 casserole)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Huile d'olive",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates cerises",
+        "quantity": 63.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Mozzarella",
+        "quantity": 38.0,
+        "unit": "bille",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "thym",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "jambon de parme",
+        "quantity": 2.0,
+        "unit": "tranches",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Mélange de riz 3 couleurs",
+        "quantity": 100.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-fondue-savoyarde",
+    "name": "Fondue savoyarde",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Oeuf",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "vin blanc",
+        "quantity": 8.0,
+        "unit": "cL",
+        "rayonId": "boissons"
+      },
+      {
+        "name": "comté",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gruyère",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Moutarde",
+        "quantity": 0.25,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "beaufort",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-yaourt",
+    "name": "yaourt",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Yaourt",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tartes-a-la-tomate",
+    "name": "tartes à la tomate",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Jambon",
+        "quantity": 6.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Gruyère",
+        "quantity": 50.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 5.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Moutarde à l'ancienne",
+        "quantity": 5.0,
+        "unit": "CAC",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pâte Feuilletée",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-jus-de-citron-vert",
+    "name": "Jus de citron vert",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "jus de citron vert",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boissons"
+      }
+    ]
+  },
+  {
+    "id": "recipe-clementine-ou-mandarine",
+    "name": "Clémentine ou Mandarine",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Clémentine ou Mandarine",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-kiwi",
+    "name": "kiwi",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Kiwi",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-rougail-poulet",
+    "name": "Rougail poulet",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 125.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "riz",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "ail",
+        "quantity": 1.0,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Oignon rouge",
+        "quantity": 0.75,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "curcuma",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "thym",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-soupe-lentille-corail-et-tomate",
+    "name": "Soupe lentille corail et tomate",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Tomates pelées",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "oignon",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Coriandre",
+        "quantity": 3.0,
+        "unit": "feuilles",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Lait de coco",
+        "quantity": 40.0,
+        "unit": "cL",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Lentille corail",
+        "quantity": 200.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pate-aux-beaufort-et-jambon",
+    "name": "Pâte aux beaufort et jambon",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Jambon",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "crème fraiche liquide",
+        "quantity": 5.0,
+        "unit": "cl",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "beaufort",
+        "quantity": 40.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Fusilli",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-soupe-fenouil-tomate-et-feta-p134-x4",
+    "name": "Soupe Fenouil, tomate et Feta p134 (x4)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Bouillon cube",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Ciboulette",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Feta",
+        "quantity": 60.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 1.0,
+        "unit": "kg",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "concentré de tomate",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Fenouil",
+        "quantity": 300.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-cassoulet-chouchou-grosse-boite",
+    "name": "Cassoulet chouchou (grosse boite)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Cassoulet",
+        "quantity": 1.0,
+        "unit": "grosse boite",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-babybel",
+    "name": "Babybel",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Babybel",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pic-et-croc",
+    "name": "Pic et croc",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Pic et croc",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-escargolo",
+    "name": "Escargolo",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Escargolo",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "entretien"
+      }
+    ]
+  },
+  {
+    "id": "recipe-chiken-soupe-p79-casserole",
+    "name": "Chiken soupe p79 casserole",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "carottes",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "poireaux",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Coriandre",
+        "quantity": 5.0,
+        "unit": "feuilles",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gingembre",
+        "quantity": 60.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-curry-de-poulet-p102-casserole",
+    "name": "Curry de poulet p102 (casserole)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Bouillon cube",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Coriandre",
+        "quantity": 3.0,
+        "unit": "feuilles",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Gingembre",
+        "quantity": 5.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Lait de coco",
+        "quantity": 10.0,
+        "unit": "cL",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Piment vert",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Sauce nuoc-mam",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-steack-hache-haricot-vert",
+    "name": "steack haché haricot vert",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "steack haché",
+        "quantity": 1.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Haricot vert",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-ratatouille",
+    "name": "Ratatouille",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "courgettes",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "poivron",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.5,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Feuilles de basilic",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "thym",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pulpe de tomates",
+        "quantity": 150.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-pommes-de-terre-au-four-jambon-et-carotte-rapee-sauce-au-fromage-blanc",
+    "name": "Pommes de terre au four jambon et carotte râpée sauce au fromage blanc",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Jambon",
+        "quantity": 2.0,
+        "unit": "u",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Vinaigre d'alcool",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "creme fraiche",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.5,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "carottes",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 200.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Ciboulette",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Fromage blanc",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-riz-poulet-poivron-cacahuete-p58-casserole",
+    "name": "Riz poulet poivron cacahuète p58 (casserole)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "poivron",
+        "quantity": 0.75,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "riz",
+        "quantity": 80.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "ail",
+        "quantity": 0.25,
+        "unit": "gousse",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "oignon",
+        "quantity": 0.25,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Coriandre",
+        "quantity": 3.0,
+        "unit": "feuilles",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "cacahuètes",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Piment vert",
+        "quantity": 0.75,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Beurre de cacahuète",
+        "quantity": 40.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-veau-pdt-et-flageolet",
+    "name": "Veau PDT et flageolet",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Flageolet",
+        "quantity": 70.0,
+        "unit": "g",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Pommes de terre",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Veau",
+        "quantity": 150.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sandwich-marine",
+    "name": "Sandwich Marine",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sandwich Marine",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sandwich-renaud",
+    "name": "Sandwich Renaud",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sandwich Renaud",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sandwich-elena",
+    "name": "Sandwich Eléna",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sandwich Eléna",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-sandwich-eva",
+    "name": "Sandwich Eva",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Sandwich Eva",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tomates-cerises",
+    "name": "Tomates cerises",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Tomates cerises",
+        "quantity": 1.0,
+        "unit": "g",
+        "rayonId": "fruits-legumes"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tartine-dinde-et-concombre-salade-de-concombre",
+    "name": "Tartine dinde et concombre + Salade de concombre",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Fromage frais",
+        "quantity": 10.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Concombre",
+        "quantity": 0.5,
+        "unit": "u",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "dinde",
+        "quantity": 1.0,
+        "unit": "escalope",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Pain de campagne",
+        "quantity": 2.0,
+        "unit": "tranche",
+        "rayonId": "boulangerie"
+      }
+    ]
+  },
+  {
+    "id": "recipe-muffin-poulet-et-tomate-sechees-6-muffins",
+    "name": "Muffin poulet et tomate séchées (6 muffins)",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Huile d'olive",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Oeuf",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Lait demi écrémé",
+        "quantity": 0.5,
+        "unit": "pcs",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Gruyère",
+        "quantity": 40.0,
+        "unit": "g",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Feuilles de basilic",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Tomate séchées",
+        "quantity": 5.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Farine complète",
+        "quantity": 80.0,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      },
+      {
+        "name": "Levure chimique",
+        "quantity": 0.2,
+        "unit": "pcs",
+        "rayonId": "epicerie-seche"
+      }
+    ]
+  },
+  {
+    "id": "recipe-tartine-poulet-tomate-mozza",
+    "name": "Tartine Poulet tomate mozza",
+    "servings": 1,
+    "createdAt": "2026-01-01T00:00:00.000Z",
+    "ingredients": [
+      {
+        "name": "Filet de poulet",
+        "quantity": 100.0,
+        "unit": "g",
+        "rayonId": "boucherie"
+      },
+      {
+        "name": "Tomates",
+        "quantity": 1.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Feuilles de basilic",
+        "quantity": 2.0,
+        "unit": "pcs",
+        "rayonId": "fruits-legumes"
+      },
+      {
+        "name": "Mozzarella",
+        "quantity": 1.0,
+        "unit": "boule",
+        "rayonId": "cremerie"
+      },
+      {
+        "name": "Pain de campagne",
+        "quantity": 2.0,
+        "unit": "tranche",
+        "rayonId": "boulangerie"
+      }
+    ]
+  }
+]

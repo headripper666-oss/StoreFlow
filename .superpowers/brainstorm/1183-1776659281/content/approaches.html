@@ -1,0 +1,598 @@
+<h2>Simplifier le flux "Utiliser une recette"</h2>
+<p class="subtitle">
+  3 approches pour réduire les écrans intermédiaires. Clique sur celle qui
+  t'attire le plus.
+</p>
+
+<style>
+  .phone-frame {
+    width: 260px;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    font-family: sans-serif;
+    font-size: 13px;
+  }
+  .phone-bar {
+    background: #2e7d32;
+    color: white;
+    padding: 10px 14px;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .phone-body {
+    padding: 12px;
+  }
+  .recipe-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .recipe-card-content {
+    padding: 10px 12px 6px;
+  }
+  .recipe-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin: 0 0 2px;
+  }
+  .recipe-sub {
+    color: #888;
+    font-size: 11px;
+    margin: 0;
+  }
+  .recipe-chip {
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 2px 8px;
+    font-size: 10px;
+    margin-top: 4px;
+  }
+  .recipe-actions {
+    padding: 6px 12px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .btn-use {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .btn-outline {
+    background: white;
+    color: #2e7d32;
+    border: 1px solid #2e7d32;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .icon-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid #eee;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  /* Dialog / Sheet */
+  .dialog-overlay {
+    background: rgba(0, 0, 0, 0.15);
+    padding: 12px 8px;
+    border-radius: 0 0 18px 18px;
+  }
+  .dialog-box {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+  .dialog-title {
+    padding: 10px 14px 6px;
+    font-weight: 700;
+    font-size: 13px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .dialog-body {
+    padding: 10px 14px;
+  }
+  .dialog-actions {
+    padding: 8px 14px 10px;
+    display: flex;
+    gap: 6px;
+    justify-content: flex-end;
+    border-top: 1px solid #f0f0f0;
+  }
+  .small-btn-contained {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: 600;
+  }
+  .small-btn-outline {
+    background: white;
+    color: #2e7d32;
+    border: 1px solid #2e7d32;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+  .small-btn-ghost {
+    background: white;
+    color: #666;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px 10px;
+    font-size: 11px;
+  }
+
+  /* Counter */
+  .counter-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .counter-label {
+    color: #555;
+    font-size: 11px;
+    flex: 1;
+  }
+  .counter-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .counter-btn {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #e8f5e9;
+    border: none;
+    font-size: 16px;
+    line-height: 1;
+    font-weight: 700;
+    color: #2e7d32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .counter-val {
+    font-weight: 700;
+    font-size: 14px;
+    width: 20px;
+    text-align: center;
+  }
+
+  /* Ingredient rows */
+  .ing-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    border-bottom: 1px solid #f5f5f5;
+    font-size: 11px;
+  }
+  .ing-name {
+    font-weight: 500;
+  }
+  .ing-qty {
+    color: #888;
+  }
+  .ing-chip {
+    font-size: 9px;
+    color: #888;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 1px 5px;
+  }
+
+  /* Bottom sheet */
+  .bottom-sheet {
+    background: white;
+    border-radius: 16px 16px 0 0;
+    padding: 14px 14px 12px;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.15);
+  }
+  .sheet-handle {
+    width: 36px;
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    margin: 0 auto 10px;
+  }
+  .sheet-title {
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  /* Steps indicator */
+  .steps {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 8px;
+  }
+  .step-dot {
+    width: 20px;
+    height: 4px;
+    border-radius: 2px;
+  }
+  .step-done {
+    background: #2e7d32;
+  }
+  .step-active {
+    background: #81c784;
+  }
+  .step-pending {
+    background: #e0e0e0;
+  }
+
+  /* Tabs inline */
+  .inline-tabs {
+    display: flex;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 8px;
+  }
+  .itab {
+    flex: 1;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 11px;
+    font-weight: 600;
+    color: #aaa;
+  }
+  .itab.active {
+    color: #2e7d32;
+    border-bottom: 2px solid #2e7d32;
+    margin-bottom: -2px;
+  }
+
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  .card {
+    width: 290px;
+  }
+  .card-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    min-height: 420px;
+    justify-content: center;
+  }
+  .card-body {
+    padding: 12px 14px 14px;
+  }
+  .card-body h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+  }
+  .card-body p {
+    margin: 0;
+    font-size: 13px;
+    color: #666;
+    line-height: 1.5;
+  }
+  .badge {
+    display: inline-block;
+    border-radius: 6px;
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .badge-green {
+    background: #e8f5e9;
+    color: #2e7d32;
+  }
+  .badge-blue {
+    background: #e3f2fd;
+    color: #1565c0;
+  }
+  .badge-purple {
+    background: #f3e5f5;
+    color: #6a1b9a;
+  }
+
+  .arrow {
+    color: #2e7d32;
+    font-size: 18px;
+    margin: 6px 0;
+    text-align: center;
+  }
+  .step-box {
+    background: #f9f9f9;
+    border: 1px solid #e8e8e8;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin: 3px 0;
+    font-size: 11px;
+    color: #333;
+    text-align: center;
+  }
+  .step-box.eliminated {
+    background: #ffebee;
+    border-color: #ffcdd2;
+    color: #c62828;
+    text-decoration: line-through;
+    opacity: 0.7;
+  }
+  .step-box.merged {
+    background: #e8f5e9;
+    border-color: #c8e6c9;
+    color: #2e7d32;
+  }
+</style>
+
+<div class="cards">
+  <!-- Option A -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="badge badge-green">Recommandé</span>
+      <div class="phone-frame">
+        <div class="phone-bar">Utiliser — Bœuf bourguignon</div>
+        <div class="phone-body">
+          <div class="counter-row">
+            <span class="counter-label">Nombre de personnes</span>
+            <div class="counter-ctrl">
+              <div class="counter-btn">−</div>
+              <div class="counter-val">6</div>
+              <div class="counter-btn">+</div>
+            </div>
+          </div>
+          <div style="font-size: 10px; color: #888; margin-bottom: 8px">
+            Base : 4 personnes · ajustement ×1.5
+          </div>
+          <div class="ing-row">
+            <span class="ing-name">Bœuf</span
+            ><span class="ing-qty"
+              >1.5 kg <span class="ing-chip">🥩 Boucherie</span></span
+            >
+          </div>
+          <div class="ing-row">
+            <span class="ing-name">Carottes</span
+            ><span class="ing-qty"
+              >5 pcs <span class="ing-chip">🥕 Légumes</span></span
+            >
+          </div>
+          <div class="ing-row">
+            <span class="ing-name">Vin rouge</span
+            ><span class="ing-qty"
+              >1 btl <span class="ing-chip">🍷 Vins</span></span
+            >
+          </div>
+          <div class="ing-row">
+            <span class="ing-name">Champignons</span
+            ><span class="ing-qty"
+              >375 g <span class="ing-chip">🍄 Légumes</span></span
+            >
+          </div>
+          <div
+            style="
+              margin-top: 10px;
+              display: flex;
+              gap: 6px;
+              flex-direction: column;
+            "
+          >
+            <button class="small-btn-contained" style="width: 100%">
+              Ajouter à la liste
+            </button>
+            <button
+              class="small-btn-outline"
+              style="width: 100%; font-size: 10px"
+            >
+              Ajouter et sauvegarder les quantités
+            </button>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 12px">
+        <div class="step-box merged">1 seul écran (dialogue unifié)</div>
+        <div
+          style="
+            font-size: 10px;
+            color: #2e7d32;
+            text-align: center;
+            margin-top: 4px;
+          "
+        >
+          Les quantités s'ajustent en temps réel
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A · Dialogue unifié</h3>
+      <p>
+        Tout dans un seul écran : le sélecteur de personnes en haut, la liste
+        d'ingrédients s'ajuste en direct en dessous. Supprime complètement
+        l'écran intermédiaire.
+      </p>
+    </div>
+  </div>
+
+  <!-- Option B -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="badge badge-blue">Mobile-natif</span>
+      <div class="phone-frame">
+        <div class="phone-bar">Mes recettes</div>
+        <div class="phone-body" style="padding-bottom: 0">
+          <div class="recipe-card" style="border: 2px solid #2e7d32">
+            <div class="recipe-card-content">
+              <p class="recipe-title">🍽 Bœuf bourguignon</p>
+              <p class="recipe-sub">4 personnes · 8 ingrédients</p>
+            </div>
+            <div
+              style="
+                background: #f1f8e9;
+                padding: 10px 12px;
+                border-top: 1px solid #e0e0e0;
+              "
+            >
+              <div class="counter-row" style="margin-bottom: 6px">
+                <span class="counter-label" style="font-weight: 600"
+                  >Personnes</span
+                >
+                <div class="counter-ctrl">
+                  <div class="counter-btn">−</div>
+                  <div class="counter-val">4</div>
+                  <div class="counter-btn">+</div>
+                </div>
+              </div>
+              <div class="ing-row">
+                <span class="ing-name">Bœuf</span
+                ><span class="ing-qty">1 kg</span>
+              </div>
+              <div class="ing-row">
+                <span class="ing-name">Carottes</span
+                ><span class="ing-qty">3 pcs</span>
+              </div>
+              <div
+                class="ing-row"
+                style="border: none; color: #aaa; font-style: italic"
+              >
+                <span>+ 6 autres ingrédients</span>
+              </div>
+              <div style="margin-top: 8px; display: flex; gap: 5px">
+                <button class="small-btn-contained" style="flex: 1">
+                  Ajouter
+                </button>
+                <button class="small-btn-ghost">✕</button>
+              </div>
+            </div>
+          </div>
+          <div class="recipe-card" style="opacity: 0.5">
+            <div class="recipe-card-content">
+              <p class="recipe-title">🍽 Tarte aux pommes</p>
+              <p class="recipe-sub">6 personnes · 6 ingrédients</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 12px">
+        <div class="step-box merged">Expansion inline dans la liste</div>
+        <div
+          style="
+            font-size: 10px;
+            color: #1565c0;
+            text-align: center;
+            margin-top: 4px;
+          "
+        >
+          Pas de popup, pas de dialogue
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B · Expansion inline</h3>
+      <p>
+        Cliquer "Utiliser" déplie la recette directement dans la liste, sans
+        quitter la page. Le sélecteur et les ingrédients apparaissent sous la
+        carte.
+      </p>
+    </div>
+  </div>
+
+  <!-- Option C -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <span class="badge badge-purple">Variante A</span>
+      <div class="phone-frame">
+        <div class="phone-bar">Mes recettes</div>
+        <div
+          class="phone-body"
+          style="padding: 8px 12px 0; position: relative; min-height: 280px"
+        >
+          <div class="recipe-card" style="opacity: 0.4">
+            <div class="recipe-card-content">
+              <p class="recipe-title">🍽 Bœuf bourguignon</p>
+              <p class="recipe-sub">4 personnes · 8 ingrédients</p>
+            </div>
+            <div class="recipe-actions">
+              <button class="btn-use">Utiliser</button>
+            </div>
+          </div>
+          <div style="height: 8px"></div>
+          <div class="bottom-sheet">
+            <div class="sheet-handle"></div>
+            <div class="sheet-title">Bœuf bourguignon</div>
+            <div class="counter-row">
+              <span class="counter-label">Personnes</span>
+              <div class="counter-ctrl">
+                <div class="counter-btn">−</div>
+                <div class="counter-val">4</div>
+                <div class="counter-btn">+</div>
+              </div>
+            </div>
+            <div class="ing-row">
+              <span class="ing-name">Bœuf</span
+              ><span class="ing-qty">1 kg</span>
+            </div>
+            <div class="ing-row">
+              <span class="ing-name">Carottes</span
+              ><span class="ing-qty">3 pcs</span>
+            </div>
+            <div
+              class="ing-row"
+              style="
+                border: none;
+                color: #aaa;
+                font-style: italic;
+                margin-bottom: 8px;
+              "
+            >
+              <span>+ 6 autres…</span>
+            </div>
+            <button class="small-btn-contained" style="width: 100%">
+              Ajouter à la liste
+            </button>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top: 12px">
+        <div class="step-box merged">Bottom sheet (glisse depuis le bas)</div>
+        <div
+          style="
+            font-size: 10px;
+            color: #6a1b9a;
+            text-align: center;
+            margin-top: 4px;
+          "
+        >
+          Idiome mobile naturel
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C · Bottom sheet</h3>
+      <p>
+        Un panneau glisse depuis le bas de l'écran — idiome mobile naturel. Même
+        contenu que A (dialogue unifié) mais dans un format plus adapté au
+        tactile.
+      </p>
+    </div>
+  </div>
+</div>

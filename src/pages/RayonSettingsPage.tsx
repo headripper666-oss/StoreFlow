@@ -2,6 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import {
   Box,
@@ -21,7 +22,7 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ConfirmDialog } from "../components/shared/ConfirmDialog";
 import type { EssentialItem, ListItem as ListItemType, Rayon } from "../types";
 
@@ -70,7 +71,17 @@ export function RayonSettingsPage({
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [newLabel, setNewLabel] = useState("");
   const [newIcon, setNewIcon] = useState("📦");
+  const [editTarget, setEditTarget] = useState<Rayon | null>(null);
+  const [editLabel, setEditLabel] = useState("");
+  const [editIcon, setEditIcon] = useState("📦");
   const [deleteTarget, setDeleteTarget] = useState<Rayon | null>(null);
+
+  // Sync localRayons when the parent updates rayons (e.g. after async fetch)
+  useEffect(() => {
+    if (!isDirty) {
+      setLocalRayons([...rayons].sort((a, b) => a.order - b.order));
+    }
+  }, [rayons, isDirty]);
 
   const assignedIds = new Set([
     ...essentials.map((e) => e.rayonId),
@@ -110,6 +121,22 @@ export function RayonSettingsPage({
     setAddDialogOpen(false);
     setNewLabel("");
     setNewIcon("📦");
+  };
+
+  const openEdit = (rayon: Rayon) => {
+    setEditTarget(rayon);
+    setEditLabel(rayon.label);
+    setEditIcon(rayon.icon ?? "📦");
+  };
+
+  const handleEditSave = () => {
+    if (!editTarget || !editLabel.trim()) return;
+    const updated = localRayons.map((r) =>
+      r.id === editTarget.id ? { ...r, label: editLabel.trim(), icon: editIcon } : r,
+    );
+    setLocalRayons(updated);
+    setIsDirty(true);
+    setEditTarget(null);
   };
 
   const handleDelete = (rayon: Rayon) => {
@@ -166,6 +193,14 @@ export function RayonSettingsPage({
                       aria-label="Descendre"
                     >
                       <ArrowDownwardIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => openEdit(rayon)}
+                      disabled={isSaving}
+                      aria-label="Renommer"
+                    >
+                      <EditIcon fontSize="small" />
                     </IconButton>
                     <Tooltip
                       title={
@@ -309,6 +344,68 @@ export function RayonSettingsPage({
             disabled={!newLabel.trim()}
           >
             Ajouter
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Edit dialog */}
+      <Dialog
+        open={!!editTarget}
+        onClose={() => setEditTarget(null)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>Renommer le rayon</DialogTitle>
+        <DialogContent
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            pt: "12px !important",
+          }}
+        >
+          <TextField
+            label="Nom du rayon"
+            value={editLabel}
+            onChange={(e) => setEditLabel(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && editLabel.trim()) handleEditSave();
+            }}
+            fullWidth
+            autoFocus
+          />
+          <Box>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+              Icône
+            </Typography>
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              {EMOJI_SUGGESTIONS.map((emoji) => (
+                <Box
+                  key={emoji}
+                  onClick={() => setEditIcon(emoji)}
+                  sx={{
+                    fontSize: "1.5rem",
+                    cursor: "pointer",
+                    p: 0.5,
+                    borderRadius: 1,
+                    border: "2px solid",
+                    borderColor:
+                      editIcon === emoji ? "primary.main" : "transparent",
+                    "&:hover": { backgroundColor: "action.hover" },
+                  }}
+                >
+                  {emoji}
+                </Box>
+              ))}
+            </Box>
+          </Box>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2, gap: 1 }}>
+          <Button onClick={() => setEditTarget(null)} variant="outlined" color="inherit">
+            Annuler
+          </Button>
+          <Button onClick={handleEditSave} variant="contained" disabled={!editLabel.trim()}>
+            Renommer
           </Button>
         </DialogActions>
       </Dialog>

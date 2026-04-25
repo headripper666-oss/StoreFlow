@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python *)",
+      "Bash(trash D:/Claude/StoreFlow/fix_rayons2.py)",
+      "Bash(node *)"
+    ]
+  }
+}

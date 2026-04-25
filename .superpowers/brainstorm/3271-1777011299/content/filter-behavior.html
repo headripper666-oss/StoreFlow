@@ -1,0 +1,62 @@
+<h2>Quand tu filtres par plusieurs tags, quel comportement tu veux ?</h2>
+<p class="subtitle">Ex : tu cliques sur "pâtes" ET "porc" dans la barre de filtres</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="or" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #f8f9fa; border-radius: 8px;">
+      <div style="display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;">
+        <span style="background: #1976d2; color: white; padding: 4px 12px; border-radius: 16px; font-size: 12px;">🍝 pâtes ✓</span>
+        <span style="background: #1976d2; color: white; padding: 4px 12px; border-radius: 16px; font-size: 12px;">🐷 porc ✓</span>
+        <span style="background: #eee; color: #666; padding: 4px 12px; border-radius: 16px; font-size: 12px;">🐔 poulet</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 8px 12px; font-size: 13px;">
+          🍝 Pâtes carbonara <span style="color: #888; font-size: 11px;">(pâtes, porc)</span>
+        </div>
+        <div style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 8px 12px; font-size: 13px;">
+          🍝 Spaghetti bolognaise <span style="color: #888; font-size: 11px;">(pâtes, bœuf)</span>
+        </div>
+        <div style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 8px 12px; font-size: 13px;">
+          🥓 Rôti de porc <span style="color: #888; font-size: 11px;">(porc)</span>
+        </div>
+        <div style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 8px 12px; font-size: 13px;">
+          🥓 Côtelettes grillées <span style="color: #888; font-size: 11px;">(porc)</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — OU (union)</h3>
+      <p>Affiche toutes les recettes qui ont <strong>au moins un</strong> des tags sélectionnés. Résultat plus large — "pâtes" OU "porc".</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="and" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #f8f9fa; border-radius: 8px;">
+      <div style="display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;">
+        <span style="background: #1976d2; color: white; padding: 4px 12px; border-radius: 16px; font-size: 12px;">🍝 pâtes ✓</span>
+        <span style="background: #1976d2; color: white; padding: 4px 12px; border-radius: 16px; font-size: 12px;">🐷 porc ✓</span>
+        <span style="background: #eee; color: #666; padding: 4px 12px; border-radius: 16px; font-size: 12px;">🐔 poulet</span>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="background: white; border: 1px solid #ddd; border-radius: 6px; padding: 8px 12px; font-size: 13px;">
+          🍝 Pâtes carbonara <span style="color: #888; font-size: 11px;">(pâtes, porc)</span>
+        </div>
+        <div style="background: #f5f5f5; border: 1px solid #eee; border-radius: 6px; padding: 8px 12px; font-size: 13px; color: #bbb; text-decoration: line-through;">
+          🍝 Spaghetti bolognaise
+        </div>
+        <div style="background: #f5f5f5; border: 1px solid #eee; border-radius: 6px; padding: 8px 12px; font-size: 13px; color: #bbb; text-decoration: line-through;">
+          🥓 Rôti de porc
+        </div>
+        <div style="background: #f5f5f5; border: 1px solid #eee; border-radius: 6px; padding: 4px 8px; font-size: 11px; color: #aaa; font-style: italic; border: none;">
+          + 2 recettes masquées
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — ET (intersection)</h3>
+      <p>Affiche seulement les recettes qui ont <strong>tous</strong> les tags sélectionnés. Résultat précis — "pâtes" ET "porc" en même temps.</p>
+    </div>
+  </div>
+
+</div>

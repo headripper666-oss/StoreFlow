@@ -1,0 +1,254 @@
+<h2>Quel style de layout desktop ?</h2>
+<p class="subtitle">
+  Sur mobile, l'interface actuelle reste identique. Sur PC (≥ 1024px), quelle
+  disposition préfères-tu ?
+</p>
+
+<style>
+  .mockup-mini {
+    background: #f5f7f5;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    font-size: 11px;
+    margin-top: 10px;
+    height: 160px;
+  }
+  .mm-topbar {
+    background: #2e7d32;
+    color: white;
+    padding: 5px 10px;
+    font-weight: 700;
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mm-sidebar {
+    background: white;
+    width: 130px;
+    padding: 8px 6px;
+    border-right: 1px solid #eee;
+    height: 100%;
+    flex-shrink: 0;
+  }
+  .mm-nav-item {
+    padding: 5px 8px;
+    border-radius: 6px;
+    margin-bottom: 3px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mm-nav-item.active {
+    background: #e8f5e9;
+    color: #2e7d32;
+    font-weight: 700;
+  }
+  .mm-body {
+    display: flex;
+    height: calc(100% - 28px);
+  }
+  .mm-main {
+    flex: 1;
+    padding: 8px 10px;
+    overflow: hidden;
+  }
+  .mm-row {
+    background: white;
+    border-radius: 6px;
+    padding: 5px 8px;
+    margin-bottom: 4px;
+    border: 1px solid #eee;
+    font-size: 10px;
+    color: #333;
+  }
+  .mm-section-label {
+    font-size: 9px;
+    color: #888;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+    margin-top: 6px;
+  }
+  .mm-split-left {
+    width: 45%;
+    border-right: 1px solid #eee;
+    padding: 8px;
+  }
+  .mm-split-right {
+    flex: 1;
+    padding: 8px;
+    background: #fafafa;
+  }
+  .mm-topnav {
+    background: white;
+    border-bottom: 1px solid #eee;
+    padding: 0 12px;
+    display: flex;
+    gap: 12px;
+  }
+  .mm-tab {
+    padding: 6px 8px;
+    font-size: 10px;
+    color: #888;
+    border-bottom: 2px solid transparent;
+  }
+  .mm-tab.active {
+    color: #2e7d32;
+    border-bottom-color: #2e7d32;
+    font-weight: 700;
+  }
+  .mm-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    padding: 8px;
+  }
+  .mm-card {
+    background: white;
+    border-radius: 6px;
+    padding: 6px 8px;
+    border: 1px solid #eee;
+    font-size: 10px;
+  }
+  .mm-card-title {
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 3px;
+  }
+</style>
+
+<div class="cards">
+  <!-- Option A : Sidebar + main -->
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup-mini">
+        <div class="mm-topbar">
+          🛒 StoreFlow
+          <span style="margin-left: auto; font-size: 9px; opacity: 0.7"
+            >● Sync • Déconnexion</span
+          >
+        </div>
+        <div class="mm-body">
+          <div class="mm-sidebar">
+            <div class="mm-nav-item active">✅ Indispensables</div>
+            <div class="mm-nav-item">🛍 Ma Liste</div>
+            <div class="mm-nav-item">➕ Ajouter</div>
+            <div class="mm-nav-item">📖 Recettes</div>
+            <div class="mm-nav-item">🔧 Rayons</div>
+          </div>
+          <div class="mm-main">
+            <div class="mm-section-label">Fruits & Légumes</div>
+            <div class="mm-row">🥕 Carottes</div>
+            <div class="mm-row">🥦 Brocoli</div>
+            <div class="mm-section-label">Produits laitiers</div>
+            <div class="mm-row">🥛 Lait</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Sidebar fixe + contenu principal</h3>
+      <p>
+        Navigation verticale à gauche, contenu pleine hauteur à droite. Pattern
+        classique des apps de productivité (Notion, Gmail). Lisible, navigation
+        toujours visible.
+      </p>
+    </div>
+  </div>
+
+  <!-- Option B : Split pane -->
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup-mini">
+        <div class="mm-topbar">
+          🛒 StoreFlow
+          <span style="margin-left: auto; font-size: 9px; opacity: 0.7"
+            >● Sync • Déconnexion</span
+          >
+        </div>
+        <div class="mm-body">
+          <div class="mm-sidebar">
+            <div class="mm-nav-item active">✅ Indispensables</div>
+            <div class="mm-nav-item">🛍 Ma Liste</div>
+            <div class="mm-nav-item">➕ Ajouter</div>
+            <div class="mm-nav-item">📖 Recettes</div>
+            <div class="mm-nav-item">🔧 Rayons</div>
+          </div>
+          <div class="mm-split-left">
+            <div class="mm-section-label" style="margin-top: 0">
+              Indispensables
+            </div>
+            <div class="mm-row">🥕 Carottes</div>
+            <div class="mm-row">🥛 Lait</div>
+            <div class="mm-row">🍞 Pain</div>
+          </div>
+          <div class="mm-split-right">
+            <div class="mm-section-label" style="margin-top: 0">Ma Liste</div>
+            <div class="mm-row" style="background: #fff8e1">🥩 Bœuf haché</div>
+            <div class="mm-row" style="background: #fff8e1">🍝 Pâtes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Sidebar + vue double panneau</h3>
+      <p>
+        Sidebar de nav + écran partagé selon la page (ex: Indispensables | Ma
+        liste côte à côte). Exploite vraiment la largeur. Idéal pour comparer ou
+        utiliser 2 sections ensemble.
+      </p>
+    </div>
+  </div>
+
+  <!-- Option C : Top nav + grille -->
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup-mini">
+        <div class="mm-topbar">
+          🛒 StoreFlow
+          <span style="margin-left: auto; font-size: 9px; opacity: 0.7"
+            >● Sync • Déconnexion</span
+          >
+        </div>
+        <div class="mm-topnav">
+          <div class="mm-tab active">Indispensables</div>
+          <div class="mm-tab">Ma Liste</div>
+          <div class="mm-tab">Ajouter</div>
+          <div class="mm-tab">Recettes</div>
+          <div class="mm-tab">Rayons</div>
+        </div>
+        <div class="mm-grid">
+          <div class="mm-card">
+            <div class="mm-card-title">Fruits & Légumes</div>
+            <div>🥕 Carottes</div>
+            <div>🥦 Brocoli</div>
+          </div>
+          <div class="mm-card">
+            <div class="mm-card-title">Produits laitiers</div>
+            <div>🥛 Lait</div>
+            <div>🧀 Fromage</div>
+          </div>
+          <div class="mm-card">
+            <div class="mm-card-title">Boucherie</div>
+            <div>🥩 Poulet</div>
+          </div>
+          <div class="mm-card">
+            <div class="mm-card-title">Épicerie</div>
+            <div>🍝 Pâtes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Top navigation + grille de cartes</h3>
+      <p>
+        Navigation horizontale en haut, contenu affiché en grille
+        multi-colonnes. Plus "dashboard". Simple à implémenter mais exploite
+        moins bien l'espace vertical disponible.
+      </p>
+    </div>
+  </div>
+</div>

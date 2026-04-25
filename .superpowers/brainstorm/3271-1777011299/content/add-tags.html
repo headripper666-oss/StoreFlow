@@ -1,0 +1,63 @@
+<h2>Comment ajouter des tags à une recette ?</h2>
+<p class="subtitle">Choisissez le style d'interface qui vous semble le plus naturel</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #f8f9fa; border-radius: 8px;">
+      <div style="font-weight: 600; margin-bottom: 12px; font-size: 14px; color: #555;">Pâtes à la carbonara</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;">
+        <span style="background: #e3f2fd; color: #1565c0; padding: 4px 10px; border-radius: 16px; font-size: 12px; display: flex; align-items: center; gap: 4px;">🍝 pâtes <span style="cursor:pointer; font-weight: bold;">×</span></span>
+        <span style="background: #e3f2fd; color: #1565c0; padding: 4px 10px; border-radius: 16px; font-size: 12px; display: flex; align-items: center; gap: 4px;">🐷 porc <span style="cursor:pointer; font-weight: bold;">×</span></span>
+        <span style="background: #f3e5f5; color: #6a1b9a; padding: 4px 10px; border-radius: 16px; font-size: 12px; cursor: pointer;">+ Ajouter un tag</span>
+      </div>
+      <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 8px; font-size: 12px; color: #888;">
+        💡 Suggestions : porc, fromage, rapide, soir...
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Chips + autocomplétion</h3>
+      <p>Les tags s'affichent comme des étiquettes. Un clic sur "+ Ajouter" ouvre un champ avec des suggestions basées sur vos tags existants. On peut aussi taper un nouveau tag.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #f8f9fa; border-radius: 8px;">
+      <div style="font-weight: 600; margin-bottom: 12px; font-size: 14px; color: #555;">Pâtes à la carbonara</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px;">
+        <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 4px; font-size: 12px; border: 1px solid #a5d6a7; cursor: pointer;">✓ pâtes</span>
+        <span style="background: #e8f5e9; color: #2e7d32; padding: 4px 10px; border-radius: 4px; font-size: 12px; border: 1px solid #a5d6a7; cursor: pointer;">✓ porc</span>
+        <span style="background: white; color: #888; padding: 4px 10px; border-radius: 4px; font-size: 12px; border: 1px solid #ddd; cursor: pointer;">poulet</span>
+        <span style="background: white; color: #888; padding: 4px 10px; border-radius: 4px; font-size: 12px; border: 1px solid #ddd; cursor: pointer;">bœuf</span>
+        <span style="background: white; color: #888; padding: 4px 10px; border-radius: 4px; font-size: 12px; border: 1px solid #ddd; cursor: pointer;">riz</span>
+        <span style="background: white; color: #888; padding: 4px 10px; border-radius: 4px; font-size: 12px; border: 1px solid #ddd; cursor: pointer;">végétarien</span>
+        <span style="background: white; color: #888; padding: 4px 10px; border-radius: 4px; font-size: 12px; border: 1px solid #ddd; cursor: pointer;">+ nouveau...</span>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Palette de tags</h3>
+      <p>Tous les tags existants sont visibles d'un coup. On clique pour activer/désactiver. Un bouton "+" permet d'en créer un nouveau. Rapide quand on a peu de tags.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding: 16px; background: #f8f9fa; border-radius: 8px;">
+      <div style="font-weight: 600; margin-bottom: 12px; font-size: 14px; color: #555;">Pâtes à la carbonara</div>
+      <div style="background: white; border: 1px solid #bbb; border-radius: 8px; padding: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-height: 40px;">
+        <span style="background: #1976d2; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px;">pâtes ×</span>
+        <span style="background: #1976d2; color: white; padding: 3px 8px; border-radius: 12px; font-size: 12px;">porc ×</span>
+        <span style="color: #888; font-size: 12px; cursor: text;">Taper un tag...</span>
+      </div>
+      <div style="margin-top: 8px; background: white; border: 1px solid #ddd; border-radius: 8px; padding: 6px; font-size: 12px;">
+        <div style="padding: 4px 8px; cursor: pointer; border-radius: 4px; background: #f0f0f0;">📝 pâtes</div>
+        <div style="padding: 4px 8px; cursor: pointer; color: #555;">🐷 porc</div>
+        <div style="padding: 4px 8px; cursor: pointer; color: #555;">🍗 poulet</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Champ de saisie type Gmail</h3>
+      <p>Un seul champ de texte dans lequel on tape. Une liste déroulante affiche les tags existants au fil de la frappe. Entrée pour confirmer. Familier pour les habitués des applis modernes.</p>
+    </div>
+  </div>
+
+</div>

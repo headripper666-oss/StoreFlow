@@ -1,0 +1,62 @@
+<h2>Interface — aperçu des changements</h2>
+<p class="subtitle">Deux zones modifiées : la fiche recette et la barre de filtres</p>
+
+<div class="section">
+  <h3>1. Tags sur une recette (édition)</h3>
+  <p class="subtitle">Le champ apparaît dans la fiche recette (import, édition, détail). Style C validé.</p>
+
+  <div class="mockup">
+    <div class="mockup-header">Pâtes à la carbonara — fiche recette</div>
+    <div class="mockup-body" style="padding: 16px; display: flex; flex-direction: column; gap: 12px;">
+      <div>
+        <div style="font-size: 11px; font-weight: 600; color: #888; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">Tags</div>
+        <div style="background: white; border: 1px solid #bbb; border-radius: 8px; padding: 8px 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-height: 42px;">
+          <span style="background: #1976d2; color: white; padding: 3px 8px; border-radius: 12px; font-size: 13px; display: flex; align-items: center; gap: 4px;">pâtes <span style="cursor:pointer; opacity:0.8;">×</span></span>
+          <span style="background: #1976d2; color: white; padding: 3px 8px; border-radius: 12px; font-size: 13px; display: flex; align-items: center; gap: 4px;">porc <span style="cursor:pointer; opacity:0.8;">×</span></span>
+          <span style="color: #aaa; font-size: 13px; cursor: text; padding: 3px 4px;">Ajouter un tag...</span>
+        </div>
+        <div style="background: white; border: 1px solid #ddd; border-radius: 8px; margin-top: 2px; padding: 4px 0; font-size: 13px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+          <div style="padding: 8px 12px; cursor: pointer; background: #f5f5f5; display: flex; align-items: center; gap: 8px;">
+            <span style="background: #e3f2fd; color: #1565c0; padding: 2px 8px; border-radius: 10px; font-size: 12px;">fromage</span>
+            <span style="color: #888; font-size: 11px;">existant</span>
+          </div>
+          <div style="padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+            <span style="background: #e3f2fd; color: #1565c0; padding: 2px 8px; border-radius: 10px; font-size: 12px;">rapide</span>
+            <span style="color: #888; font-size: 11px;">existant</span>
+          </div>
+          <div style="padding: 8px 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; border-top: 1px solid #f0f0f0; color: #1976d2;">
+            <span>+ Créer le tag "car..."</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>2. Barre de filtres (multi-sélection)</h3>
+  <p class="subtitle">Plusieurs tags actifs en même temps → logique OU validée</p>
+
+  <div class="mockup">
+    <div class="mockup-header">Page Recettes — barre de filtres</div>
+    <div class="mockup-body" style="padding: 12px 16px;">
+      <div style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+        <span style="background: #eee; color: #555; padding: 5px 12px; border-radius: 16px; font-size: 13px; cursor: pointer;">Tous</span>
+        <span style="background: #1976d2; color: white; padding: 5px 12px; border-radius: 16px; font-size: 13px; cursor: pointer;">🍝 pâtes ✓</span>
+        <span style="background: #1976d2; color: white; padding: 5px 12px; border-radius: 16px; font-size: 13px; cursor: pointer;">🐷 porc ✓</span>
+        <span style="background: #eee; color: #555; padding: 5px 12px; border-radius: 16px; font-size: 13px; cursor: pointer;">🐔 poulet</span>
+        <span style="background: #eee; color: #555; padding: 5px 12px; border-radius: 16px; font-size: 13px; cursor: pointer;">🥩 bœuf</span>
+        <span style="background: #eee; color: #555; padding: 5px 12px; border-radius: 16px; font-size: 13px; cursor: pointer;">🍚 riz</span>
+        <span style="background: #eee; color: #555; padding: 5px 12px; border-radius: 16px; font-size: 13px; cursor: pointer;">🥦 végétarien</span>
+        <span style="background: #eee; color: #555; padding: 5px 12px; border-radius: 16px; font-size: 13px; cursor: pointer;">… 3 autres</span>
+      </div>
+      <div style="margin-top: 6px; font-size: 11px; color: #888;">
+        Filtre actif : pâtes OU porc — 7 recettes affichées
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 12px; background: #fff8e1; border-left: 3px solid #f9a825; padding: 10px 14px; border-radius: 0 6px 6px 0; font-size: 13px;">
+    <strong>Note :</strong> Les tags qui n'existent sur aucune recette n'apparaissent pas dans cette barre. La barre s'auto-peuple dynamiquement à partir des tags présents dans tes recettes. "Tous" reste toujours le premier bouton, et clicker dessus efface les filtres actifs.
+  </div>
+</div>

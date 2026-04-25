@@ -1,0 +1,478 @@
+<h2>Design proposé — Dialogue unifié avec cases à cocher</h2>
+<p class="subtitle">
+  Tout en un seul écran. Clique sur des ingrédients pour voir l'état "décoché".
+</p>
+
+<style>
+  .center {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-top: 8px;
+  }
+
+  .ph {
+    width: 280px;
+    border: 2px solid #ccc;
+    border-radius: 20px;
+    overflow: hidden;
+    font-family: sans-serif;
+    font-size: 13px;
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  }
+  .ph-bar {
+    background: #2e7d32;
+    color: white;
+    padding: 12px 16px;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .ph-close {
+    opacity: 0.7;
+    font-size: 18px;
+  }
+  .ph-body {
+    padding: 14px 14px 10px;
+  }
+
+  /* Counter */
+  .ctr-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f1f8e9;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 10px;
+  }
+  .ctr-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+  }
+  .ctr-hint {
+    font-size: 10px;
+    color: #888;
+    margin-top: 1px;
+  }
+  .ctr-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .ctr-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: white;
+    border: 1.5px solid #2e7d32;
+    color: #2e7d32;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    line-height: 1;
+  }
+  .ctr-val {
+    font-weight: 800;
+    font-size: 18px;
+    width: 24px;
+    text-align: center;
+    color: #2e7d32;
+  }
+
+  /* Ingredient list */
+  .ing-list {
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .ing-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background 0.1s;
+  }
+  .ing-row:last-child {
+    border-bottom: none;
+  }
+  .ing-row:hover {
+    background: #fafafa;
+  }
+  .ing-row.unchecked {
+    opacity: 0.4;
+    background: #fafafa;
+  }
+  .ing-row.unchecked .ing-name {
+    text-decoration: line-through;
+  }
+
+  .checkbox {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid #2e7d32;
+    background: #2e7d32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .checkbox.empty {
+    background: white;
+    border-color: #ccc;
+  }
+
+  .ing-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .ing-name {
+    font-weight: 500;
+    font-size: 12px;
+  }
+  .ing-meta {
+    font-size: 10px;
+    color: #999;
+  }
+  .ing-edit {
+    color: #ccc;
+    font-size: 14px;
+    padding: 2px 4px;
+    flex-shrink: 0;
+  }
+
+  .count-badge {
+    font-size: 10px;
+    color: #888;
+    text-align: right;
+    margin-bottom: 6px;
+    padding: 0 2px;
+  }
+
+  /* Actions */
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 0 2px;
+  }
+  .btn-main {
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .btn-main .btn-count {
+    font-size: 11px;
+    opacity: 0.8;
+    font-weight: 400;
+  }
+  .btn-sec {
+    background: white;
+    color: #2e7d32;
+    border: 1.5px solid #2e7d32;
+    border-radius: 10px;
+    padding: 9px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    width: 100%;
+    text-align: left;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+  .btn-sec .btn-count {
+    font-size: 11px;
+    opacity: 0.7;
+    font-weight: 400;
+  }
+
+  /* Annotation panel */
+  .annot {
+    width: 220px;
+  }
+  .ann-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    align-items: flex-start;
+  }
+  .ann-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #2e7d32;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .ann-text {
+    font-size: 12px;
+    color: #444;
+    line-height: 1.5;
+  }
+  .ann-text strong {
+    color: #222;
+  }
+
+  .flow-old,
+  .flow-new {
+    background: #f9f9f9;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+  }
+  .flow-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #aaa;
+    margin-bottom: 6px;
+  }
+  .fstep {
+    border-radius: 5px;
+    padding: 4px 8px;
+    font-size: 10px;
+    font-weight: 500;
+    margin: 2px 0;
+    text-align: center;
+  }
+  .fstep.ok {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+  }
+  .fstep.gone {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+    text-decoration: line-through;
+  }
+  .farrow {
+    text-align: center;
+    font-size: 9px;
+    color: #bbb;
+  }
+</style>
+
+<div class="center">
+  <!-- Phone mockup -->
+  <div>
+    <div class="ph" id="phone">
+      <div class="ph-bar">
+        Bœuf bourguignon
+        <span class="ph-close">✕</span>
+      </div>
+      <div class="ph-body">
+        <!-- Counter -->
+        <div class="ctr-box">
+          <div>
+            <div class="ctr-label">Personnes</div>
+            <div class="ctr-hint">Base : 4 — quantités ×1.5</div>
+          </div>
+          <div class="ctr-ctrl">
+            <div class="ctr-btn">−</div>
+            <div class="ctr-val">6</div>
+            <div class="ctr-btn">+</div>
+          </div>
+        </div>
+
+        <!-- Count -->
+        <div class="count-badge" id="count-badge">
+          5 / 6 ingrédients sélectionnés
+        </div>
+
+        <!-- Ingredient list -->
+        <div class="ing-list">
+          <div class="ing-row" id="i0" onclick="toggle('i0')">
+            <div class="checkbox">✓</div>
+            <div class="ing-info">
+              <div class="ing-name">Bœuf</div>
+              <div class="ing-meta">1.5 kg · 🥩 Boucherie</div>
+            </div>
+            <span class="ing-edit">✏</span>
+          </div>
+          <div class="ing-row" id="i1" onclick="toggle('i1')">
+            <div class="checkbox">✓</div>
+            <div class="ing-info">
+              <div class="ing-name">Carottes</div>
+              <div class="ing-meta">5 pcs · 🥕 Légumes</div>
+            </div>
+            <span class="ing-edit">✏</span>
+          </div>
+          <div class="ing-row unchecked" id="i2" onclick="toggle('i2')">
+            <div class="checkbox empty"></div>
+            <div class="ing-info">
+              <div class="ing-name">Champignons</div>
+              <div class="ing-meta">375 g · 🍄 Légumes</div>
+            </div>
+            <span class="ing-edit">✏</span>
+          </div>
+          <div class="ing-row" id="i3" onclick="toggle('i3')">
+            <div class="checkbox">✓</div>
+            <div class="ing-info">
+              <div class="ing-name">Vin rouge</div>
+              <div class="ing-meta">1 btl · 🍷 Boissons</div>
+            </div>
+            <span class="ing-edit">✏</span>
+          </div>
+          <div class="ing-row" id="i4" onclick="toggle('i4')">
+            <div class="checkbox">✓</div>
+            <div class="ing-info">
+              <div class="ing-name">Lardons</div>
+              <div class="ing-meta">225 g · 🥩 Boucherie</div>
+            </div>
+            <span class="ing-edit">✏</span>
+          </div>
+          <div class="ing-row" id="i5" onclick="toggle('i5')">
+            <div class="checkbox">✓</div>
+            <div class="ing-info">
+              <div class="ing-name">Bouillon de bœuf</div>
+              <div class="ing-meta">450 ml · 🥫 Épicerie</div>
+            </div>
+            <span class="ing-edit">✏</span>
+          </div>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button class="btn-main">
+            Ajouter à la liste
+            <span class="btn-count" id="btn-count">5 ingrédients</span>
+          </button>
+          <button class="btn-sec">
+            Ajouter + sauvegarder la recette
+            <span class="btn-count">enregistre les qtés</span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <p
+      style="font-size: 11px; color: #999; text-align: center; margin-top: 8px"
+    >
+      ← clique sur un ingrédient pour le décocher
+    </p>
+  </div>
+
+  <!-- Annotations -->
+  <div class="annot">
+    <div class="ann-item">
+      <div class="ann-dot">1</div>
+      <div class="ann-text">
+        <strong>Sélecteur de personnes</strong> en haut avec ratio affiché — les
+        quantités se recalculent en direct.
+      </div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-dot">2</div>
+      <div class="ann-text">
+        <strong>Coche/décoche</strong> chaque ingrédient déjà dans le frigo.
+        L'ingrédient barré et grisé, exclu de l'ajout.
+      </div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-dot">3</div>
+      <div class="ann-text">
+        L'icône <strong>✏</strong> ouvre l'édition inline pour ajuster
+        quantité/unité/rayon si besoin.
+      </div>
+    </div>
+    <div class="ann-item">
+      <div class="ann-dot">4</div>
+      <div class="ann-text">
+        <strong>Ajouter à la liste</strong> = ce voyage seulement.
+        <strong>Ajouter + sauvegarder</strong> = modifie aussi la recette de
+        base.
+      </div>
+    </div>
+
+    <div style="margin-top: 8px">
+      <div class="flow-old">
+        <div class="flow-label">Avant</div>
+        <div class="fstep ok">Clic "Utiliser"</div>
+        <div class="farrow">▼</div>
+        <div class="fstep ok">Dialogue — combien de personnes ?</div>
+        <div class="farrow">▼</div>
+        <div class="fstep ok">Clic "Voir les ingrédients"</div>
+        <div class="farrow">▼</div>
+        <div class="fstep ok">Dialogue — liste + confirmer</div>
+        <div class="farrow">▼</div>
+        <div class="fstep ok">Ajouté ✓</div>
+      </div>
+      <div class="flow-new">
+        <div class="flow-label" style="color: #2e7d32">Après</div>
+        <div class="fstep ok">Clic "Utiliser"</div>
+        <div class="farrow">▼</div>
+        <div class="fstep ok">Dialogue — personnes + ingrédients + cocher</div>
+        <div class="farrow">▼</div>
+        <div class="fstep ok">Ajouté ✓</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const checked = {
+    i0: true,
+    i1: true,
+    i2: false,
+    i3: true,
+    i4: true,
+    i5: true,
+  };
+  function countChecked() {
+    return Object.values(checked).filter(Boolean).length;
+  }
+  function toggle(id) {
+    checked[id] = !checked[id];
+    const row = document.getElementById(id);
+    const box = row.querySelector(".checkbox");
+    if (checked[id]) {
+      row.classList.remove("unchecked");
+      box.classList.remove("empty");
+      box.textContent = "✓";
+    } else {
+      row.classList.add("unchecked");
+      box.classList.add("empty");
+      box.textContent = "";
+    }
+    const n = countChecked();
+    document.getElementById("count-badge").textContent =
+      n + " / 6 ingrédients sélectionnés";
+    document.getElementById("btn-count").textContent =
+      n + " ingrédient" + (n > 1 ? "s" : "");
+  }
+</script>
