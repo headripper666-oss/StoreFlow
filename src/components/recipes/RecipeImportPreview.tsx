@@ -2,13 +2,20 @@ import AddIcon from "@mui/icons-material/Add";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import {
+  Alert,
   Autocomplete,
   Box,
   Button,
   Card,
   Chip,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   IconButton,
   MenuItem,
@@ -27,6 +34,7 @@ import type {
   RecipeIngredient,
 } from "../../types";
 import { detectTags, findInCatalog, normalize } from "../../utils/recipeUtils";
+import { parseRecipeStepsFromImage } from "../../services/mistral";
 
 type CatalogStatus =
   | { kind: "matched"; product: CatalogProduct }
@@ -45,6 +53,7 @@ interface RecipeImportPreviewProps {
   initialTags?: string[];
   title?: string;
   confirmLabel?: string;
+  showCatalogStatus?: boolean;
   onConfirm: (recipe: Recipe) => Promise<void>;
   onCancel: () => void;
   onTagsChange?: (tags: string[]) => void;
@@ -72,6 +81,7 @@ export function RecipeImportPreview({
   initialTags,
   title = "Recette détectée",
   confirmLabel = "Sauvegarder la recette",
+  showCatalogStatus = true,
   onConfirm,
   onCancel,
   onTagsChange,
@@ -81,6 +91,9 @@ export function RecipeImportPreview({
   const defaultRayonId = rayons[0]?.id ?? "autre";
   const [ingredients, setIngredients] = useState<IngWithStatus[]>(() =>
     parsed.ingredients.map((ing) => {
+      if (!showCatalogStatus) {
+        return { ...ing, rayonId: ing.rayonId ?? defaultRayonId, catalogStatus: { kind: "ignored" } as CatalogStatus };
+      }
       const status = resolveStatus(ing.name, catalog);
       const resolved =
         status.kind === "matched"
@@ -101,6 +114,11 @@ export function RecipeImportPreview({
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
   const [steps, setSteps] = useState<string[]>(parsed.steps ?? []);
   const [editingStepIdx, setEditingStepIdx] = useState<number | null>(null);
+  const [stepsImageOpen, setStepsImageOpen] = useState(false);
+  const [stepsImageParsing, setStepsImageParsing] = useState(false);
+  const [stepsImageError, setStepsImageError] = useState<string | null>(null);
+  const [replaceStepsConfirmOpen, setReplaceStepsConfirmOpen] = useState(false);
+  const [pendingSteps, setPendingSteps] = useState<string[]>([]);
   const [tags, setTags] = useState<string[]>(() => {
     if (initialTags !== undefined) return initialTags;
     return detectTags(
@@ -137,6 +155,32 @@ export function RecipeImportPreview({
   const removeIngredient = (idx: number) => {
     setIngredients((prev) => prev.filter((_, i) => i !== idx));
     setEditingIdx(null);
+  };
+
+  const handleStepsImageFile = async (file: File) => {
+    setStepsImageError(null);
+    setStepsImageParsing(true);
+    try {
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve((reader.result as string).split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      const { steps: newSteps } = await parseRecipeStepsFromImage(base64, file.type || "image/jpeg");
+      if (steps.length > 0) {
+        setPendingSteps(newSteps);
+        setStepsImageOpen(false);
+        setReplaceStepsConfirmOpen(true);
+      } else {
+        setSteps(newSteps);
+        setStepsImageOpen(false);
+      }
+    } catch (err) {
+      setStepsImageError(err instanceof Error ? err.message : "Erreur lors de l'analyse");
+    } finally {
+      setStepsImageParsing(false);
+    }
   };
 
   const addStep = () => {
@@ -461,9 +505,80 @@ export function RecipeImportPreview({
 
       {/* Steps */}
       <Box>
-        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-          Étapes de préparation{steps.length > 0 ? ` (${steps.length})` : ""}
-        </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+          <Typography variant="subtitle2" color="text.secondary">
+            Étapes de préparation{steps.length > 0 ? ` (${steps.length})` : ""}
+          </Typography>
+          <Button
+            size="small"
+            variant="outlined"
+            startIcon={<PhotoCameraIcon fontSize="small" />}
+            onClick={() => { setStepsImageOpen(true); setStepsImageError(null); }}
+            sx={{ ml: "auto" }}
+          >
+            Analyser une image
+          </Button>
+        </Box>
+
+        {/* Mini-dialog upload image pour steps */}
+        <Dialog open={stepsImageOpen} onClose={() => setStepsImageOpen(false)} maxWidth="xs" fullWidth>
+          <DialogTitle>Analyser les étapes par image</DialogTitle>
+          <DialogContent>
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+              Photo d'un livre ou screenshot d'une recette — l'IA extrait les étapes.
+            </Typography>
+            <Button
+              variant="outlined"
+              component="label"
+              startIcon={stepsImageParsing ? <CircularProgress size={16} /> : <PhotoCameraIcon />}
+              disabled={stepsImageParsing}
+              fullWidth
+            >
+              {stepsImageParsing ? "Analyse en cours…" : "Choisir une image"}
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleStepsImageFile(file);
+                  e.target.value = "";
+                }}
+              />
+            </Button>
+            {stepsImageError && (
+              <Alert severity="error" sx={{ mt: 1 }}>{stepsImageError}</Alert>
+            )}
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setStepsImageOpen(false)}>Annuler</Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Confirmation remplacement steps */}
+        <Dialog open={replaceStepsConfirmOpen} onClose={() => setReplaceStepsConfirmOpen(false)} maxWidth="xs">
+          <DialogTitle>Remplacer les étapes ?</DialogTitle>
+          <DialogContent>
+            <Typography variant="body2">
+              {steps.length} étape{steps.length > 1 ? "s" : ""} existante{steps.length > 1 ? "s" : ""} seront remplacées par les {pendingSteps.length} étapes extraites de l'image.
+            </Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setReplaceStepsConfirmOpen(false)}>Annuler</Button>
+            <Button
+              variant="contained"
+              color="warning"
+              onClick={() => {
+                setSteps(pendingSteps);
+                setPendingSteps([]);
+                setReplaceStepsConfirmOpen(false);
+              }}
+            >
+              Remplacer
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         <Card variant="outlined" sx={{ borderRadius: 2 }}>
           {steps.map((step, idx) => (
             <Box key={idx}>
