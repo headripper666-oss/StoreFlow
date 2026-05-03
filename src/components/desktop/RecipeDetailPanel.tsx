@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import type { CatalogProduct, Rayon, Recipe, RecipeIngredient } from "../../types";
-import { normalize, roundQuantity } from "../../utils/recipeUtils";
+import { findInCatalog, normalize, roundQuantity } from "../../utils/recipeUtils";
 import { RecipeImportPreview } from "../recipes/RecipeImportPreview";
 
 const EDIT_COLOR = "#E65100";
@@ -212,7 +212,7 @@ export function RecipeDetailPanel({
   };
 
   const handleCatalogSelect = (_: unknown, value: string | null) => {
-    const found = catalog.find((c) => c.name === value);
+    const found = findInCatalog(value ?? "", catalog);
     setNewName(value ?? "");
     if (found) {
       setNewUnit(found.defaultUnit);
