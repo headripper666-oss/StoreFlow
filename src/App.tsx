@@ -13,7 +13,7 @@ import { AddItemsPage } from "./pages/AddItemsPage";
 import { EssentialsPage } from "./pages/EssentialsPage";
 import { ListPage } from "./pages/ListPage";
 import { LoginPage } from "./pages/LoginPage";
-import { RayonSettingsPage } from "./pages/RayonSettingsPage";
+import { SettingsPage } from "./pages/SettingsPage";
 import { RecipesPage } from "./pages/RecipesPage";
 import type { Recipe, RecipeIngredient } from "./types";
 import { DEFAULT_TAGS } from "./utils/recipeUtils";
@@ -48,6 +48,7 @@ export default function App() {
     updateEssentialQuantity,
     updateEssentialRayon,
     reorderEssential,
+    reorderItem,
     updateRayons,
     addItems,
     addFromParsed,
@@ -57,18 +58,62 @@ export default function App() {
     removeItem,
     clearChecked,
     migrateData,
+    updateCatalogProductRayon,
+    updateCatalogProductPrice,
+    updateCatalogProductUnit,
+    updateListItemRayon,
+    updateListItemPrice,
+    updateListItemUnit,
+    updateEssentialPrice,
+    updateEssentialUnit,
   } = useShoppingList(config);
 
   const {
     recipes,
     isSaving: isSavingRecipes,
+    error: recipesError,
     saveRecipe,
     updateRecipe,
     deleteRecipe,
+    renameTag,
+    deleteTag,
+    updateRecipeIngredientRayon,
+    updateRecipeIngredientPrice,
+    updateRecipeIngredientUnit,
   } = useRecipes(config);
+
+  const combinedError = error || recipesError;
 
   const [desktopSelectedRecipe, setDesktopSelectedRecipe] =
     useState<Recipe | null>(null);
+  const [desktopEditingRecipe, setDesktopEditingRecipe] =
+    useState<Recipe | null>(null);
+
+  const handleDesktopEdit = useCallback((recipe: Recipe) => {
+    setDesktopEditingRecipe(recipe);
+    setDesktopSelectedRecipe(null);
+  }, []);
+
+  const handleDesktopEditConfirm = useCallback(
+    async (recipe: Recipe) => {
+      if (!desktopEditingRecipe) return;
+      try {
+        await updateRecipe({
+          ...recipe,
+          id: desktopEditingRecipe.id,
+          createdAt: desktopEditingRecipe.createdAt,
+        });
+        setDesktopEditingRecipe(null);
+      } catch {
+        // Error handled by hook
+      }
+    },
+    [desktopEditingRecipe, updateRecipe],
+  );
+
+  const handleDesktopEditCancel = useCallback(() => {
+    setDesktopEditingRecipe(null);
+  }, []);
 
   const allTags = useMemo((): string[] => {
     const tags = new Set<string>(DEFAULT_TAGS);
@@ -113,11 +158,16 @@ export default function App() {
             return (
               <RecipeDetailPanel
                 recipe={desktopSelectedRecipe}
+                editingRecipe={desktopEditingRecipe}
                 rayons={rayons}
+                catalog={catalog}
                 allTags={allTags}
                 isSaving={isSaving || isSavingRecipes}
                 onAddToList={handleAddIngredientsToList}
                 onUpdateRecipe={updateRecipe}
+                onConfirmEdit={handleDesktopEditConfirm}
+                onCancelEdit={handleDesktopEditCancel}
+                onUpdateEditingRecipe={setDesktopEditingRecipe}
               />
             );
           default:
@@ -148,6 +198,7 @@ export default function App() {
           <EssentialsPage
             essentials={data?.essentials ?? []}
             rayons={rayons}
+            catalog={catalog}
             onToggle={toggleEssential}
             onReset={resetEssentials}
             onAdd={addEssential}
@@ -168,6 +219,7 @@ export default function App() {
             items={data?.personalList ?? []}
             essentials={data?.essentials ?? []}
             rayons={rayons}
+            catalog={catalog}
             onToggle={toggleItem}
             onDelete={removeItem}
             onClearChecked={clearChecked}
@@ -175,6 +227,7 @@ export default function App() {
             onUpdateQuantity={updateItemQuantity}
             onUpdateEssentialQuantity={updateEssentialQuantity}
             onToggleAll={toggleAllItems}
+            onReorderItem={reorderItem}
             isLoading={isLoading}
             isSaving={isSaving}
           />
@@ -195,12 +248,30 @@ export default function App() {
       <Route
         path="/rayons"
         element={
-          <RayonSettingsPage
+          <SettingsPage
             rayons={rayons}
             essentials={data?.essentials ?? []}
             listItems={data?.personalList ?? []}
-            onSave={updateRayons}
             isSaving={isSaving}
+            onSaveRayons={updateRayons}
+            recipes={recipes}
+            isSavingRecipes={isSavingRecipes}
+            onRenameTag={renameTag}
+            onDeleteTag={deleteTag}
+            personalList={data?.personalList ?? []}
+            catalog={catalog}
+            onUpdateEssentialRayon={updateEssentialRayon}
+            onUpdateRecipeIngredientRayon={updateRecipeIngredientRayon}
+            onUpdateListItemRayon={updateListItemRayon}
+            onUpdateCatalogProductRayon={updateCatalogProductRayon}
+            onUpdateEssentialPrice={updateEssentialPrice}
+            onUpdateListItemPrice={updateListItemPrice}
+            onUpdateCatalogProductPrice={updateCatalogProductPrice}
+            onUpdateRecipeIngredientPrice={updateRecipeIngredientPrice}
+            onUpdateEssentialUnit={updateEssentialUnit}
+            onUpdateListItemUnit={updateListItemUnit}
+            onUpdateCatalogProductUnit={updateCatalogProductUnit}
+            onUpdateRecipeIngredientUnit={updateRecipeIngredientUnit}
           />
         }
       />
@@ -210,6 +281,8 @@ export default function App() {
           <RecipesPage
             recipes={recipes}
             rayons={rayons}
+            essentials={data?.essentials ?? []}
+            catalog={catalog}
             isSavingList={isSaving}
             isSavingRecipes={isSavingRecipes}
             onAddToList={handleAddIngredientsToList}
@@ -217,6 +290,7 @@ export default function App() {
             onUpdateRecipe={updateRecipe}
             onDeleteRecipe={deleteRecipe}
             onDesktopSelect={isDesktop ? setDesktopSelectedRecipe : undefined}
+            onDesktopEdit={isDesktop ? handleDesktopEdit : undefined}
           />
         }
       />
@@ -229,7 +303,7 @@ export default function App() {
       <AppShellDesktop
         syncStatus={syncStatus}
         lastSyncAt={lastSyncAt}
-        error={error}
+        error={combinedError}
         onLogout={logout}
         rightPane={desktopRightPane}
         splitStorageKey={splitStorageKey}
@@ -243,7 +317,7 @@ export default function App() {
     <AppShell
       syncStatus={syncStatus}
       lastSyncAt={lastSyncAt}
-      error={error}
+      error={combinedError}
       onLogout={logout}
     >
       {routes}

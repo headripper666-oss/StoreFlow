@@ -1,4 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
+import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import {
   Autocomplete,
@@ -33,6 +34,7 @@ interface RecipeImportPreviewProps {
   confirmLabel?: string;
   onConfirm: (recipe: Recipe) => Promise<void>;
   onCancel: () => void;
+  onTagsChange?: (tags: string[]) => void;
 }
 
 export function RecipeImportPreview({
@@ -45,6 +47,7 @@ export function RecipeImportPreview({
   confirmLabel = "Sauvegarder la recette",
   onConfirm,
   onCancel,
+  onTagsChange,
 }: RecipeImportPreviewProps) {
   const [name, setName] = useState(parsed.name);
   const [servings, setServings] = useState(parsed.servings);
@@ -56,6 +59,8 @@ export function RecipeImportPreview({
     })),
   );
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
+  const [steps, setSteps] = useState<string[]>(parsed.steps ?? []);
+  const [editingStepIdx, setEditingStepIdx] = useState<number | null>(null);
   const [tags, setTags] = useState<string[]>(() => {
     if (initialTags !== undefined) return initialTags;
     return detectTags(
@@ -93,6 +98,18 @@ export function RecipeImportPreview({
     setEditingIdx(null);
   };
 
+  const addStep = () => {
+    setSteps((prev) => [...prev, ""]);
+    setEditingStepIdx(steps.length);
+  };
+  const removeStep = (idx: number) => {
+    setSteps((prev) => prev.filter((_, i) => i !== idx));
+    setEditingStepIdx(null);
+  };
+  const updateStep = (idx: number, value: string) => {
+    setSteps((prev) => prev.map((s, i) => (i === idx ? value : s)));
+  };
+
   const handleConfirm = async () => {
     const recipe: Recipe = {
       id: `recipe-${uuidv4()}`,
@@ -101,6 +118,7 @@ export function RecipeImportPreview({
       ingredients,
       createdAt: new Date().toISOString(),
       tags,
+      steps: steps.filter((s) => s.trim()),
     };
     await onConfirm(recipe);
   };
@@ -149,7 +167,11 @@ export function RecipeImportPreview({
           freeSolo
           options={allTags}
           value={tags}
-          onChange={(_, newValue) => setTags(newValue as string[])}
+          onChange={(_, newValue) => {
+            const newTags = newValue as string[];
+            setTags(newTags);
+            onTagsChange?.(newTags);
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -290,6 +312,76 @@ export function RecipeImportPreview({
           </Button>
         </Box>
       </Card>
+
+      {/* Steps */}
+      <Box>
+        <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
+          Étapes de préparation{steps.length > 0 ? ` (${steps.length})` : ""}
+        </Typography>
+        <Card variant="outlined" sx={{ borderRadius: 2 }}>
+          {steps.map((step, idx) => (
+            <Box key={idx}>
+              <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.5, px: 2, py: 1.5 }}>
+                <Box
+                  sx={{
+                    width: 22, height: 22, borderRadius: "50%",
+                    bgcolor: "primary.main", color: "white",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: "0.7rem", fontWeight: 700, flexShrink: 0, mt: 0.25,
+                  }}
+                >
+                  {idx + 1}
+                </Box>
+                {editingStepIdx === idx ? (
+                  <Box sx={{ flex: 1, display: "flex", flexDirection: "column", gap: 1 }}>
+                    <TextField
+                      multiline
+                      minRows={2}
+                      size="small"
+                      value={step}
+                      onChange={(e) => updateStep(idx, e.target.value)}
+                      fullWidth
+                      autoFocus
+                      placeholder="Décrivez cette étape…"
+                    />
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                      <Button size="small" variant="outlined" onClick={() => setEditingStepIdx(null)}>
+                        OK
+                      </Button>
+                      <Button size="small" color="error" variant="text" onClick={() => removeStep(idx)}>
+                        Supprimer
+                      </Button>
+                    </Box>
+                  </Box>
+                ) : (
+                  <>
+                    <Typography
+                      variant="body2"
+                      sx={{ flex: 1, lineHeight: 1.6, cursor: "pointer", color: step ? "text.primary" : "text.disabled" }}
+                      onClick={() => setEditingStepIdx(idx)}
+                    >
+                      {step || <em>Cliquer pour saisir l'étape…</em>}
+                    </Typography>
+                    <IconButton size="small" onClick={() => setEditingStepIdx(idx)} sx={{ color: "text.disabled", flexShrink: 0 }}>
+                      <EditIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton size="small" onClick={() => removeStep(idx)} sx={{ color: "text.disabled", flexShrink: 0 }}>
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                  </>
+                )}
+              </Box>
+              {idx < steps.length - 1 && <Divider />}
+            </Box>
+          ))}
+          <Divider />
+          <Box sx={{ p: 1 }}>
+            <Button startIcon={<AddIcon />} size="small" onClick={addStep} sx={{ color: "text.secondary" }}>
+              Ajouter une étape
+            </Button>
+          </Box>
+        </Card>
+      </Box>
 
       <Button
         variant="contained"
