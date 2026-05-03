@@ -1,8 +1,13 @@
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import RemoveIcon from "@mui/icons-material/Remove";
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Alert,
+  Autocomplete,
   Box,
   Button,
   Chip,
@@ -18,15 +23,16 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import type { Rayon, Recipe, RecipeIngredient } from "../../types";
+import type { CatalogProduct, Rayon, Recipe, RecipeIngredient } from "../../types";
 import { roundQuantity } from "../../utils/recipeUtils";
 
-type IngredientRow = RecipeIngredient & { included: boolean };
+type IngredientRow = RecipeIngredient & { included: boolean; baseQty: number };
 
 interface RecipeUsageDialogProps {
   open: boolean;
   recipe: Recipe | null;
   rayons: Rayon[];
+  catalog: CatalogProduct[];
   isSaving: boolean;
   onAddToList: (ingredients: RecipeIngredient[]) => Promise<void>;
   onUpdateRecipe: (recipe: Recipe) => Promise<void>;
@@ -37,6 +43,7 @@ export function RecipeUsageDialog({
   open,
   recipe,
   rayons,
+  catalog,
   isSaving,
   onAddToList,
   onUpdateRecipe,
@@ -46,6 +53,12 @@ export function RecipeUsageDialog({
   const [ingredients, setIngredients] = useState<IngredientRow[]>([]);
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const [addOpen, setAddOpen] = useState(false);
+  const [newName, setNewName] = useState("");
+  const [newQty, setNewQty] = useState(1);
+  const [newUnit, setNewUnit] = useState("pcs");
+  const [newRayonId, setNewRayonId] = useState("");
 
   const defaultRayonId = rayons[0]?.id ?? "autre";
 
@@ -57,10 +70,40 @@ export function RecipeUsageDialog({
         ...ing,
         rayonId: ing.rayonId ?? defaultRayonId,
         included: true,
+        baseQty: ing.quantity,
       })),
     );
     setEditingIdx(null);
     setError(null);
+    setAddOpen(false);
+    setNewName("");
+    setNewQty(1);
+    setNewUnit("pcs");
+    setNewRayonId(defaultRayonId);
+  };
+
+  const handleCatalogSelect = (_: unknown, value: string | null) => {
+    const found = catalog.find((c) => c.name === value);
+    setNewName(value ?? "");
+    if (found) {
+      setNewUnit(found.defaultUnit);
+      setNewRayonId(found.rayonId);
+    }
+  };
+
+  const handleAddIngredient = () => {
+    if (!newName.trim() || newQty <= 0) return;
+    const scale = recipe ? guestCount / recipe.servings : 1;
+    const baseQty = roundQuantity(newQty / scale, newUnit);
+    setIngredients((prev) => [
+      ...prev,
+      { name: newName.trim(), quantity: newQty, unit: newUnit, rayonId: newRayonId || defaultRayonId, included: true, baseQty },
+    ]);
+    setAddOpen(false);
+    setNewName("");
+    setNewQty(1);
+    setNewUnit("pcs");
+    setNewRayonId(defaultRayonId);
   };
 
   const handleGuestCountChange = (newCount: number) => {
@@ -69,12 +112,9 @@ export function RecipeUsageDialog({
     setGuestCount(count);
     const scale = count / recipe.servings;
     setIngredients((prev) =>
-      prev.map((ing, i) => ({
+      prev.map((ing) => ({
         ...ing,
-        quantity: roundQuantity(
-          recipe.ingredients[i].quantity * scale,
-          ing.unit,
-        ),
+        quantity: roundQuantity(ing.baseQty * scale, ing.unit),
       })),
     );
   };
@@ -103,7 +143,7 @@ export function RecipeUsageDialog({
     setError(null);
     try {
       await onAddToList(
-        selectedIngredients.map(({ included: _included, ...ing }) => ing),
+        selectedIngredients.map(({ included: _included, baseQty: _baseQty, ...ing }) => ing),
       );
       onClose();
     } catch {
@@ -114,15 +154,14 @@ export function RecipeUsageDialog({
   const handleAddAndSave = async () => {
     if (!recipe) return;
     setError(null);
-    const scale = guestCount / recipe.servings;
-    const unscaled = ingredients.map(({ included: _included, ...ing }) => ({
+    const unscaled = ingredients.map(({ included: _included, baseQty, ...ing }) => ({
       ...ing,
-      quantity: roundQuantity(ing.quantity / scale, ing.unit),
+      quantity: roundQuantity(baseQty, ing.unit),
     }));
     try {
       await onUpdateRecipe({ ...recipe, ingredients: unscaled });
       await onAddToList(
-        selectedIngredients.map(({ included: _included, ...ing }) => ing),
+        selectedIngredients.map(({ included: _included, baseQty: _b, ...ing }) => ing),
       );
       onClose();
     } catch {
@@ -383,10 +422,127 @@ export function RecipeUsageDialog({
             ))}
           </Box>
 
+          {/* Add ingredient */}
+          {!addOpen ? (
+            <Button
+              size="small"
+              startIcon={<AddIcon />}
+              onClick={() => { setAddOpen(true); setNewRayonId(defaultRayonId); }}
+              sx={{ alignSelf: "flex-start", color: "text.secondary" }}
+            >
+              Ajouter un ingrédient
+            </Button>
+          ) : (
+            <Box sx={{ display: "flex", flexDirection: "column", gap: 1, p: 1.5, border: "1px solid", borderColor: "divider", borderRadius: 2 }}>
+              <Autocomplete
+                freeSolo
+                size="small"
+                options={catalog.map((c) => c.name)}
+                inputValue={newName}
+                onInputChange={(_, v) => setNewName(v)}
+                onChange={handleCatalogSelect}
+                renderInput={(params) => (
+                  <TextField {...params} label="Ingrédient" autoFocus />
+                )}
+              />
+              <Box sx={{ display: "flex", gap: 1 }}>
+                <TextField
+                  size="small"
+                  label="Qté"
+                  type="number"
+                  value={newQty}
+                  onChange={(e) => setNewQty(parseFloat(e.target.value) || 0)}
+                  sx={{ width: 80 }}
+                  slotProps={{ htmlInput: { min: 0, step: 0.1 } }}
+                />
+                <TextField
+                  size="small"
+                  label="Unité"
+                  value={newUnit}
+                  onChange={(e) => setNewUnit(e.target.value)}
+                  sx={{ width: 90 }}
+                />
+                <Select
+                  size="small"
+                  value={newRayonId || defaultRayonId}
+                  onChange={(e) => setNewRayonId(e.target.value)}
+                  sx={{ flex: 1 }}
+                >
+                  {rayons.map((r) => (
+                    <MenuItem key={r.id} value={r.id}>{r.icon} {r.label}</MenuItem>
+                  ))}
+                </Select>
+              </Box>
+              <Box sx={{ display: "flex", gap: 1 }}>
+                <Button size="small" variant="contained" onClick={handleAddIngredient} disabled={!newName.trim() || newQty <= 0}>
+                  Valider
+                </Button>
+                <Button size="small" onClick={() => setAddOpen(false)}>
+                  Annuler
+                </Button>
+              </Box>
+            </Box>
+          )}
+
+          {/* Steps */}
+          {(recipe.steps ?? []).length > 0 && (
+            <Accordion
+              disableGutters
+              elevation={0}
+              sx={{
+                border: "1px solid",
+                borderColor: "divider",
+                borderRadius: "8px !important",
+                "&:before": { display: "none" },
+              }}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 40, px: 2, "&.Mui-expanded": { minHeight: 40 } }}>
+                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                  Préparation · {recipe.steps!.length} étape{recipe.steps!.length > 1 ? "s" : ""}
+                </Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ px: 2, pt: 0, pb: 1.5 }}>
+                {recipe.steps!.map((step, idx) => (
+                  <Box key={idx} sx={{ display: "flex", gap: 1.5, mb: 1.5 }}>
+                    <Box
+                      sx={{
+                        width: 20, height: 20, borderRadius: "50%",
+                        bgcolor: "primary.main", color: "white",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontSize: "0.65rem", fontWeight: 700, flexShrink: 0, mt: 0.2,
+                      }}
+                    >
+                      {idx + 1}
+                    </Box>
+                    <Typography variant="body2" sx={{ flex: 1, lineHeight: 1.6 }}>
+                      {step}
+                    </Typography>
+                  </Box>
+                ))}
+              </AccordionDetails>
+            </Accordion>
+          )}
+
           {error && (
             <Alert severity="error" onClose={() => setError(null)}>
               {error}
             </Alert>
+          )}
+
+          {(recipe?.steps ?? []).length > 0 && (
+            <>
+              <Divider sx={{ my: 1 }} />
+              <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+                Étapes
+              </Typography>
+              <Box component="ol" sx={{ pl: 2.5, m: 0 }}>
+                {(recipe?.steps ?? []).map((step, idx) => (
+                  <Box component="li" key={idx} sx={{ mb: 1 }}>
+                    <Typography variant="body2">{step}</Typography>
+                  </Box>
+                ))}
+              </Box>
+            </>
           )}
         </Box>
       </DialogContent>
