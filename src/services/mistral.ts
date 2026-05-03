@@ -37,3 +37,45 @@ export async function parseRecipeFromText(
 
   return (await res.json()) as ParsedRecipe;
 }
+
+export async function parseRecipeFromImage(
+  imageBase64: string,
+  mimeType: string,
+): Promise<ParsedRecipe> {
+  const baseUrl = import.meta.env.VITE_NETLIFY_FUNCTION_URL || "/api/parse-products";
+  const url = baseUrl.replace(/\/[^/]+$/, "/parse-recipe-image");
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ imageBase64, mimeType }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error((data as { error?: string }).error || `Erreur lors de l'analyse de l'image : ${res.status}`);
+  }
+
+  return (await res.json()) as ParsedRecipe;
+}
+
+export async function parseRecipeStepsFromImage(
+  imageBase64: string,
+  mimeType: string,
+): Promise<{ steps: string[] }> {
+  const baseUrl = import.meta.env.VITE_NETLIFY_FUNCTION_URL || "/api/parse-products";
+  const url = baseUrl.replace(/\/[^/]+$/, "/parse-recipe-steps");
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ imageBase64, mimeType }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error((data as { error?: string }).error || `Erreur lors de l'analyse des étapes : ${res.status}`);
+  }
+
+  return (await res.json()) as { steps: string[] };
+}
