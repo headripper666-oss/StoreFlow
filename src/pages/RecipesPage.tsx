@@ -1,8 +1,10 @@
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import AddIcon from "@mui/icons-material/Add";
 import ClearIcon from "@mui/icons-material/Clear";
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import SearchIcon from "@mui/icons-material/Search";
+import TextFieldsIcon from "@mui/icons-material/TextFields";
 import {
   Alert,
   Box,
@@ -14,6 +16,8 @@ import {
   Tab,
   Tabs,
   TextField,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from "@mui/material";
 import { useState, useMemo } from "react";
@@ -21,7 +25,7 @@ import { RecipeCard } from "../components/recipes/RecipeCard";
 import { RecipeImportPreview } from "../components/recipes/RecipeImportPreview";
 import { RecipeUsageDialog } from "../components/recipes/RecipeUsageDialog";
 import { ConfirmDialog } from "../components/shared/ConfirmDialog";
-import { parseRecipeFromText } from "../services/mistral";
+import { parseRecipeFromText, parseRecipeFromImage } from "../services/mistral";
 import type {
   EssentialItem,
   ParsedRecipe,
@@ -91,6 +95,8 @@ export function RecipesPage({
   const isUrl = /^https?:\/\//i.test(importText.trim());
   const [parsedRecipe, setParsedRecipe] = useState<ParsedRecipe | null>(null);
   const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null);
+  const [importMode, setImportMode] = useState<"text" | "image">("text");
+  const [imageError, setImageError] = useState<string | null>(null);
 
   const allTags = useMemo((): string[] => {
     const tags = new Set<string>(DEFAULT_TAGS);
@@ -188,6 +194,35 @@ export function RecipesPage({
     }
   };
 
+  const handleAnalyzeImage = async (file: File) => {
+    setImageError(null);
+    setIsParsing(true);
+    try {
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const result = reader.result as string;
+          resolve(result.split(",")[1]);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+      const result = await parseRecipeFromImage(base64, file.type || "image/jpeg");
+      const resolved: ParsedRecipe = {
+        ...result,
+        ingredients: result.ingredients.map((ing) => ({
+          ...ing,
+          rayonId: resolveRayonId(ing.name, ing.rayonId),
+        })),
+      };
+      setParsedRecipe(resolved);
+    } catch (err) {
+      setImageError(err instanceof Error ? err.message : "Erreur lors de l'analyse de l'image");
+    } finally {
+      setIsParsing(false);
+    }
+  };
+
   const handleConfirmImport = async (recipe: Recipe) => {
     try {
       await onSaveRecipe(recipe);
@@ -253,6 +288,7 @@ export function RecipesPage({
           setParsedRecipe(null);
           setParseError(null);
           setEditingRecipe(null);
+          setImportMode("text");
         }}
         sx={{ mb: 3, borderBottom: 1, borderColor: "divider" }}
       >
@@ -415,6 +451,7 @@ export function RecipesPage({
             confirmLabel={
               editingRecipe ? "Enregistrer les modifications" : undefined
             }
+            showCatalogStatus={!editingRecipe}
             onConfirm={editingRecipe ? handleConfirmEdit : handleConfirmImport}
             onCancel={() => {
               setParsedRecipe(null);
@@ -423,56 +460,119 @@ export function RecipesPage({
           />
         ) : (
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Typography variant="body2" color="text.secondary">
-              Collez le texte d'une recette (depuis un blog, un livre, une
-              application…). L'IA va en extraire les ingrédients et les
-              quantités par personne.
-            </Typography>
-            <TextField
-              multiline={!isUrl}
-              rows={isUrl ? 1 : 10}
-              fullWidth
-              placeholder={
-                "URL d'une recette (https://…) ou texte à coller :\n• Bœuf bourguignon pour 6 personnes\n  - 1 kg de bœuf\n  - 3 carottes\n  ..."
-              }
-              value={importText}
-              onChange={(e) => setImportText(e.target.value)}
-              disabled={isParsing}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  fontFamily: "monospace",
-                  fontSize: "0.9rem",
-                },
+            <ToggleButtonGroup
+              value={importMode}
+              exclusive
+              onChange={(_, v) => {
+                if (v) {
+                  setImportMode(v);
+                  setParseError(null);
+                  setImageError(null);
+                }
               }}
-            />
-            {isUrl && (
-              <Alert severity="info" sx={{ py: 0.5 }}>
-                La page sera téléchargée par le serveur. Fonctionne sur la plupart des sites, sauf ceux qui chargent le contenu en JavaScript.
-              </Alert>
-            )}
-            {parseError && (
-              <Alert severity="error" onClose={() => setParseError(null)}>
-                {parseError}
-              </Alert>
-            )}
-            <Button
-              variant="contained"
-              size="large"
-              onClick={handleAnalyzeRecipe}
-              disabled={!importText.trim() || isParsing}
-              startIcon={
-                isParsing ? (
-                  <CircularProgress size={20} color="inherit" />
-                ) : (
-                  <AutoAwesomeIcon />
-                )
-              }
-              fullWidth
+              size="small"
+              sx={{ alignSelf: "flex-start" }}
             >
-              {isParsing
-                ? isUrl ? "Téléchargement en cours..." : "Analyse en cours..."
-                : isUrl ? "Analyser l'URL" : "Analyser avec l'IA"}
-            </Button>
+              <ToggleButton value="text">
+                <TextFieldsIcon fontSize="small" sx={{ mr: 0.5 }} />
+                Texte
+              </ToggleButton>
+              <ToggleButton value="image">
+                <PhotoCameraIcon fontSize="small" sx={{ mr: 0.5 }} />
+                Image
+              </ToggleButton>
+            </ToggleButtonGroup>
+
+            {importMode === "text" ? (
+              <>
+                <Typography variant="body2" color="text.secondary">
+                  Collez le texte d'une recette (depuis un blog, un livre, une
+                  application…). L'IA va en extraire les ingrédients et les
+                  quantités par personne.
+                </Typography>
+                <TextField
+                  multiline={!isUrl}
+                  rows={isUrl ? 1 : 10}
+                  fullWidth
+                  placeholder={
+                    "URL d'une recette (https://…) ou texte à coller :\n• Bœuf bourguignon pour 6 personnes\n  - 1 kg de bœuf\n  - 3 carottes\n  ..."
+                  }
+                  value={importText}
+                  onChange={(e) => setImportText(e.target.value)}
+                  disabled={isParsing}
+                  sx={{
+                    "& .MuiOutlinedInput-root": {
+                      fontFamily: "monospace",
+                      fontSize: "0.9rem",
+                    },
+                  }}
+                />
+                {isUrl && (
+                  <Alert severity="info" sx={{ py: 0.5 }}>
+                    La page sera téléchargée par le serveur. Fonctionne sur la plupart des sites, sauf ceux qui chargent le contenu en JavaScript.
+                  </Alert>
+                )}
+                {parseError && (
+                  <Alert severity="error" onClose={() => setParseError(null)}>
+                    {parseError}
+                  </Alert>
+                )}
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={handleAnalyzeRecipe}
+                  disabled={!importText.trim() || isParsing}
+                  startIcon={
+                    isParsing ? (
+                      <CircularProgress size={20} color="inherit" />
+                    ) : (
+                      <AutoAwesomeIcon />
+                    )
+                  }
+                  fullWidth
+                >
+                  {isParsing
+                    ? isUrl ? "Téléchargement en cours..." : "Analyse en cours..."
+                    : isUrl ? "Analyser l'URL" : "Analyser avec l'IA"}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Typography variant="body2" color="text.secondary">
+                  Prenez en photo une page de livre de cuisine ou un screenshot de recette. L'IA va extraire les ingrédients et les étapes.
+                </Typography>
+                <Button
+                  variant="outlined"
+                  component="label"
+                  startIcon={<PhotoCameraIcon />}
+                  disabled={isParsing}
+                  sx={{ alignSelf: "flex-start" }}
+                >
+                  Choisir une image
+                  <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) handleAnalyzeImage(file);
+                      e.target.value = "";
+                    }}
+                  />
+                </Button>
+                {isParsing && (
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <CircularProgress size={18} />
+                    <Typography variant="body2" color="text.secondary">Analyse en cours…</Typography>
+                  </Box>
+                )}
+                {imageError && (
+                  <Alert severity="error" onClose={() => setImageError(null)}>
+                    {imageError}
+                  </Alert>
+                )}
+              </>
+            )}
           </Box>
         )}
       </Box>
