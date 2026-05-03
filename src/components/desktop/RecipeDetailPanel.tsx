@@ -151,6 +151,7 @@ export function RecipeDetailPanel({
             initialTags={editingRecipe.tags}
             title=""
             confirmLabel="Enregistrer les modifications"
+            showCatalogStatus={false}
             onConfirm={onConfirmEdit}
             onCancel={onCancelEdit}
             onTagsChange={async (tags) => {
@@ -724,6 +725,22 @@ export function RecipeDetailPanel({
           <Alert severity="success" sx={{ mb: 0.5 }}>
             Ajouté à la liste !
           </Alert>
+        )}
+        {(recipe?.steps ?? []).length > 0 && (
+          <>
+            <Divider sx={{ my: 1 }} />
+            <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
+              Étapes
+            </Typography>
+            <Box component="ol" sx={{ pl: 2.5, m: 0, mb: 1 }}>
+              {(recipe?.steps ?? []).map((step, idx) => (
+                <Box component="li" key={idx} sx={{ mb: 1 }}>
+                  <Typography variant="body2">{step}</Typography>
+                </Box>
+              ))}
+            </Box>
+            <Divider sx={{ mb: 1 }} />
+          </>
         )}
         <Button
           variant="contained"
