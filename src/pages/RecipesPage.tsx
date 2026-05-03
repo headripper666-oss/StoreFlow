@@ -23,6 +23,7 @@ import { RecipeUsageDialog } from "../components/recipes/RecipeUsageDialog";
 import { ConfirmDialog } from "../components/shared/ConfirmDialog";
 import { parseRecipeFromText } from "../services/mistral";
 import type {
+  EssentialItem,
   ParsedRecipe,
   Rayon,
   Recipe,
@@ -33,6 +34,8 @@ import { DEFAULT_TAGS, tagDisplay } from "../utils/recipeUtils";
 interface RecipesPageProps {
   recipes: Recipe[];
   rayons: Rayon[];
+  essentials: EssentialItem[];
+  catalog: import("../types").CatalogProduct[];
   isSavingList: boolean;
   isSavingRecipes: boolean;
   onAddToList: (ingredients: RecipeIngredient[]) => Promise<void>;
@@ -40,6 +43,7 @@ interface RecipesPageProps {
   onUpdateRecipe: (recipe: Recipe) => Promise<void>;
   onDeleteRecipe: (id: string) => Promise<void>;
   onDesktopSelect?: (recipe: Recipe) => void;
+  onDesktopEdit?: (recipe: Recipe) => void;
 }
 
 const EMPTY_RECIPE: ParsedRecipe = {
@@ -58,6 +62,8 @@ function normalize(s: string): string {
 export function RecipesPage({
   recipes,
   rayons,
+  essentials,
+  catalog,
   isSavingList,
   isSavingRecipes,
   onAddToList,
@@ -65,6 +71,7 @@ export function RecipesPage({
   onUpdateRecipe,
   onDeleteRecipe,
   onDesktopSelect,
+  onDesktopEdit,
 }: RecipesPageProps) {
   const [tab, setTab] = useState(0);
 
@@ -81,6 +88,7 @@ export function RecipesPage({
   const [importText, setImportText] = useState("");
   const [isParsing, setIsParsing] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
+  const isUrl = /^https?:\/\//i.test(importText.trim());
   const [parsedRecipe, setParsedRecipe] = useState<ParsedRecipe | null>(null);
   const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null);
 
@@ -137,8 +145,23 @@ export function RecipesPage({
 
   const handleConfirmDelete = async () => {
     if (!deleteTarget) return;
-    await onDeleteRecipe(deleteTarget.id);
-    setDeleteTarget(null);
+    try {
+      await onDeleteRecipe(deleteTarget.id);
+      setDeleteTarget(null);
+    } catch {
+      // Error handled by hook
+    }
+  };
+
+  const resolveRayonId = (name: string, aiRayonId: string): string => {
+    const n = normalize(name);
+    const essential = essentials.find((e) => normalize(e.name) === n);
+    if (essential) return essential.rayonId;
+    const product = catalog.find(
+      (p) => normalize(p.name) === n || (p.aliases ?? []).some((a) => normalize(a) === n),
+    );
+    if (product) return product.rayonId;
+    return aiRayonId;
   };
 
   const handleAnalyzeRecipe = async () => {
@@ -147,7 +170,14 @@ export function RecipesPage({
     setIsParsing(true);
     try {
       const result = await parseRecipeFromText(importText.trim());
-      setParsedRecipe(result);
+      const resolved: ParsedRecipe = {
+        ...result,
+        ingredients: result.ingredients.map((ing) => ({
+          ...ing,
+          rayonId: resolveRayonId(ing.name, ing.rayonId),
+        })),
+      };
+      setParsedRecipe(resolved);
       setImportText("");
     } catch (err) {
       setParseError(
@@ -159,31 +189,44 @@ export function RecipesPage({
   };
 
   const handleConfirmImport = async (recipe: Recipe) => {
-    await onSaveRecipe(recipe);
-    setParsedRecipe(null);
-    setTab(0);
+    try {
+      await onSaveRecipe(recipe);
+      setParsedRecipe(null);
+      setTab(0);
+    } catch {
+      // Error is handled by hook and shown in AppShell
+    }
   };
 
   const handleEditRecipe = (recipe: Recipe) => {
+    if (onDesktopEdit) {
+      onDesktopEdit(recipe);
+      return;
+    }
     setEditingRecipe(recipe);
     setParsedRecipe({
       name: recipe.name,
       servings: recipe.servings,
       ingredients: recipe.ingredients,
+      steps: recipe.steps,
     });
     setTab(1);
   };
 
   const handleConfirmEdit = async (recipe: Recipe) => {
     if (!editingRecipe) return;
-    await onUpdateRecipe({
-      ...recipe,
-      id: editingRecipe.id,
-      createdAt: editingRecipe.createdAt,
-    });
-    setEditingRecipe(null);
-    setParsedRecipe(null);
-    setTab(0);
+    try {
+      await onUpdateRecipe({
+        ...recipe,
+        id: editingRecipe.id,
+        createdAt: editingRecipe.createdAt,
+      });
+      setEditingRecipe(null);
+      setParsedRecipe(null);
+      setTab(0);
+    } catch {
+      // Error is handled by hook
+    }
   };
 
   const handleOpenManualCreate = () => {
@@ -299,7 +342,6 @@ export function RecipesPage({
                   overflowX: "auto",
                   pb: 1,
                   mb: 1.5,
-                  "&::-webkit-scrollbar": { display: "none" },
                 }}
               >
                 <Chip
@@ -365,6 +407,7 @@ export function RecipesPage({
           <RecipeImportPreview
             parsed={parsedRecipe}
             rayons={rayons}
+            catalog={catalog}
             isSaving={isSavingRecipes}
             allTags={allTags}
             initialTags={editingRecipe?.tags}
@@ -386,11 +429,11 @@ export function RecipesPage({
               quantités par personne.
             </Typography>
             <TextField
-              multiline
-              rows={10}
+              multiline={!isUrl}
+              rows={isUrl ? 1 : 10}
               fullWidth
               placeholder={
-                "Exemples :\n• Bœuf bourguignon pour 6 personnes\n  - 1 kg de bœuf\n  - 3 carottes\n  - 1 bouteille de vin rouge\n  ...\n\nOu simplement coller une page de blog avec la recette."
+                "URL d'une recette (https://…) ou texte à coller :\n• Bœuf bourguignon pour 6 personnes\n  - 1 kg de bœuf\n  - 3 carottes\n  ..."
               }
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
@@ -402,6 +445,11 @@ export function RecipesPage({
                 },
               }}
             />
+            {isUrl && (
+              <Alert severity="info" sx={{ py: 0.5 }}>
+                La page sera téléchargée par le serveur. Fonctionne sur la plupart des sites, sauf ceux qui chargent le contenu en JavaScript.
+              </Alert>
+            )}
             {parseError && (
               <Alert severity="error" onClose={() => setParseError(null)}>
                 {parseError}
@@ -421,7 +469,9 @@ export function RecipesPage({
               }
               fullWidth
             >
-              {isParsing ? "Analyse en cours..." : "Analyser avec l'IA"}
+              {isParsing
+                ? isUrl ? "Téléchargement en cours..." : "Analyse en cours..."
+                : isUrl ? "Analyser l'URL" : "Analyser avec l'IA"}
             </Button>
           </Box>
         )}
@@ -432,6 +482,7 @@ export function RecipesPage({
         open={usageDialogOpen}
         recipe={selectedRecipe}
         rayons={rayons}
+        catalog={catalog}
         isSaving={isSavingList || isSavingRecipes}
         onAddToList={onAddToList}
         onUpdateRecipe={onUpdateRecipe}

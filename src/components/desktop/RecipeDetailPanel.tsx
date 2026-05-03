@@ -145,6 +145,7 @@ export function RecipeDetailPanel({
             key={editingRecipe.id}
             parsed={{ name: editingRecipe.name, servings: editingRecipe.servings, ingredients: editingRecipe.ingredients, steps: editingRecipe.steps }}
             rayons={rayons}
+            catalog={catalog}
             isSaving={isSaving}
             allTags={allTags}
             initialTags={editingRecipe.tags}

@@ -1,6 +1,8 @@
 import AddIcon from "@mui/icons-material/Add";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import {
   Autocomplete,
   Box,
@@ -12,21 +14,32 @@ import {
   MenuItem,
   Select,
   TextField,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import type {
+  CatalogProduct,
   ParsedRecipe,
   Rayon,
   Recipe,
   RecipeIngredient,
 } from "../../types";
-import { detectTags } from "../../utils/recipeUtils";
+import { detectTags, findInCatalog, normalize } from "../../utils/recipeUtils";
+
+type CatalogStatus =
+  | { kind: "matched"; product: CatalogProduct }
+  | { kind: "suggested"; product: CatalogProduct }
+  | { kind: "unmatched" }
+  | { kind: "ignored" };
+
+type IngWithStatus = RecipeIngredient & { catalogStatus: CatalogStatus };
 
 interface RecipeImportPreviewProps {
   parsed: ParsedRecipe;
   rayons: Rayon[];
+  catalog: CatalogProduct[];
   isSaving: boolean;
   allTags: string[];
   initialTags?: string[];
@@ -37,9 +50,23 @@ interface RecipeImportPreviewProps {
   onTagsChange?: (tags: string[]) => void;
 }
 
+function resolveStatus(name: string, catalog: CatalogProduct[]): CatalogStatus {
+  const normName = normalize(name);
+  for (const p of catalog) {
+    if (normalize(p.name) === normName) return { kind: "matched", product: p };
+  }
+  for (const p of catalog) {
+    if ((p.aliases ?? []).some((a) => normalize(a) === normName)) {
+      return { kind: "suggested", product: p };
+    }
+  }
+  return { kind: "unmatched" };
+}
+
 export function RecipeImportPreview({
   parsed,
   rayons,
+  catalog,
   isSaving,
   allTags,
   initialTags,
@@ -52,11 +79,24 @@ export function RecipeImportPreview({
   const [name, setName] = useState(parsed.name);
   const [servings, setServings] = useState(parsed.servings);
   const defaultRayonId = rayons[0]?.id ?? "autre";
-  const [ingredients, setIngredients] = useState<RecipeIngredient[]>(
-    parsed.ingredients.map((ing) => ({
-      ...ing,
-      rayonId: ing.rayonId ?? defaultRayonId,
-    })),
+  const [ingredients, setIngredients] = useState<IngWithStatus[]>(() =>
+    parsed.ingredients.map((ing) => {
+      const status = resolveStatus(ing.name, catalog);
+      const resolved =
+        status.kind === "matched"
+          ? {
+              unit: status.product.defaultUnit,
+              pricePerUnit: status.product.pricePerUnit,
+              rayonId: status.product.rayonId,
+            }
+          : {};
+      return {
+        ...ing,
+        rayonId: ing.rayonId ?? defaultRayonId,
+        ...resolved,
+        catalogStatus: status,
+      };
+    }),
   );
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
   const [steps, setSteps] = useState<string[]>(parsed.steps ?? []);
@@ -88,6 +128,7 @@ export function RecipeImportPreview({
         quantity: 1,
         unit: "pcs",
         rayonId: rayons[0]?.id ?? "autre",
+        catalogStatus: { kind: "ignored" },
       },
     ]);
     setEditingIdx(newIdx);
@@ -115,12 +156,37 @@ export function RecipeImportPreview({
       id: `recipe-${uuidv4()}`,
       name: name.trim() || "Recette sans nom",
       servings: Math.max(1, servings),
-      ingredients,
+      ingredients: ingredients.map(({ catalogStatus: _cs, ...ing }) => ing),
       createdAt: new Date().toISOString(),
       tags,
       steps: steps.filter((s) => s.trim()),
     };
     await onConfirm(recipe);
+  };
+
+  const acceptSuggestion = (idx: number, product: CatalogProduct) => {
+    setIngredients((prev) =>
+      prev.map((ing, i) =>
+        i === idx
+          ? {
+              ...ing,
+              name: product.name,
+              unit: product.defaultUnit,
+              pricePerUnit: product.pricePerUnit,
+              rayonId: product.rayonId,
+              catalogStatus: { kind: "matched", product },
+            }
+          : ing,
+      ),
+    );
+  };
+
+  const ignoreSuggestion = (idx: number) => {
+    setIngredients((prev) =>
+      prev.map((ing, i) =>
+        i === idx ? { ...ing, catalogStatus: { kind: "ignored" } } : ing,
+      ),
+    );
   };
 
   return (
@@ -189,13 +255,43 @@ export function RecipeImportPreview({
             <Box sx={{ px: 2, py: 1.5 }}>
               {editingIdx === idx ? (
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
-                  <TextField
+                  <Autocomplete
+                    freeSolo
                     size="small"
-                    label="Ingrédient"
+                    options={catalog.map((c) => c.name)}
                     value={ing.name}
-                    onChange={(e) => updateField(idx, "name", e.target.value)}
-                    fullWidth
-                    autoFocus
+                    inputValue={ing.name}
+                    onInputChange={(_, value) => updateField(idx, "name", value)}
+                    onChange={(_, value) => {
+                      if (typeof value === "string" && value) {
+                        const match = findInCatalog(value, catalog);
+                        setIngredients((prev) =>
+                          prev.map((item, i) =>
+                            i === idx
+                              ? {
+                                  ...item,
+                                  name: value,
+                                  unit: match ? match.defaultUnit : item.unit,
+                                  pricePerUnit: match ? match.pricePerUnit : item.pricePerUnit,
+                                  rayonId: match ? match.rayonId : item.rayonId,
+                                  catalogStatus: match
+                                    ? { kind: "matched", product: match }
+                                    : { kind: "ignored" },
+                                }
+                              : item,
+                          ),
+                        );
+                      }
+                    }}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        size="small"
+                        label="Ingrédient"
+                        fullWidth
+                        autoFocus
+                      />
+                    )}
                   />
                   <Box sx={{ display: "flex", gap: 1 }}>
                     <TextField
@@ -254,46 +350,96 @@ export function RecipeImportPreview({
                   </Box>
                 </Box>
               ) : (
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <Box sx={{ flex: 1, minWidth: 0 }}>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        fontWeight: 500,
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        whiteSpace: "nowrap",
-                      }}
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 0.5 }}>
+                  <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <Box sx={{ flex: 1, minWidth: 0 }}>
+                      <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                        <Typography
+                          variant="body1"
+                          sx={{
+                            fontWeight: 500,
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            whiteSpace: "nowrap",
+                          }}
+                        >
+                          {ing.name || <em style={{ opacity: 0.5 }}>Sans nom</em>}
+                        </Typography>
+                        {ing.catalogStatus.kind === "matched" && (
+                          <Tooltip title="Reconnu dans le catalogue">
+                            <CheckCircleIcon sx={{ fontSize: 14, color: "success.main", flexShrink: 0 }} />
+                          </Tooltip>
+                        )}
+                        {ing.catalogStatus.kind === "unmatched" && (
+                          <Tooltip title="Inconnu dans le catalogue">
+                            <WarningAmberIcon sx={{ fontSize: 14, color: "warning.main", flexShrink: 0 }} />
+                          </Tooltip>
+                        )}
+                      </Box>
+                      <Box
+                        sx={{
+                          display: "flex",
+                          gap: 0.75,
+                          mt: 0.25,
+                          flexWrap: "wrap",
+                          alignItems: "center",
+                        }}
+                      >
+                        <Typography variant="body2" color="text.secondary">
+                          {ing.quantity} {ing.unit}
+                        </Typography>
+                        <Chip
+                          label={`${rayons.find((r) => r.id === ing.rayonId)?.icon ?? ""} ${rayons.find((r) => r.id === ing.rayonId)?.label ?? ing.rayonId}`}
+                          size="small"
+                          variant="outlined"
+                          sx={{ height: 20, fontSize: "0.68rem" }}
+                        />
+                      </Box>
+                    </Box>
+                    <IconButton
+                      size="small"
+                      onClick={() => setEditingIdx(idx)}
+                      sx={{ flexShrink: 0 }}
                     >
-                      {ing.name || <em style={{ opacity: 0.5 }}>Sans nom</em>}
-                    </Typography>
+                      <EditIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+                  {ing.catalogStatus.kind === "suggested" && (
                     <Box
                       sx={{
                         display: "flex",
-                        gap: 0.75,
-                        mt: 0.25,
-                        flexWrap: "wrap",
                         alignItems: "center",
+                        gap: 1,
+                        px: 1,
+                        py: 0.5,
+                        bgcolor: "warning.50",
+                        borderRadius: 1,
+                        border: "1px solid",
+                        borderColor: "warning.200",
                       }}
                     >
-                      <Typography variant="body2" color="text.secondary">
-                        {ing.quantity} {ing.unit}
+                      <WarningAmberIcon sx={{ fontSize: 14, color: "warning.main", flexShrink: 0 }} />
+                      <Typography variant="caption" sx={{ flex: 1 }}>
+                        Voulez-vous dire <strong>{ing.catalogStatus.product.name}</strong> ?
                       </Typography>
-                      <Chip
-                        label={`${rayons.find((r) => r.id === ing.rayonId)?.icon ?? ""} ${rayons.find((r) => r.id === ing.rayonId)?.label ?? ing.rayonId}`}
+                      <Button
                         size="small"
                         variant="outlined"
-                        sx={{ height: 20, fontSize: "0.68rem" }}
-                      />
+                        color="warning"
+                        sx={{ py: 0, minWidth: 0, px: 1, fontSize: "0.7rem" }}
+                        onClick={() => acceptSuggestion(idx, ing.catalogStatus.kind === "suggested" ? ing.catalogStatus.product : (ing.catalogStatus as { kind: "matched"; product: CatalogProduct }).product)}
+                      >
+                        Oui
+                      </Button>
+                      <Button
+                        size="small"
+                        sx={{ py: 0, minWidth: 0, px: 1, fontSize: "0.7rem", color: "text.secondary" }}
+                        onClick={() => ignoreSuggestion(idx)}
+                      >
+                        Ignorer
+                      </Button>
                     </Box>
-                  </Box>
-                  <IconButton
-                    size="small"
-                    onClick={() => setEditingIdx(idx)}
-                    sx={{ flexShrink: 0 }}
-                  >
-                    <EditIcon fontSize="small" />
-                  </IconButton>
+                  )}
                 </Box>
               )}
             </Box>
