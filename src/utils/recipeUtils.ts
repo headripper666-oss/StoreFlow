@@ -1,4 +1,4 @@
-import type { RecipeIngredient } from "../types";
+import type { CatalogProduct, RecipeIngredient } from "../types";
 
 export const DEFAULT_TAGS = [
   "poulet",
@@ -63,11 +63,28 @@ const SYNONYM_MAP: Array<{ tag: string; keywords: string[] }> = [
   },
 ];
 
+export function capitalize(s: string): string {
+  if (!s) return s;
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
 export function normalize(s: string): string {
   return s
     .toLowerCase()
     .normalize("NFD")
     .replace(/[̀-ͯ]/g, "");
+}
+
+export function findInCatalog(
+  name: string,
+  catalog: CatalogProduct[],
+): CatalogProduct | null {
+  const normName = normalize(name);
+  for (const p of catalog) {
+    if (normalize(p.name) === normName) return p;
+    if ((p.aliases ?? []).some((a) => normalize(a) === normName)) return p;
+  }
+  return null;
 }
 
 export function detectTags(
