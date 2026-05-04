@@ -79,3 +79,23 @@ export async function parseRecipeStepsFromImage(
 
   return (await res.json()) as { steps: string[] };
 }
+
+export async function parseRecipeStepsFromUrl(
+  url: string,
+): Promise<{ steps: string[] }> {
+  const baseUrl = import.meta.env.VITE_NETLIFY_FUNCTION_URL || "/api/parse-products";
+  const endpoint = baseUrl.replace(/\/[^/]+$/, "/parse-recipe-steps-url");
+
+  const res = await fetch(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ url }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json().catch(() => ({}));
+    throw new Error((data as { error?: string }).error || `Erreur lors de l'extraction des étapes : ${res.status}`);
+  }
+
+  return (await res.json()) as { steps: string[] };
+}
