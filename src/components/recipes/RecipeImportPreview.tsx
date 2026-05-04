@@ -2,6 +2,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import LinkIcon from "@mui/icons-material/Link";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import {
@@ -34,7 +35,7 @@ import type {
   RecipeIngredient,
 } from "../../types";
 import { detectTags, findInCatalog, normalize } from "../../utils/recipeUtils";
-import { parseRecipeStepsFromImage } from "../../services/mistral";
+import { parseRecipeStepsFromImage, parseRecipeStepsFromUrl } from "../../services/mistral";
 
 type CatalogStatus =
   | { kind: "matched"; product: CatalogProduct }
@@ -119,6 +120,9 @@ export function RecipeImportPreview({
   const [stepsImageError, setStepsImageError] = useState<string | null>(null);
   const [replaceStepsConfirmOpen, setReplaceStepsConfirmOpen] = useState(false);
   const [pendingSteps, setPendingSteps] = useState<string[]>([]);
+  const [stepsUrl, setStepsUrl] = useState("");
+  const [stepsUrlParsing, setStepsUrlParsing] = useState(false);
+  const [stepsUrlError, setStepsUrlError] = useState<string | null>(null);
   const [tags, setTags] = useState<string[]>(() => {
     if (initialTags !== undefined) return initialTags;
     return detectTags(
@@ -180,6 +184,26 @@ export function RecipeImportPreview({
       setStepsImageError(err instanceof Error ? err.message : "Erreur lors de l'analyse");
     } finally {
       setStepsImageParsing(false);
+    }
+  };
+
+  const handleStepsUrl = async () => {
+    if (!stepsUrl.trim()) return;
+    setStepsUrlError(null);
+    setStepsUrlParsing(true);
+    try {
+      const { steps: newSteps } = await parseRecipeStepsFromUrl(stepsUrl.trim());
+      if (steps.length > 0) {
+        setPendingSteps(newSteps);
+        setReplaceStepsConfirmOpen(true);
+      } else {
+        setSteps(newSteps);
+      }
+      setStepsUrl("");
+    } catch (err) {
+      setStepsUrlError(err instanceof Error ? err.message : "Erreur lors de l'extraction des étapes");
+    } finally {
+      setStepsUrlParsing(false);
     }
   };
 
@@ -505,7 +529,7 @@ export function RecipeImportPreview({
 
       {/* Steps */}
       <Box>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 1, flexWrap: "wrap" }}>
           <Typography variant="subtitle2" color="text.secondary">
             Étapes de préparation{steps.length > 0 ? ` (${steps.length})` : ""}
           </Typography>
@@ -519,6 +543,34 @@ export function RecipeImportPreview({
             Analyser une image
           </Button>
         </Box>
+
+        {/* Champ URL pour les steps */}
+        <Box sx={{ display: "flex", gap: 1, mb: 1 }}>
+          <TextField
+            size="small"
+            fullWidth
+            placeholder="URL d'une recette (https://…)"
+            value={stepsUrl}
+            onChange={(e) => setStepsUrl(e.target.value)}
+            disabled={stepsUrlParsing}
+            onKeyDown={(e) => { if (e.key === "Enter") handleStepsUrl(); }}
+          />
+          <Button
+            variant="outlined"
+            size="small"
+            startIcon={stepsUrlParsing ? <CircularProgress size={14} /> : <LinkIcon />}
+            disabled={!stepsUrl.trim() || stepsUrlParsing}
+            onClick={handleStepsUrl}
+            sx={{ whiteSpace: "nowrap", flexShrink: 0 }}
+          >
+            Extraire
+          </Button>
+        </Box>
+        {stepsUrlError && (
+          <Alert severity="error" sx={{ mb: 1 }} onClose={() => setStepsUrlError(null)}>
+            {stepsUrlError}
+          </Alert>
+        )}
 
         {/* Mini-dialog upload image pour steps */}
         <Dialog open={stepsImageOpen} onClose={() => setStepsImageOpen(false)} maxWidth="xs" fullWidth>
@@ -560,7 +612,7 @@ export function RecipeImportPreview({
           <DialogTitle>Remplacer les étapes ?</DialogTitle>
           <DialogContent>
             <Typography variant="body2">
-              {steps.length} étape{steps.length > 1 ? "s" : ""} existante{steps.length > 1 ? "s" : ""} seront remplacées par les {pendingSteps.length} étapes extraites de l'image.
+              {steps.length} étape{steps.length > 1 ? "s" : ""} existante{steps.length > 1 ? "s" : ""} seront remplacées par les {pendingSteps.length} nouvelles étapes.
             </Typography>
           </DialogContent>
           <DialogActions>
