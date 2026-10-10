@@ -20,6 +20,7 @@ import {
   toggleShoppingItem,
   toggleEssentialItem,
   connectWebSocket,
+  isWebSocketConnected,
 } from "../services/api";
 import { capitalize, normalize, normalizeUnit } from "../utils/recipeUtils";
 import templateListsJson from "../../data-init/lists.json";
@@ -235,7 +236,7 @@ export function useShoppingList(
 
   // Poll for remote changes every 30 seconds
   const pollCallback = useCallback(async () => {
-    if (!config || isSaving) return;
+    if (!config || isSaving || isWebSocketConnected()) return;
 
     try {
       const fileState = await fetchShoppingData(config);

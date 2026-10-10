@@ -1,5 +1,6 @@
 import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
+import { AiSettings } from "../components/settings/AiSettings";
 import { ArticlesRayonManager } from "../components/settings/ArticlesRayonManager";
 import { TagsManager } from "../components/settings/TagsManager";
 import { RayonSettingsPage } from "./RayonSettingsPage";
@@ -85,6 +86,7 @@ export function SettingsPage({
         <Tab label="Rayons" sx={{ textTransform: "none", fontWeight: 600 }} />
         <Tab label="Tags" sx={{ textTransform: "none", fontWeight: 600 }} />
         <Tab label="Catalogue" sx={{ textTransform: "none", fontWeight: 600 }} />
+        <Tab label="IA" sx={{ textTransform: "none", fontWeight: 600 }} />
       </Tabs>
 
       <Box hidden={tab !== 0}>
@@ -130,6 +132,10 @@ export function SettingsPage({
           onUpdateListItemUnit={onUpdateListItemUnit}
           onUpdateRecipe={onUpdateRecipe}
         />
+      </Box>
+
+      <Box hidden={tab !== 3}>
+        <AiSettings />
       </Box>
     </Container>
   );

@@ -1,4 +1,14 @@
 import type { ParsedProduct, ParsedRecipe } from "../types";
+import { loadAiSettings } from "./storage";
+
+// Choix d'IA envoyé au serveur (OpenRouter si configuré, sinon Mistral par défaut)
+function aiOptions() {
+  const ai = loadAiSettings();
+  if (ai.provider === "openrouter" && ai.openrouterKey && ai.openrouterModel) {
+    return { ai: { provider: "openrouter", apiKey: ai.openrouterKey, model: ai.openrouterModel } };
+  }
+  return {};
+}
 
 export async function parseProductsFromText(
   rawText: string,
@@ -8,11 +18,12 @@ export async function parseProductsFromText(
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ rawText }),
+    body: JSON.stringify({ rawText, ...aiOptions() }),
   });
 
   if (!res.ok) {
-    throw new Error(`Erreur lors de l'analyse : ${res.status}`);
+    const data = await res.json().catch(() => ({}));
+    throw new Error((data as { error?: string }).error || `Erreur lors de l'analyse : ${res.status}`);
   }
 
   const data = await res.json();
@@ -28,11 +39,12 @@ export async function parseRecipeFromText(
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ rawText }),
+    body: JSON.stringify({ rawText, ...aiOptions() }),
   });
 
   if (!res.ok) {
-    throw new Error(`Erreur lors de l'analyse de la recette : ${res.status}`);
+    const data = await res.json().catch(() => ({}));
+    throw new Error((data as { error?: string }).error || `Erreur lors de l'analyse de la recette : ${res.status}`);
   }
 
   return (await res.json()) as ParsedRecipe;
@@ -48,7 +60,7 @@ export async function parseRecipeFromImage(
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ imageBase64, mimeType }),
+    body: JSON.stringify({ imageBase64, mimeType, ...aiOptions() }),
   });
 
   if (!res.ok) {
@@ -69,7 +81,7 @@ export async function parseRecipeStepsFromImage(
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ imageBase64, mimeType }),
+    body: JSON.stringify({ imageBase64, mimeType, ...aiOptions() }),
   });
 
   if (!res.ok) {
@@ -89,7 +101,7 @@ export async function parseRecipeStepsFromUrl(
   const res = await fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url }),
+    body: JSON.stringify({ url, ...aiOptions() }),
   });
 
   if (!res.ok) {

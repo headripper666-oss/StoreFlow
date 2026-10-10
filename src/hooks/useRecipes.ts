@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { AuthConfig, Recipe } from "../types";
-import { fetchRecipes, saveRecipes, connectWebSocket } from "../services/api";
+import { fetchRecipes, saveRecipes, connectWebSocket, isWebSocketConnected } from "../services/api";
 import { capitalize, DEFAULT_TAGS, detectTags, normalize } from "../utils/recipeUtils";
 import { usePolling } from "./usePolling";
 
@@ -121,7 +121,7 @@ export function useRecipes(config: AuthConfig | null): UseRecipesReturn {
 
   // Poll for remote changes every 60 seconds
   const pollCallback = useCallback(async () => {
-    if (!config || isSaving || isLoading) return;
+    if (!config || isSaving || isLoading || isWebSocketConnected()) return;
 
     try {
       const { recipes: loaded, sha } = await fetchRecipes(config);

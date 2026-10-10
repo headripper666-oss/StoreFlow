@@ -304,6 +304,11 @@ let _ws: WebSocket | null = null;
 let _wsHandler: UpdateHandler | null = null;
 let _wsReconnectTimer: ReturnType<typeof setTimeout> | null = null;
 
+// Quand le WebSocket est connecté, il prévient de chaque changement : inutile de poller
+export function isWebSocketConnected(): boolean {
+  return _ws?.readyState === WebSocket.OPEN;
+}
+
 export function connectWebSocket(onUpdate: UpdateHandler): () => void {
   _wsHandler = onUpdate;
   _connect();

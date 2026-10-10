@@ -117,6 +117,18 @@ sudo systemctl restart storeflow-proxy
 
 Le dossier `netlify/` et `netlify.toml` sont conservés mais non utilisés en production.
 
+**Synchro GitHub** : le serveur pousse vers `storeflow-data` ~1 min après chaque modification (+ cron horaire). Si un fichier a été modifié directement sur GitHub (mode secours) et est plus récent, il est importé dans SQLite.
+
+**Assets** : `/assets/*` servis compressés en gzip avec `Cache-Control: immutable` (1 an). Le polling client est coupé tant que le WebSocket est connecté.
+
+### Version de secours (GitHub Pages)
+
+`https://headripper666-oss.github.io/StoreFlow/` — déployée par `.github/workflows/pages.yml` à chaque push sur `main`. Build avec `VITE_GITHUB_ONLY=true` (lecture/écriture directe sur GitHub, pas de serveur) et `VITE_BASE=/StoreFlow/`. Service worker `public/sw.js` : l'app s'ouvre hors-ligne (HTTPS uniquement, donc inactif sur l'URL N150 en HTTP). L'analyse IA n'y fonctionne pas (elle passe par le N150).
+
+### IA (Mistral / OpenRouter)
+
+Réglages > onglet **IA** (`src/components/settings/AiSettings.tsx`), stocké par appareil dans `localStorage` (`storeflow_ai`). Si OpenRouter est choisi avec une clé et un modèle, `src/services/mistral.ts` envoie `{ ai: { provider, apiKey, model } }` au serveur, qui appelle OpenRouter au lieu de Mistral (`aiTarget()` dans `storeflow-proxy/server.js`).
+
 ### Recipes feature — ingredient scaling & UX
 
 When a user picks a recipe for N guests and the recipe base is M servings, each ingredient quantity is multiplied by `N/M` then passed through `roundQuantity(raw, unit)`: discrete units (pcs, œuf, tranche, gousse…) round to the nearest 0.5; all others round to 2 decimal places.
