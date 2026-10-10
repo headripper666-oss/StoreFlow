@@ -1,0 +1,16 @@
+[Unit]
+Description=StoreFlow Proxy (Mistral + static files)
+After=network.target
+
+[Service]
+Type=simple
+User=renaud
+WorkingDirectory=/home/renaud/dev/claude-projects/Claude/StoreFlow/storeflow-proxy
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

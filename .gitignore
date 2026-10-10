@@ -28,7 +28,6 @@ dist-ssr
 
 # Local files
 Api.txt
-storeflow-proxy/
 
 # Données et brouillons locaux (ne jamais publier)
 storeflow-api/*.db*

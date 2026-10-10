@@ -14,10 +14,13 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useMemo, useState } from "react";
-import { loadAiSettings, saveAiSettings } from "../../services/storage";
-import type { AiSettings as AiSettingsType } from "../../types";
-
-const OPENROUTER_API = "https://openrouter.ai/api/v1";
+import {
+  fetchAiCredits,
+  fetchAiSettings,
+  isGithubOnly,
+  saveAiSettings,
+  type ServerAiSettings,
+} from "../../services/api";
 
 interface OpenRouterModel {
   id: string;
@@ -39,63 +42,66 @@ function readsImages(m: OpenRouterModel): boolean {
 }
 
 export function AiSettings() {
-  const [settings, setSettings] = useState<AiSettingsType>(loadAiSettings);
-  const [keyInput, setKeyInput] = useState(settings.openrouterKey);
-  const [account, setAccount] = useState<string | null>(null);
+  const [settings, setSettings] = useState<ServerAiSettings | null>(null);
+  const [keyInput, setKeyInput] = useState("");
+  const [credits, setCredits] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [connecting, setConnecting] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [models, setModels] = useState<OpenRouterModel[]>([]);
   const [imagesOnly, setImagesOnly] = useState(true);
 
-  function update(patch: Partial<AiSettingsType>) {
-    const next = { ...settings, ...patch };
-    setSettings(next);
-    saveAiSettings(next);
-  }
-
-  // Vérifie la clé, affiche le solde et charge la liste des modèles
-  async function connect(key: string) {
-    setConnecting(true);
+  async function save(patch: Parameters<typeof saveAiSettings>[0]) {
+    setSaving(true);
     setError(null);
     try {
-      const headers = { Authorization: `Bearer ${key}` };
-      const keyRes = await fetch(`${OPENROUTER_API}/key`, { headers });
-      if (!keyRes.ok) throw new Error("Clé API refusée par OpenRouter");
-      const credits = await fetch(`${OPENROUTER_API}/credits`, { headers })
-        .then((r) => (r.ok ? r.json() : null))
-        .catch(() => null);
-      const remaining = credits
-        ? `${(credits.data.total_credits - credits.data.total_usage).toFixed(2)} $ de crédits restants`
-        : "connecté";
-      setAccount(remaining);
-
-      const modelsRes = await fetch(`${OPENROUTER_API}/models`);
-      const json = await modelsRes.json();
-      setModels(
-        (json.data as OpenRouterModel[]).sort((a, b) => a.name.localeCompare(b.name)),
-      );
-      if (key !== settings.openrouterKey) update({ openrouterKey: key });
+      const next = await saveAiSettings(patch);
+      setSettings(next);
+      if (patch.apiKey) {
+        setKeyInput("");
+        setCredits(await fetchAiCredits());
+      }
     } catch (e) {
-      setAccount(null);
-      setError(e instanceof Error ? e.message : "Connexion impossible");
+      setError(e instanceof Error ? e.message : "Enregistrement impossible");
     } finally {
-      setConnecting(false);
+      setSaving(false);
     }
   }
 
-  // Reconnexion automatique si une clé est déjà enregistrée
+  // Config actuelle du serveur + liste publique des modèles OpenRouter
   useEffect(() => {
-    if (settings.provider === "openrouter" && settings.openrouterKey) {
-      connect(settings.openrouterKey);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (isGithubOnly()) return;
+    fetchAiSettings()
+      .then((s) => {
+        setSettings(s);
+        if (s.hasKey) fetchAiCredits().then(setCredits);
+      })
+      .catch(() => setError("Serveur injoignable : réglages IA indisponibles."));
+    fetch("https://openrouter.ai/api/v1/models")
+      .then((r) => r.json())
+      .then((json) =>
+        setModels((json.data as OpenRouterModel[]).sort((a, b) => a.name.localeCompare(b.name))),
+      )
+      .catch(() => {});
   }, []);
 
   const visibleModels = useMemo(
     () => (imagesOnly ? models.filter(readsImages) : models),
     [models, imagesOnly],
   );
-  const selectedModel = models.find((m) => m.id === settings.openrouterModel) ?? null;
+
+  if (isGithubOnly()) {
+    return (
+      <Alert severity="info" sx={{ maxWidth: 640 }}>
+        L'analyse par IA passe par le PC : elle n'est pas disponible dans la version de secours.
+      </Alert>
+    );
+  }
+
+  if (!settings) {
+    return error ? <Alert severity="error">{error}</Alert> : <CircularProgress size={24} />;
+  }
+
+  const selectedModel = models.find((m) => m.id === settings.model) ?? null;
 
   return (
     <Box sx={{ maxWidth: 640 }}>
@@ -104,22 +110,36 @@ export function AiSettings() {
       </Typography>
       <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
         Utilisée pour analyser les listes et les recettes (texte, photo, lien).
-        Réglage propre à cet appareil.
+        Réglage partagé par tous les appareils.
       </Typography>
 
       <RadioGroup
         value={settings.provider}
-        onChange={(e) => update({ provider: e.target.value as AiSettingsType["provider"] })}
+        onChange={(e) => save({ provider: e.target.value as ServerAiSettings["provider"] })}
       >
         <FormControlLabel value="mistral" control={<Radio />} label="Mistral (clé du serveur)" />
         <FormControlLabel value="openrouter" control={<Radio />} label="OpenRouter (mon compte)" />
       </RadioGroup>
 
+      {error && <Alert severity="error" sx={{ mt: 2 }}>{error}</Alert>}
+
       {settings.provider === "openrouter" && (
         <Stack spacing={2} sx={{ mt: 2 }}>
+          {settings.hasKey ? (
+            <Alert severity="success">
+              Clé OpenRouter enregistrée sur le serveur
+              {credits !== null && ` — ${credits.toFixed(2)} $ de crédits restants`}
+            </Alert>
+          ) : (
+            <Alert severity="info">
+              La clé est envoyée une seule fois au serveur, puis ne circule plus. Fais-le depuis le
+              Wi-Fi de la maison ou avec le VPN.
+            </Alert>
+          )}
+
           <Stack direction={{ xs: "column", sm: "row" }} spacing={1}>
             <TextField
-              label="Clé API OpenRouter"
+              label={settings.hasKey ? "Remplacer la clé API" : "Clé API OpenRouter"}
               type="password"
               placeholder="sk-or-..."
               value={keyInput}
@@ -129,18 +149,15 @@ export function AiSettings() {
             />
             <Button
               variant="contained"
-              onClick={() => connect(keyInput)}
-              disabled={!keyInput || connecting}
+              onClick={() => save({ apiKey: keyInput })}
+              disabled={!keyInput || saving}
               sx={{ whiteSpace: "nowrap" }}
             >
-              {connecting ? <CircularProgress size={20} /> : "Connecter"}
+              {saving ? <CircularProgress size={20} /> : "Enregistrer"}
             </Button>
           </Stack>
 
-          {error && <Alert severity="error">{error}</Alert>}
-          {account && <Alert severity="success">Compte OpenRouter : {account}</Alert>}
-
-          {account && (
+          {settings.hasKey && (
             <>
               <FormControlLabel
                 control={<Switch checked={imagesOnly} onChange={(e) => setImagesOnly(e.target.checked)} />}
@@ -149,7 +166,7 @@ export function AiSettings() {
               <Autocomplete
                 options={visibleModels}
                 value={selectedModel}
-                onChange={(_, m) => update({ openrouterModel: m?.id ?? "" })}
+                onChange={(_, m) => m && save({ model: m.id })}
                 getOptionLabel={(m) => m.name}
                 isOptionEqualToValue={(a, b) => a.id === b.id}
                 filterOptions={(opts, { inputValue }) => {
@@ -184,7 +201,7 @@ export function AiSettings() {
                   )}
                 </Stack>
               )}
-              {!settings.openrouterModel && (
+              {!settings.model && (
                 <Alert severity="info">Choisis un modèle : en attendant, c'est Mistral qui est utilisé.</Alert>
               )}
             </>

@@ -127,7 +127,15 @@ Le dossier `netlify/` et `netlify.toml` sont conservés mais non utilisés en pr
 
 ### IA (Mistral / OpenRouter)
 
-Réglages > onglet **IA** (`src/components/settings/AiSettings.tsx`), stocké par appareil dans `localStorage` (`storeflow_ai`). Si OpenRouter est choisi avec une clé et un modèle, `src/services/mistral.ts` envoie `{ ai: { provider, apiKey, model } }` au serveur, qui appelle OpenRouter au lieu de Mistral (`aiTarget()` dans `storeflow-proxy/server.js`).
+Réglages > onglet **IA** (`src/components/settings/AiSettings.tsx`). Config **stockée sur le serveur** (table SQLite `settings`, clé `ai`) et partagée par tous les appareils : `GET/PUT /ai/settings` (la clé OpenRouter n'est jamais renvoyée, seulement `hasKey`), `GET /ai/credits`. `aiTarget()` dans `storeflow-proxy/server.js` choisit OpenRouter si clé + modèle, sinon Mistral (clé dans `storeflow-proxy/.env`, voir `.env.example`).
+
+### Config GitHub du serveur
+
+`POST /init` mémorise `{ pat, dataOwner, dataRepo }` dans la table `settings` (clé `github`). `/health` renvoie `githubRepo` : si c'est le bon dépôt, le client ne renvoie pas le jeton (l'URL est en HTTP). Au démarrage, le serveur reprend la synchro tout seul. Un 401 GitHub efface la config (le prochain appareil la renverra).
+
+### Serveur versionné
+
+`storeflow-proxy/` est dans le dépôt (sauf `.env`, `*.db*`, `*.bak*`, `node_modules`). Après un clone : `cd storeflow-proxy && npm ci && cp .env.example .env`.
 
 ### Recipes feature — ingredient scaling & UX
 

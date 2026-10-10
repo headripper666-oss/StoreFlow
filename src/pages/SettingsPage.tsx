@@ -1,9 +1,12 @@
-import { Box, Container, Tab, Tabs, Typography } from "@mui/material";
+import { Alert, Box, Container, Link, Tab, Tabs, Typography } from "@mui/material";
 import { useState } from "react";
 import { AiSettings } from "../components/settings/AiSettings";
 import { ArticlesRayonManager } from "../components/settings/ArticlesRayonManager";
 import { TagsManager } from "../components/settings/TagsManager";
 import { RayonSettingsPage } from "./RayonSettingsPage";
+import { isGithubOnly } from "../services/api";
+
+const SECOURS_URL = "https://headripper666-oss.github.io/StoreFlow/";
 import type {
   CatalogProduct,
   EssentialItem,
@@ -77,6 +80,17 @@ export function SettingsPage({
       <Typography variant="h6" sx={{ fontWeight: 700, mb: 2 }}>
         Réglages
       </Typography>
+
+      {!isGithubOnly() && (
+        <Alert severity="info" sx={{ mb: 2 }}>
+          <strong>PC éteint ?</strong> Version de secours :{" "}
+          <Link href={SECOURS_URL} target="_blank" rel="noopener">
+            {SECOURS_URL.replace("https://", "")}
+          </Link>
+          <br />
+          À ouvrir une fois sur chaque téléphone, se connecter, puis « Ajouter à l'écran d'accueil ».
+        </Alert>
+      )}
 
       <Tabs
         value={tab}

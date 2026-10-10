@@ -1,4 +1,4 @@
-import type { AiSettings, AuthConfig, PendingChange, ShoppingData } from "../types";
+import type { AuthConfig, PendingChange, ShoppingData } from "../types";
 
 const CACHE_KEY = "storeflow_data";
 const AUTH_KEY = "storeflow_auth";
@@ -81,24 +81,6 @@ export function loadAuthConfig(): AuthConfig | null {
 
 export function clearAuthConfig(): void {
   localStorage.removeItem(AUTH_KEY);
-}
-
-// --- Réglages IA (localStorage) ---
-
-const AI_KEY = "storeflow_ai";
-
-export function loadAiSettings(): AiSettings {
-  try {
-    const raw = localStorage.getItem(AI_KEY);
-    if (raw) return JSON.parse(raw) as AiSettings;
-  } catch {
-    // ignore
-  }
-  return { provider: "mistral", openrouterKey: "", openrouterModel: "" };
-}
-
-export function saveAiSettings(settings: AiSettings): void {
-  localStorage.setItem(AI_KEY, JSON.stringify(settings));
 }
 
 // --- Pending changes queue (offline support) ---

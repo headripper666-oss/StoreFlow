@@ -56,6 +56,16 @@ export function resetServerCheck() {
 export async function initApiServer(config: AuthConfig): Promise<boolean> {
   if (GITHUB_ONLY) return false;
   try {
+    // Le serveur mémorise le dépôt : inutile de renvoyer le jeton en clair (HTTP) à chaque ouverture
+    const health = await fetch(`${API_BASE}/health`, { signal: AbortSignal.timeout(3000) });
+    if (health.ok) {
+      const { githubRepo } = (await health.json()) as { githubRepo?: string | null };
+      if (githubRepo === `${config.dataOwner}/${config.dataRepo}`) {
+        _serverAvailable = true;
+        _lastCheck = Date.now();
+        return true;
+      }
+    }
     const res = await fetch(`${API_BASE}/init`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -110,6 +120,44 @@ async function apiPatch(path: string, body: Record<string, string>): Promise<voi
 // En mode secours, le SHA "local" (mode serveur) n'est pas un SHA GitHub valide
 async function githubSha(config: AuthConfig, file: string, sha: string): Promise<string> {
   return sha && sha !== "local" ? sha : github.fetchFileSha(config, file);
+}
+
+// ── Réglages IA (stockés sur le serveur, partagés par tous les appareils) ─────
+
+export interface ServerAiSettings {
+  provider: "mistral" | "openrouter";
+  model: string;
+  hasKey: boolean;
+}
+
+export function isGithubOnly(): boolean {
+  return GITHUB_ONLY;
+}
+
+export async function fetchAiSettings(): Promise<ServerAiSettings> {
+  const res = await fetch(`${API_BASE}/ai/settings`, { signal: AbortSignal.timeout(5000) });
+  if (!res.ok) throw new Error("Serveur injoignable");
+  return res.json() as Promise<ServerAiSettings>;
+}
+
+export async function saveAiSettings(
+  patch: Partial<Pick<ServerAiSettings, "provider" | "model">> & { apiKey?: string },
+): Promise<ServerAiSettings> {
+  const res = await fetch(`${API_BASE}/ai/settings`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(patch),
+    signal: AbortSignal.timeout(10_000),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error((data as { error?: string }).error ?? `Erreur ${res.status}`);
+  return data as ServerAiSettings;
+}
+
+export async function fetchAiCredits(): Promise<number | null> {
+  const res = await fetch(`${API_BASE}/ai/credits`, { signal: AbortSignal.timeout(10_000) });
+  if (!res.ok) return null;
+  return ((await res.json()) as { remaining: number }).remaining;
 }
 
 // ── ShoppingData (lists.json) ────────────────────────────────────────────────

@@ -66,13 +66,6 @@ export interface GitHubFileState {
   content: ShoppingData;
 }
 
-// Réglages IA (par appareil) — Mistral via le serveur par défaut, ou OpenRouter
-export interface AiSettings {
-  provider: "mistral" | "openrouter";
-  openrouterKey: string;
-  openrouterModel: string;
-}
-
 // Mistral parse request/response
 export interface ParseRequest {
   rawText: string;

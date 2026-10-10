@@ -1,14 +1,4 @@
 import type { ParsedProduct, ParsedRecipe } from "../types";
-import { loadAiSettings } from "./storage";
-
-// Choix d'IA envoyé au serveur (OpenRouter si configuré, sinon Mistral par défaut)
-function aiOptions() {
-  const ai = loadAiSettings();
-  if (ai.provider === "openrouter" && ai.openrouterKey && ai.openrouterModel) {
-    return { ai: { provider: "openrouter", apiKey: ai.openrouterKey, model: ai.openrouterModel } };
-  }
-  return {};
-}
 
 export async function parseProductsFromText(
   rawText: string,
@@ -18,7 +8,7 @@ export async function parseProductsFromText(
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ rawText, ...aiOptions() }),
+    body: JSON.stringify({ rawText }),
   });
 
   if (!res.ok) {
@@ -39,7 +29,7 @@ export async function parseRecipeFromText(
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ rawText, ...aiOptions() }),
+    body: JSON.stringify({ rawText }),
   });
 
   if (!res.ok) {
@@ -60,7 +50,7 @@ export async function parseRecipeFromImage(
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ imageBase64, mimeType, ...aiOptions() }),
+    body: JSON.stringify({ imageBase64, mimeType }),
   });
 
   if (!res.ok) {
@@ -81,7 +71,7 @@ export async function parseRecipeStepsFromImage(
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ imageBase64, mimeType, ...aiOptions() }),
+    body: JSON.stringify({ imageBase64, mimeType }),
   });
 
   if (!res.ok) {
@@ -101,7 +91,7 @@ export async function parseRecipeStepsFromUrl(
   const res = await fetch(endpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ url, ...aiOptions() }),
+    body: JSON.stringify({ url }),
   });
 
   if (!res.ok) {

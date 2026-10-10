@@ -1,0 +1,6 @@
+# Secrets et données : jamais sur GitHub
+.env
+*.db
+*.db-*
+*.bak*
+node_modules
