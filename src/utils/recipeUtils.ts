@@ -146,3 +146,20 @@ export function roundQuantity(raw: number, unit: string): number {
 export function formatQuantity(quantity: number): string {
   return Number.isInteger(quantity) ? String(quantity) : String(quantity);
 }
+
+export function computeRecipeCalories(
+  ingredients: RecipeIngredient[],
+  guests: number,
+  baseServings: number,
+): number | null {
+  const scale = baseServings > 0 ? guests / baseServings : 1;
+  let total = 0;
+  let hasAny = false;
+  for (const ing of ingredients) {
+    if (ing.caloriesPerUnit !== undefined) {
+      total += ing.caloriesPerUnit * ing.quantity * scale;
+      hasAny = true;
+    }
+  }
+  return hasAny ? Math.round(total) : null;
+}

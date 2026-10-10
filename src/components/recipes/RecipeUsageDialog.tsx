@@ -23,8 +23,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import type { CatalogProduct, Rayon, Recipe, RecipeIngredient } from "../../types";
-import { roundQuantity } from "../../utils/recipeUtils";
+import type { CatalogProduct, Rayon, Recipe, RecipeHistoryEntry, RecipeIngredient } from "../../types";
+import { computeRecipeCalories, roundQuantity } from "../../utils/recipeUtils";
 
 type IngredientRow = RecipeIngredient & { included: boolean; baseQty: number };
 
@@ -36,6 +36,7 @@ interface RecipeUsageDialogProps {
   isSaving: boolean;
   onAddToList: (ingredients: RecipeIngredient[]) => Promise<void>;
   onUpdateRecipe: (recipe: Recipe) => Promise<void>;
+  onRecordHistory?: (entry: RecipeHistoryEntry) => Promise<void>;
   onClose: () => void;
 }
 
@@ -47,6 +48,7 @@ export function RecipeUsageDialog({
   isSaving,
   onAddToList,
   onUpdateRecipe,
+  onRecordHistory,
   onClose,
 }: RecipeUsageDialogProps) {
   const [guestCount, setGuestCount] = useState(4);
@@ -139,12 +141,23 @@ export function RecipeUsageDialog({
 
   const selectedIngredients = ingredients.filter((ing) => ing.included);
 
+  const buildHistoryEntry = (): RecipeHistoryEntry => ({
+    recipeId: recipe!.id,
+    recipeName: recipe!.name,
+    lastUsedAt: new Date().toISOString(),
+    lastGuests: guestCount,
+    baseServings: recipe!.servings,
+    ingredients: selectedIngredients.map(({ included: _i, baseQty: _b, ...ing }) => ing),
+    steps: recipe!.steps,
+  });
+
   const handleAddOnly = async () => {
     setError(null);
     try {
       await onAddToList(
         selectedIngredients.map(({ included: _included, baseQty: _baseQty, ...ing }) => ing),
       );
+      onRecordHistory?.(buildHistoryEntry());
       onClose();
     } catch {
       setError("Erreur lors de l'ajout à la liste.");
@@ -163,6 +176,7 @@ export function RecipeUsageDialog({
       await onAddToList(
         selectedIngredients.map(({ included: _included, baseQty: _b, ...ing }) => ing),
       );
+      onRecordHistory?.(buildHistoryEntry());
       onClose();
     } catch {
       setError("Erreur lors de la sauvegarde de la recette.");
@@ -176,6 +190,10 @@ export function RecipeUsageDialog({
     scale === 1
       ? `Base : ${recipe.servings} pers.`
       : `Base : ${recipe.servings} pers. — ×${Number.isInteger(scale) ? scale : scale.toFixed(2)}`;
+
+  // Les quantités de selectedIngredients sont déjà scalées pour guestCount personnes
+  const totalKcal = computeRecipeCalories(selectedIngredients, 1, 1);
+  const kcalPerPerson = totalKcal !== null && guestCount > 0 ? Math.round(totalKcal / guestCount) : null;
 
   return (
     <Dialog
@@ -245,15 +263,17 @@ export function RecipeUsageDialog({
             </Box>
           </Box>
 
-          {/* Selection count */}
-          <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ textAlign: "right", pr: 0.5 }}
-          >
-            {selectedIngredients.length} / {ingredients.length} ingrédients
-            sélectionnés
-          </Typography>
+          {/* Selection count + calories */}
+          <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pr: 0.5 }}>
+            {totalKcal !== null ? (
+              <Typography variant="caption" color="text.secondary">
+                ~{totalKcal} kcal · {kcalPerPerson} kcal/pers
+              </Typography>
+            ) : <Box />}
+            <Typography variant="caption" color="text.secondary">
+              {selectedIngredients.length} / {ingredients.length} ingrédients sélectionnés
+            </Typography>
+          </Box>
 
           {/* Ingredient list */}
           <Box

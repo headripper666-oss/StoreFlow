@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import Button from "@mui/material/Button";
 import type { Recipe } from "../../types";
-import { tagDisplay } from "../../utils/recipeUtils";
+import { computeRecipeCalories, tagDisplay } from "../../utils/recipeUtils";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -30,6 +30,7 @@ export function RecipeCard({
   disabled = false,
 }: RecipeCardProps) {
   const tags = recipe.tags ?? [];
+  const kcalPerPerson = computeRecipeCalories(recipe.ingredients, recipe.servings, recipe.servings);
 
   return (
     <Card variant="outlined" sx={{ borderRadius: 3, mb: 1.5 }}>
@@ -48,8 +49,9 @@ export function RecipeCard({
               sx={{ mt: 0.25 }}
             >
               {recipe.servings} personne{recipe.servings > 1 ? "s" : ""} ·{" "}
-              {recipe.ingredients.length} ingrédient
-              {recipe.ingredients.length > 1 ? "s" : ""}
+              {recipe.ingredients.length} ingrédient{recipe.ingredients.length > 1 ? "s" : ""}
+              {(recipe.steps ?? []).length > 0 && ` · ${recipe.steps!.length} étape${recipe.steps!.length > 1 ? "s" : ""}`}
+              {kcalPerPerson !== null && ` · ~${kcalPerPerson} kcal/pers`}
             </Typography>
             {tags.length > 0 && (
               <Box

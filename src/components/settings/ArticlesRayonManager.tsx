@@ -33,6 +33,7 @@ interface ArticlesRayonManagerProps {
   onUpdateListItemPrice: (id: string, price: number | undefined) => Promise<void>;
   onUpdateCatalogProductPrice: (id: string, price: number | undefined) => Promise<void>;
   onUpdateRecipeIngredientPrice: (name: string, price: number | undefined) => Promise<void>;
+  onUpdateRecipeIngredientCalories: (name: string, calories: number | undefined) => Promise<void>;
   onUpdateEssentialUnit: (id: string, unit: string) => Promise<void>;
   onUpdateListItemUnit: (id: string, unit: string) => Promise<void>;
   onUpdateCatalogProductUnit: (id: string, unit: string) => Promise<void>;
@@ -43,6 +44,7 @@ interface IngredientEntry {
   name: string;
   rayonId: string;
   pricePerUnit?: number;
+  caloriesPerUnit?: number;
   unit: string;
   conflicted: boolean;
   recipeCount: number;
@@ -108,6 +110,7 @@ export function ArticlesRayonManager({
   onUpdateListItemPrice,
   onUpdateCatalogProductPrice,
   onUpdateRecipeIngredientPrice,
+  onUpdateRecipeIngredientCalories,
   onUpdateEssentialUnit,
   onUpdateListItemUnit,
   onUpdateCatalogProductUnit,
@@ -136,6 +139,7 @@ export function ArticlesRayonManager({
           name: ing.name,
           rayonId: essentialMatch?.rayonId ?? catalogMatch?.rayonId ?? ing.rayonId,
           pricePerUnit: essentialMatch?.pricePerUnit ?? catalogMatch?.pricePerUnit ?? ing.pricePerUnit,
+          caloriesPerUnit: ing.caloriesPerUnit,
           unit: essentialMatch?.unit ?? catalogMatch?.defaultUnit ?? ing.unit,
           conflicted: false,
           recipeCount: 1,
@@ -233,11 +237,13 @@ export function ArticlesRayonManager({
                   name={ing.name}
                   rayonId={ing.rayonId}
                   pricePerUnit={ing.pricePerUnit}
+                  caloriesPerUnit={ing.caloriesPerUnit}
                   unit={ing.unit}
                   rayons={rayons}
                   disabled={isSaving}
                   onRayonChange={(r) => onUpdateRecipeIngredientRayon(ing.name, r)}
                   onPriceChange={(p) => onUpdateRecipeIngredientPrice(ing.name, p)}
+                  onCaloriesChange={(c) => onUpdateRecipeIngredientCalories(ing.name, c)}
                   onUnitChange={(u) => onUpdateRecipeIngredientUnit(ing.name, u)}
                   badge={
                     ing.conflicted ? (
@@ -330,11 +336,13 @@ function Row({
   name,
   rayonId,
   pricePerUnit,
+  caloriesPerUnit,
   unit,
   rayons,
   disabled,
   onRayonChange,
   onPriceChange,
+  onCaloriesChange,
   onUnitChange,
   badge,
   sublabel,
@@ -342,38 +350,40 @@ function Row({
   name: string;
   rayonId: string;
   pricePerUnit?: number;
+  caloriesPerUnit?: number;
   unit: string;
   rayons: Rayon[];
   disabled: boolean;
   onRayonChange: (r: string) => void;
   onPriceChange: (p: number | undefined) => void;
+  onCaloriesChange?: (c: number | undefined) => void;
   onUnitChange: (u: string) => void;
   badge?: React.ReactNode;
   sublabel?: string;
 }) {
   const [localPrice, setLocalPrice] = useState(pricePerUnit?.toString() ?? "");
+  const [localCalories, setLocalCalories] = useState(caloriesPerUnit?.toString() ?? "");
   const [localUnit, setLocalUnit] = useState(unit);
 
-  useEffect(() => {
-    setLocalPrice(pricePerUnit?.toString() ?? "");
-  }, [pricePerUnit]);
-
-  useEffect(() => {
-    setLocalUnit(unit);
-  }, [unit]);
+  useEffect(() => { setLocalPrice(pricePerUnit?.toString() ?? ""); }, [pricePerUnit]);
+  useEffect(() => { setLocalCalories(caloriesPerUnit?.toString() ?? ""); }, [caloriesPerUnit]);
+  useEffect(() => { setLocalUnit(unit); }, [unit]);
 
   const handlePriceBlur = () => {
     const v = parseFloat(localPrice);
     const newVal = isNaN(v) ? undefined : v;
-    if (newVal !== pricePerUnit) {
-      onPriceChange(newVal);
-    }
+    if (newVal !== pricePerUnit) onPriceChange(newVal);
+  };
+
+  const handleCaloriesBlur = () => {
+    if (!onCaloriesChange) return;
+    const v = parseFloat(localCalories);
+    const newVal = isNaN(v) ? undefined : v;
+    if (newVal !== caloriesPerUnit) onCaloriesChange(newVal);
   };
 
   const handleUnitBlur = () => {
-    if (localUnit !== unit) {
-      onUnitChange(localUnit);
-    }
+    if (localUnit !== unit) onUnitChange(localUnit);
   };
 
   return (
@@ -406,13 +416,30 @@ function Row({
         onChange={(e) => setLocalPrice(e.target.value)}
         onBlur={handlePriceBlur}
         disabled={disabled}
-        sx={{ width: 100, "& .MuiInputBase-input": { fontSize: "0.8rem", p: "6px 8px" } }}
+        sx={{ width: 90, "& .MuiInputBase-input": { fontSize: "0.8rem", p: "6px 8px" } }}
         slotProps={{
           input: {
             endAdornment: <InputAdornment position="end" sx={{ "& .MuiTypography-root": { fontSize: "0.75rem" } }}>€</InputAdornment>,
           },
         }}
       />
+      {onCaloriesChange !== undefined && (
+        <TextField
+          type="number"
+          size="small"
+          placeholder="kcal/u"
+          value={localCalories}
+          onChange={(e) => setLocalCalories(e.target.value)}
+          onBlur={handleCaloriesBlur}
+          disabled={disabled}
+          sx={{ width: 100, "& .MuiInputBase-input": { fontSize: "0.8rem", p: "6px 8px" } }}
+          slotProps={{
+            input: {
+              endAdornment: <InputAdornment position="end" sx={{ "& .MuiTypography-root": { fontSize: "0.75rem" } }}>kcal</InputAdornment>,
+            },
+          }}
+        />
+      )}
       <RayonSelect value={rayonId} rayons={rayons} disabled={disabled} onChange={onRayonChange} />
     </Box>
   );

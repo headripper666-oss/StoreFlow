@@ -7,10 +7,12 @@ import { AppShellDesktop } from "./components/layout/AppShellDesktop";
 import { ListOverviewPane } from "./components/desktop/ListOverviewPane";
 import { RecipeDetailPanel } from "./components/desktop/RecipeDetailPanel";
 import { useAuth } from "./hooks/useAuth";
+import { useRecipeHistory } from "./hooks/useRecipeHistory";
 import { useRecipes } from "./hooks/useRecipes";
 import { useShoppingList } from "./hooks/useShoppingList";
 import { AddItemsPage } from "./pages/AddItemsPage";
 import { EssentialsPage } from "./pages/EssentialsPage";
+import { HistoryPage } from "./pages/HistoryPage";
 import { ListPage } from "./pages/ListPage";
 import { LoginPage } from "./pages/LoginPage";
 import { SettingsPage } from "./pages/SettingsPage";
@@ -68,6 +70,8 @@ export default function App() {
     updateEssentialUnit,
   } = useShoppingList(config);
 
+  const { recordUsage } = useRecipeHistory(config);
+
   const {
     recipes,
     isSaving: isSavingRecipes,
@@ -79,6 +83,7 @@ export default function App() {
     deleteTag,
     updateRecipeIngredientRayon,
     updateRecipeIngredientPrice,
+    updateRecipeIngredientCalories,
     updateRecipeIngredientUnit,
   } = useRecipes(config);
 
@@ -165,6 +170,7 @@ export default function App() {
                 isSaving={isSaving || isSavingRecipes}
                 onAddToList={handleAddIngredientsToList}
                 onUpdateRecipe={updateRecipe}
+                onRecordHistory={recordUsage}
                 onConfirmEdit={handleDesktopEditConfirm}
                 onCancelEdit={handleDesktopEditCancel}
                 onUpdateEditingRecipe={setDesktopEditingRecipe}
@@ -268,6 +274,7 @@ export default function App() {
             onUpdateListItemPrice={updateListItemPrice}
             onUpdateCatalogProductPrice={updateCatalogProductPrice}
             onUpdateRecipeIngredientPrice={updateRecipeIngredientPrice}
+            onUpdateRecipeIngredientCalories={updateRecipeIngredientCalories}
             onUpdateEssentialUnit={updateEssentialUnit}
             onUpdateListItemUnit={updateListItemUnit}
             onUpdateCatalogProductUnit={updateCatalogProductUnit}
@@ -289,8 +296,19 @@ export default function App() {
             onSaveRecipe={saveRecipe}
             onUpdateRecipe={updateRecipe}
             onDeleteRecipe={deleteRecipe}
+            onRecordHistory={recordUsage}
             onDesktopSelect={isDesktop ? setDesktopSelectedRecipe : undefined}
             onDesktopEdit={isDesktop ? handleDesktopEdit : undefined}
+          />
+        }
+      />
+      <Route
+        path="/history"
+        element={
+          <HistoryPage
+            config={config}
+            rayons={rayons}
+            onAddToList={handleAddIngredientsToList}
           />
         }
       />

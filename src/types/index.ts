@@ -20,6 +20,7 @@ export interface CatalogProduct {
   defaultUnit: string;
   rayonId: string;
   aliases?: string[];
+  pricePerUnit?: number;
 }
 
 // A personal list item
@@ -33,6 +34,8 @@ export interface ListItem {
   checked: boolean;
   addedAt: string;
   checkedAt?: string;
+  order?: number;
+  pricePerUnit?: number;
 }
 
 // An essential item (always present, resets each trip)
@@ -44,6 +47,7 @@ export interface EssentialItem {
   rayonId: string;
   checked: boolean;
   order?: number;
+  pricePerUnit?: number;
 }
 
 // Root data structure stored in lists.json
@@ -88,6 +92,8 @@ export interface DisplayItem {
   rayonId: string;
   checked: boolean;
   isEssential: boolean;
+  order?: number;
+  pricePerUnit?: number;
 }
 
 // Sync status
@@ -113,6 +119,8 @@ export interface RecipeIngredient {
   quantity: number; // quantité pour le nombre de personnes de base (servings)
   unit: string;
   rayonId: string;
+  pricePerUnit?: number;
+  caloriesPerUnit?: number;
 }
 
 export interface Recipe {
@@ -122,10 +130,23 @@ export interface Recipe {
   ingredients: RecipeIngredient[];
   createdAt: string;
   tags?: string[];
+  steps?: string[];
 }
 
 export interface ParsedRecipe {
   name: string;
   servings: number;
   ingredients: RecipeIngredient[];
+  steps?: string[];
+}
+
+// Recipe history — one entry per recipe, updated on each use
+export interface RecipeHistoryEntry {
+  recipeId: string;       // id de la recette source
+  recipeName: string;
+  lastUsedAt: string;     // ISO date du dernier usage
+  lastGuests: number;     // nombre de personnes lors du dernier usage
+  ingredients: RecipeIngredient[]; // quantités pour lastGuests personnes
+  baseServings: number;   // servings de la recette source (pour rescaler)
+  steps?: string[];
 }

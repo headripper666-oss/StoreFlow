@@ -21,8 +21,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import type { CatalogProduct, Rayon, Recipe, RecipeIngredient } from "../../types";
-import { findInCatalog, normalize, roundQuantity } from "../../utils/recipeUtils";
+import type { CatalogProduct, Rayon, Recipe, RecipeHistoryEntry, RecipeIngredient } from "../../types";
+import { computeRecipeCalories, findInCatalog, normalize, roundQuantity } from "../../utils/recipeUtils";
 import { RecipeImportPreview } from "../recipes/RecipeImportPreview";
 
 const EDIT_COLOR = "#E65100";
@@ -38,6 +38,7 @@ interface RecipeDetailPanelProps {
   isSaving: boolean;
   onAddToList: (ingredients: RecipeIngredient[]) => Promise<void>;
   onUpdateRecipe: (recipe: Recipe) => Promise<void>;
+  onRecordHistory?: (entry: RecipeHistoryEntry) => Promise<void>;
   onConfirmEdit?: (recipe: Recipe) => Promise<void>;
   onCancelEdit?: () => void;
   onUpdateEditingRecipe?: (recipe: Recipe) => void;
@@ -52,6 +53,7 @@ export function RecipeDetailPanel({
   isSaving,
   onAddToList,
   onUpdateRecipe,
+  onRecordHistory,
   onConfirmEdit,
   onCancelEdit,
   onUpdateEditingRecipe,
@@ -96,6 +98,18 @@ export function RecipeDetailPanel({
     setNewUnit("pcs");
     setNewRayonId(defaultRayonId);
   }, [recipe?.id]);
+
+  // Mettre à jour caloriesPerUnit en temps réel quand les ingrédients changent (ex: édition via Réglages)
+  useEffect(() => {
+    if (!recipe) return;
+    setIngredients((prev) =>
+      prev.map((row) => {
+        const updated = recipe.ingredients.find((ing) => normalize(ing.name) === normalize(row.name));
+        if (!updated) return row;
+        return { ...row, caloriesPerUnit: updated.caloriesPerUnit };
+      }),
+    );
+  }, [recipe?.ingredients]);
 
   // ── Edit mode ──────────────────────────────────────────────────────────────
   if (editingRecipe && onConfirmEdit && onCancelEdit) {
@@ -266,12 +280,29 @@ export function RecipeDetailPanel({
 
   const selectedIngredients = ingredients.filter((ing) => ing.included);
 
+  const buildHistoryEntry = (): RecipeHistoryEntry => ({
+    recipeId: recipe!.id,
+    recipeName: recipe!.name,
+    lastUsedAt: new Date().toISOString(),
+    lastGuests: guestCount,
+    baseServings: recipe!.servings,
+    ingredients: selectedIngredients.map(({ included: _i, baseQty: _b, ...ing }) => ing),
+    steps: recipe!.steps,
+  });
+
   const recipeTotal = selectedIngredients.reduce((sum, ing) => {
     if (ing.pricePerUnit && ing.quantity) {
       return sum + ing.pricePerUnit * ing.quantity;
     }
     return sum;
   }, 0);
+
+  // Calculer les calories depuis recipe.ingredients (source de vérité fraîche),
+  // en filtrant les ingrédients décochés et en appliquant le scale
+  const selectedNames = new Set(selectedIngredients.map((i) => normalize(i.name)));
+  const freshSelectedIngredients = recipe.ingredients.filter((ing) => selectedNames.has(normalize(ing.name)));
+  const totalKcal = computeRecipeCalories(freshSelectedIngredients, guestCount, recipe.servings);
+  const kcalPerPerson = totalKcal !== null && guestCount > 0 ? Math.round(totalKcal / guestCount) : null;
 
   const scale = guestCount / recipe.servings;
   const scaleLabel =
@@ -285,6 +316,7 @@ export function RecipeDetailPanel({
       await onAddToList(
         selectedIngredients.map(({ included: _included, baseQty: _baseQty, ...ing }) => ing),
       );
+      onRecordHistory?.(buildHistoryEntry());
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch {
@@ -303,6 +335,7 @@ export function RecipeDetailPanel({
       await onAddToList(
         selectedIngredients.map(({ included: _included, baseQty: _b, ...ing }) => ing),
       );
+      onRecordHistory?.(buildHistoryEntry());
       setSuccess(true);
       setTimeout(() => setSuccess(false), 3000);
     } catch {
@@ -417,14 +450,17 @@ export function RecipeDetailPanel({
         </Box>
       </Box>
 
-      {/* Selection count */}
-      <Typography
-        variant="caption"
-        color="text.secondary"
-        sx={{ textAlign: "right", pr: 2.5, pt: 1 }}
-      >
-        {selectedIngredients.length}/{ingredients.length} sélectionnés
-      </Typography>
+      {/* Selection count + calories */}
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pr: 2.5, pl: 2.5, pt: 1 }}>
+        {totalKcal !== null ? (
+          <Typography variant="caption" color="text.secondary">
+            ~{totalKcal} kcal · {kcalPerPerson} kcal/pers
+          </Typography>
+        ) : <Box />}
+        <Typography variant="caption" color="text.secondary">
+          {selectedIngredients.length}/{ingredients.length} sélectionnés
+        </Typography>
+      </Box>
 
       {/* Ingredient list */}
       <Box
@@ -488,6 +524,15 @@ export function RecipeDetailPanel({
                     onChange={(e) => updateField(idx, "pricePerUnit", parseFloat(e.target.value) || 0)}
                     sx={{ width: 80 }}
                     slotProps={{ htmlInput: { min: 0, step: 0.01 } }}
+                  />
+                  <TextField
+                    size="small"
+                    label="kcal/unité"
+                    type="number"
+                    value={ing.caloriesPerUnit ?? ""}
+                    onChange={(e) => updateField(idx, "caloriesPerUnit", parseFloat(e.target.value) || 0)}
+                    sx={{ width: 90 }}
+                    slotProps={{ htmlInput: { min: 0, step: 0.1 } }}
                   />
                   <Select
                     size="small"
@@ -570,7 +615,8 @@ export function RecipeDetailPanel({
                   >
                     <Typography variant="caption" color="text.secondary">
                       {ing.quantity} {ing.unit}
-                      {ing.pricePerUnit && ` (${(ing.pricePerUnit * ing.quantity).toFixed(2)} €)`}
+                      {ing.pricePerUnit && ` · ${(ing.pricePerUnit * ing.quantity).toFixed(2)} €`}
+                      {ing.caloriesPerUnit !== undefined && ` · ${Math.round(ing.caloriesPerUnit * ing.quantity)} kcal`}
                     </Typography>
                     <Chip
                       label={`${rayons.find((r) => r.id === ing.rayonId)?.icon ?? ""} ${rayons.find((r) => r.id === ing.rayonId)?.label ?? ing.rayonId}`}
