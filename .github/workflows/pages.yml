@@ -41,7 +41,8 @@ jobs:
           VITE_API_URL: ""
 
       - name: Nom distinct sur l'écran d'accueil
-        run: sed -i 's/"short_name": "StoreFlow"/"short_name": "StoreFlow Secours"/' dist/manifest.json
+        run: |
+          sed -i 's/"short_name": "StoreFlow"/"short_name": "StoreFlow Secours"/' dist/manifest.json
 
       - uses: actions/upload-pages-artifact@v3
         with:
