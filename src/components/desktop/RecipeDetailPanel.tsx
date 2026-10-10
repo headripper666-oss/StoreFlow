@@ -42,6 +42,7 @@ interface RecipeDetailPanelProps {
   onConfirmEdit?: (recipe: Recipe) => Promise<void>;
   onCancelEdit?: () => void;
   onUpdateEditingRecipe?: (recipe: Recipe) => void;
+  onSyncIngredientToCatalog?: (name: string, price?: number, calories?: number) => Promise<void>;
 }
 
 export function RecipeDetailPanel({
@@ -57,10 +58,12 @@ export function RecipeDetailPanel({
   onConfirmEdit,
   onCancelEdit,
   onUpdateEditingRecipe,
+  onSyncIngredientToCatalog,
 }: RecipeDetailPanelProps) {
   const [guestCount, setGuestCount] = useState(4);
   const [ingredients, setIngredients] = useState<IngredientRow[]>([]);
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
+  const [editQtyStr, setEditQtyStr] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [isSavingTags, setIsSavingTags] = useState(false);
@@ -450,6 +453,9 @@ export function RecipeDetailPanel({
         </Box>
       </Box>
 
+      {/* Scrollable middle section */}
+      <Box sx={{ flex: 1, overflowY: "auto", display: "flex", flexDirection: "column" }}>
+
       {/* Selection count + calories */}
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", pr: 2.5, pl: 2.5, pt: 1 }}>
         {totalKcal !== null ? (
@@ -463,17 +469,25 @@ export function RecipeDetailPanel({
       </Box>
 
       {/* Ingredient list */}
-      <Box
+      <Accordion
+        defaultExpanded
+        disableGutters
+        elevation={0}
         sx={{
-          flex: 1,
-          overflowY: "auto",
           mx: 2.5,
           mt: 0.5,
           border: "1px solid",
           borderColor: "divider",
-          borderRadius: 2,
+          borderRadius: "8px !important",
+          "&:before": { display: "none" },
         }}
       >
+        <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{ minHeight: 40, px: 2, "&.Mui-expanded": { minHeight: 40 } }}>
+          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+            Ingrédients · {ingredients.length}
+          </Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ p: 0, maxHeight: 320, overflowY: "auto" }}>
         {ingredients.map((ing, idx) => (
           <Box key={idx}>
             {editingIdx === idx ? (
@@ -498,14 +512,12 @@ export function RecipeDetailPanel({
                     size="small"
                     label="Qté"
                     type="number"
-                    value={ing.quantity}
-                    onChange={(e) =>
-                      updateField(
-                        idx,
-                        "quantity",
-                        parseFloat(e.target.value) || 0,
-                      )
-                    }
+                    value={editQtyStr}
+                    onChange={(e) => {
+                      setEditQtyStr(e.target.value);
+                      const num = parseFloat(e.target.value);
+                      if (!isNaN(num)) updateField(idx, "quantity", num);
+                    }}
                     sx={{ width: 80 }}
                     slotProps={{ htmlInput: { min: 0, step: 0.1 } }}
                   />
@@ -552,7 +564,17 @@ export function RecipeDetailPanel({
                 <Button
                   size="small"
                   variant="outlined"
-                  onClick={() => setEditingIdx(null)}
+                  onClick={() => {
+                    const edited = ingredients[idx];
+                    if (edited && onSyncIngredientToCatalog) {
+                      onSyncIngredientToCatalog(
+                        edited.name,
+                        edited.pricePerUnit,
+                        edited.caloriesPerUnit,
+                      );
+                    }
+                    setEditingIdx(null);
+                  }}
                 >
                   OK
                 </Button>
@@ -631,6 +653,7 @@ export function RecipeDetailPanel({
                   onClick={(e) => {
                     e.stopPropagation();
                     setEditingIdx(idx);
+                    setEditQtyStr(String(ing.quantity));
                   }}
                   sx={{ flexShrink: 0, color: "text.disabled" }}
                 >
@@ -641,7 +664,8 @@ export function RecipeDetailPanel({
             {idx < ingredients.length - 1 && <Divider />}
           </Box>
         ))}
-      </Box>
+        </AccordionDetails>
+      </Accordion>
 
       {/* Steps */}
       {(recipe.steps ?? []).length > 0 && (
@@ -747,6 +771,7 @@ export function RecipeDetailPanel({
           </Box>
         )}
       </Box>
+      </Box>{/* end scrollable */}
 
       {/* Actions */}
       <Box
@@ -756,6 +781,9 @@ export function RecipeDetailPanel({
           display: "flex",
           flexDirection: "column",
           gap: 1,
+          borderTop: "1px solid",
+          borderColor: "divider",
+          flexShrink: 0,
         }}
       >
         {error && (
@@ -771,22 +799,6 @@ export function RecipeDetailPanel({
           <Alert severity="success" sx={{ mb: 0.5 }}>
             Ajouté à la liste !
           </Alert>
-        )}
-        {(recipe?.steps ?? []).length > 0 && (
-          <>
-            <Divider sx={{ my: 1 }} />
-            <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 1 }}>
-              Étapes
-            </Typography>
-            <Box component="ol" sx={{ pl: 2.5, m: 0, mb: 1 }}>
-              {(recipe?.steps ?? []).map((step, idx) => (
-                <Box component="li" key={idx} sx={{ mb: 1 }}>
-                  <Typography variant="body2">{step}</Typography>
-                </Box>
-              ))}
-            </Box>
-            <Divider sx={{ mb: 1 }} />
-          </>
         )}
         <Button
           variant="contained"
