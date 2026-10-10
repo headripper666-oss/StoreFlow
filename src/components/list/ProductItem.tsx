@@ -1,8 +1,10 @@
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import { Box, Divider, IconButton } from "@mui/material";
 import { useState } from "react";
-import type { DisplayItem } from "../../types";
+import type { DisplayItem, Rayon } from "../../types";
 import { QuantityEditDialog } from "../shared/QuantityEditDialog";
 import { CheckButton } from "./CheckButton";
 
@@ -10,7 +12,11 @@ interface ProductItemProps {
   item: DisplayItem;
   onToggle: () => void;
   onDelete: () => void;
-  onUpdateQuantity?: (quantity: number, unit: string) => void;
+  onUpdateQuantity?: (quantity: number, unit: string, price: number | undefined, rayonId?: string) => void;
+  onReorder?: (direction: -1 | 1) => void;
+  rayons?: Rayon[];
+  isFirst?: boolean;
+  isLastReorderable?: boolean;
   disabled?: boolean;
   isLast?: boolean;
 }
@@ -20,6 +26,10 @@ export function ProductItem({
   onToggle,
   onDelete,
   onUpdateQuantity,
+  onReorder,
+  rayons,
+  isFirst,
+  isLastReorderable,
   disabled,
   isLast,
 }: ProductItemProps) {
@@ -32,6 +42,8 @@ export function ProductItem({
       ? `${item.quantity} ${item.unit}`
       : undefined;
 
+  const totalPrice = item.pricePerUnit ? (item.pricePerUnit * (item.quantity ?? 1)).toFixed(2) : null;
+
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -42,8 +54,29 @@ export function ProductItem({
             sublabel={sublabel}
             onToggle={onToggle}
             disabled={disabled}
+            badge={totalPrice ? `${totalPrice} €` : undefined}
           />
         </Box>
+        {onReorder && (
+          <Box sx={{ display: "flex", flexDirection: "column", flexShrink: 0 }}>
+            <IconButton
+              size="small"
+              onClick={(e) => { e.stopPropagation(); onReorder(-1); }}
+              disabled={disabled || isFirst}
+              sx={{ p: 0.25 }}
+            >
+              <ArrowUpwardIcon fontSize="small" />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={(e) => { e.stopPropagation(); onReorder(1); }}
+              disabled={disabled || isLastReorderable}
+              sx={{ p: 0.25 }}
+            >
+              <ArrowDownwardIcon fontSize="small" />
+            </IconButton>
+          </Box>
+        )}
         {!item.isEssential && onUpdateQuantity && (
           <IconButton
             onClick={() => setEditOpen(true)}
@@ -55,17 +88,15 @@ export function ProductItem({
             <EditIcon fontSize="small" />
           </IconButton>
         )}
-        {!item.isEssential && (
-          <IconButton
-            onClick={onDelete}
-            disabled={disabled}
-            size="small"
-            sx={{ mr: 1, color: "text.disabled", flexShrink: 0 }}
-            aria-label={`Supprimer ${item.name}`}
-          >
-            <DeleteIcon fontSize="small" />
-          </IconButton>
-        )}
+        <IconButton
+          onClick={onDelete}
+          disabled={disabled}
+          size="small"
+          sx={{ mr: 1, color: "text.disabled", flexShrink: 0 }}
+          aria-label={item.isEssential ? `Décocher ${item.name}` : `Supprimer ${item.name}`}
+        >
+          <DeleteIcon fontSize="small" />
+        </IconButton>
       </Box>
       {!isLast && <Divider sx={{ ml: 7 }} />}
 
@@ -74,9 +105,12 @@ export function ProductItem({
           open={editOpen}
           initialQuantity={item.quantity ?? 1}
           initialUnit={item.unit ?? "pcs"}
-          onConfirm={(qty, unit) => {
+          initialPrice={item.pricePerUnit}
+          initialRayonId={item.rayonId}
+          rayons={rayons}
+          onConfirm={(qty, unit, price, newRayonId) => {
             setEditOpen(false);
-            onUpdateQuantity(qty, unit);
+            onUpdateQuantity(qty, unit, price, newRayonId);
           }}
           onCancel={() => setEditOpen(false)}
         />

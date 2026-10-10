@@ -13,18 +13,22 @@ import { ProductItem } from "./ProductItem";
 interface RayonSectionProps {
   rayon: Rayon;
   items: DisplayItem[];
+  allRayons?: Rayon[];
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
-  onUpdateQuantity?: (id: string, quantity: number, unit: string) => void;
+  onUpdateQuantity?: (id: string, quantity: number, unit: string, price: number | undefined, rayonId?: string) => void;
+  onReorder?: (id: string, direction: -1 | 1) => void;
   disabled?: boolean;
 }
 
 export function RayonSection({
   rayon,
   items,
+  allRayons,
   onToggle,
   onDelete,
   onUpdateQuantity,
+  onReorder,
   disabled,
 }: RayonSectionProps) {
   const uncheckedCount = items.filter((i) => !i.checked).length;
@@ -34,6 +38,11 @@ export function RayonSection({
     ...items.filter((i) => !i.checked),
     ...items.filter((i) => i.checked),
   ];
+
+  // Reorderable = unchecked personal items (not essentials)
+  const reorderableItems = onReorder
+    ? sorted.filter((i) => !i.checked && !i.isEssential)
+    : [];
 
   return (
     <Accordion
@@ -77,21 +86,32 @@ export function RayonSection({
         </Box>
       </AccordionSummary>
       <AccordionDetails sx={{ p: 0, backgroundColor: "background.paper" }}>
-        {sorted.map((item, idx) => (
-          <ProductItem
-            key={item.id}
-            item={item}
-            onToggle={() => onToggle(item.id)}
-            onDelete={() => onDelete(item.id)}
-            onUpdateQuantity={
-              onUpdateQuantity
-                ? (qty, unit) => onUpdateQuantity(item.id, qty, unit)
-                : undefined
-            }
-            disabled={disabled}
-            isLast={idx === sorted.length - 1}
-          />
-        ))}
+        {sorted.map((item, idx) => {
+          const reorderIdx = reorderableItems.indexOf(item);
+          return (
+            <ProductItem
+              key={item.id}
+              item={item}
+              onToggle={() => onToggle(item.id)}
+              onDelete={() => onDelete(item.id)}
+              onUpdateQuantity={
+                onUpdateQuantity
+                  ? (qty, unit, price, newRayonId) => onUpdateQuantity(item.id, qty, unit, price, newRayonId)
+                  : undefined
+              }
+              rayons={allRayons}
+              onReorder={
+                reorderIdx >= 0
+                  ? (dir) => onReorder!(item.id, dir)
+                  : undefined
+              }
+              isFirst={reorderIdx === 0}
+              isLastReorderable={reorderIdx === reorderableItems.length - 1}
+              disabled={disabled}
+              isLast={idx === sorted.length - 1}
+            />
+          );
+        })}
       </AccordionDetails>
     </Accordion>
   );

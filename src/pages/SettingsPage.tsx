@@ -39,6 +39,7 @@ interface SettingsPageProps {
   onUpdateRecipeIngredientUnit: (name: string, unit: string) => Promise<void>;
   onUpdateEssentialUnit: (id: string, unit: string) => Promise<void>;
   onUpdateListItemUnit: (id: string, unit: string) => Promise<void>;
+  onUpdateRecipe: (recipe: Recipe) => Promise<void>;
 }
 
 export function SettingsPage({
@@ -66,6 +67,7 @@ export function SettingsPage({
   onUpdateRecipeIngredientUnit,
   onUpdateEssentialUnit,
   onUpdateListItemUnit,
+  onUpdateRecipe,
 }: SettingsPageProps) {
   const [tab, setTab] = useState(0);
 
@@ -82,7 +84,7 @@ export function SettingsPage({
       >
         <Tab label="Rayons" sx={{ textTransform: "none", fontWeight: 600 }} />
         <Tab label="Tags" sx={{ textTransform: "none", fontWeight: 600 }} />
-        <Tab label="Articles" sx={{ textTransform: "none", fontWeight: 600 }} />
+        <Tab label="Catalogue" sx={{ textTransform: "none", fontWeight: 600 }} />
       </Tabs>
 
       <Box hidden={tab !== 0}>
@@ -126,6 +128,7 @@ export function SettingsPage({
           onUpdateRecipeIngredientUnit={onUpdateRecipeIngredientUnit}
           onUpdateEssentialUnit={onUpdateEssentialUnit}
           onUpdateListItemUnit={onUpdateListItemUnit}
+          onUpdateRecipe={onUpdateRecipe}
         />
       </Box>
     </Container>

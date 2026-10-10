@@ -1,4 +1,3 @@
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ChecklistIcon from "@mui/icons-material/Checklist";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
@@ -9,19 +8,26 @@ import { useLocation, useNavigate } from "react-router-dom";
 const NAV_ITEMS = [
   { label: "Indispensables", icon: <ChecklistIcon />, path: "/essentials" },
   { label: "Ma Liste", icon: <ShoppingBagIcon />, path: "/list" },
-  { label: "Ajouter", icon: <AddCircleIcon />, path: "/add" },
   { label: "Recettes", icon: <MenuBookIcon />, path: "/recipes" },
-  { label: "Rayons", icon: <TuneIcon />, path: "/rayons" },
+  { label: "Réglages", icon: <TuneIcon />, path: "/rayons" },
 ];
+
+// Chemins qui correspondent à un item de nav (pour l'état actif)
+const PATH_TO_NAV: Record<string, string> = {
+  "/add": "/list",
+  "/history": "/rayons",
+  "/settings": "/rayons",
+};
 
 export function BottomNav() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const activePath = PATH_TO_NAV[location.pathname] ?? location.pathname;
   const currentIndex = NAV_ITEMS.findIndex(
     (item) =>
-      location.pathname === item.path ||
-      location.pathname.startsWith(item.path + "/"),
+      activePath === item.path ||
+      activePath.startsWith(item.path + "/"),
   );
   const activeIndex = currentIndex === -1 ? 0 : currentIndex;
 

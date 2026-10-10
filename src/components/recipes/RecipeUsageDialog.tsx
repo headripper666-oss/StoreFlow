@@ -25,6 +25,7 @@ import {
 import { useState } from "react";
 import type { CatalogProduct, Rayon, Recipe, RecipeHistoryEntry, RecipeIngredient } from "../../types";
 import { computeRecipeCalories, roundQuantity } from "../../utils/recipeUtils";
+import { useWakeLock } from "../../hooks/useWakeLock";
 
 type IngredientRow = RecipeIngredient & { included: boolean; baseQty: number };
 
@@ -55,6 +56,7 @@ export function RecipeUsageDialog({
   const [ingredients, setIngredients] = useState<IngredientRow[]>([]);
   const [editingIdx, setEditingIdx] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
+  useWakeLock(open);
 
   const [addOpen, setAddOpen] = useState(false);
   const [newName, setNewName] = useState("");
@@ -588,9 +590,9 @@ export function RecipeUsageDialog({
           disabled={isSaving || selectedIngredients.length === 0}
           sx={{ justifyContent: "space-between" }}
         >
-          <span>Ajouter + sauvegarder la recette</span>
+          <span>Ajouter + mettre à jour la recette</span>
           <span style={{ opacity: 0.7, fontSize: "0.75rem", fontWeight: 400 }}>
-            enregistre les quantités
+            sauvegarde vos modifications
           </span>
         </Button>
         <Button

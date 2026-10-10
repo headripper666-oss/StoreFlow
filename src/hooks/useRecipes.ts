@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { AuthConfig, Recipe } from "../types";
-import { fetchRecipes, saveRecipes } from "../services/github";
+import { fetchRecipes, saveRecipes, connectWebSocket } from "../services/api";
 import { capitalize, DEFAULT_TAGS, detectTags, normalize } from "../utils/recipeUtils";
 import { usePolling } from "./usePolling";
 
@@ -105,8 +105,17 @@ export function useRecipes(config: AuthConfig | null): UseRecipesReturn {
         if (!cancelled) setIsLoading(false);
       });
 
+    const disconnectWs = connectWebSocket((table) => {
+      if ((table === "recipes" || table === "all") && !isSaving) {
+        fetchRecipes(config).then(({ recipes: loaded, sha }) => {
+          processLoadedRecipes(loaded, sha);
+        }).catch(() => {});
+      }
+    });
+
     return () => {
       cancelled = true;
+      disconnectWs();
     };
   }, [config, processLoadedRecipes]);
 

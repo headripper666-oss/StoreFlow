@@ -23,8 +23,9 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
+import { useBlocker } from "react-router-dom";
 import { ConfirmDialog } from "../components/shared/ConfirmDialog";
-import type { EssentialItem, ListItem as ListItemType, Rayon } from "../types";
+import type { EssentialItem, ListItem as ListItemType, Rayon, Recipe } from "../types";
 
 const EMOJI_SUGGESTIONS = [
   "🥖",
@@ -53,6 +54,7 @@ interface RayonSettingsPageProps {
   rayons: Rayon[];
   essentials: EssentialItem[];
   listItems: ListItemType[];
+  recipes?: Recipe[];
   onSave: (rayons: Rayon[]) => Promise<void>;
   isSaving: boolean;
 }
@@ -61,6 +63,7 @@ export function RayonSettingsPage({
   rayons,
   essentials,
   listItems,
+  recipes = [],
   onSave,
   isSaving,
 }: RayonSettingsPageProps) {
@@ -86,7 +89,21 @@ export function RayonSettingsPage({
   const assignedIds = new Set([
     ...essentials.map((e) => e.rayonId),
     ...listItems.map((i) => i.rayonId),
+    ...recipes.flatMap((r) => r.ingredients.map((ing) => ing.rayonId)),
   ]);
+
+  const getBlockReason = (rayonId: string): string => {
+    const parts: string[] = [];
+    const essCount = essentials.filter((e) => e.rayonId === rayonId).length;
+    const listCount = listItems.filter((i) => i.rayonId === rayonId).length;
+    const recipeNames = [...new Set(
+      recipes.filter((r) => r.ingredients.some((ing) => ing.rayonId === rayonId)).map((r) => r.name)
+    )];
+    if (essCount > 0) parts.push(`${essCount} indispensable${essCount > 1 ? "s" : ""}`);
+    if (listCount > 0) parts.push(`${listCount} article${listCount > 1 ? "s" : ""} en liste`);
+    if (recipeNames.length > 0) parts.push(`recette${recipeNames.length > 1 ? "s" : ""} : ${recipeNames.join(", ")}`);
+    return `Utilisé par ${parts.join(", ")}`;
+  };
 
   const move = (index: number, direction: -1 | 1) => {
     const next = index + direction;
@@ -153,6 +170,14 @@ export function RayonSettingsPage({
     setIsDirty(false);
   };
 
+  const blocker = useBlocker(isDirty);
+
+  const handleSaveAndProceed = async () => {
+    await onSave(localRayons);
+    setIsDirty(false);
+    blocker.proceed?.();
+  };
+
   return (
     <Container maxWidth="sm" sx={{ py: 2, pb: 10 }}>
       <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
@@ -203,11 +228,7 @@ export function RayonSettingsPage({
                       <EditIcon fontSize="small" />
                     </IconButton>
                     <Tooltip
-                      title={
-                        isAssigned
-                          ? "Des articles sont assignés à ce rayon"
-                          : "Supprimer"
-                      }
+                      title={isAssigned ? getBlockReason(rayon.id) : "Supprimer"}
                     >
                       <span>
                         <IconButton
@@ -256,7 +277,7 @@ export function RayonSettingsPage({
         aria-label="Ajouter un rayon"
         onClick={() => setAddDialogOpen(true)}
         disabled={isSaving}
-        sx={{ position: "fixed", bottom: 80, right: 20 }}
+        sx={{ position: "fixed", bottom: 80, right: { xs: 20, lg: "max(20px, calc((100vw - 220px - 600px) / 2 + 20px))" } }}
       >
         <AddIcon />
       </Fab>
@@ -418,6 +439,49 @@ export function RayonSettingsPage({
         onConfirm={() => deleteTarget && handleDelete(deleteTarget)}
         onCancel={() => setDeleteTarget(null)}
       />
+
+      {/* Unsaved changes warning */}
+      <Dialog
+        open={blocker.state === "blocked"}
+        onClose={() => blocker.reset?.()}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>Modifications non sauvegardées</DialogTitle>
+        <DialogContent>
+          <Typography>
+            Tu as des modifications non sauvegardées. Que veux-tu faire ?
+          </Typography>
+        </DialogContent>
+        <DialogActions sx={{ px: 3, pb: 2, flexDirection: "column", gap: 1, alignItems: "stretch" }}>
+          <Button
+            onClick={handleSaveAndProceed}
+            variant="contained"
+            color="success"
+            startIcon={<SaveIcon />}
+            disabled={isSaving}
+            fullWidth
+          >
+            Sauvegarder et quitter
+          </Button>
+          <Button
+            onClick={() => blocker.proceed?.()}
+            variant="outlined"
+            color="error"
+            fullWidth
+          >
+            Quitter sans sauvegarder
+          </Button>
+          <Button
+            onClick={() => blocker.reset?.()}
+            variant="outlined"
+            color="inherit"
+            fullWidth
+          >
+            Rester sur la page
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }

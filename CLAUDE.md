@@ -100,15 +100,22 @@ On desktop, `App.tsx` uses `useMediaQuery(theme.breakpoints.up('lg'))` to render
 
 Spec: `docs/superpowers/specs/2026-04-20-desktop-layout-design.md`
 
-### Hébergement (C300)
+### Hébergement (N150)
 
-L'application est hébergée sur un Chromebook C300 sous XFCE, accessible via Freebox OS.
+L'application est hébergée sur le **N150** (SOYO M4 Plus2), accessible via Freebox OS.
 
 - **URL publique** : `http://noforgiv.freeboxos.fr:50010`
-- **Fichiers build** : `/home/renaud/dossier_partage/storeflow/` (accessible depuis Windows sur `Z:\storeflow`)
-- **Proxy Mistral** : `/home/renaud/storeflow-proxy/` — remplace les Netlify functions pour proxifier les appels Mistral AI
+- **Service systemd** : `storeflow-proxy` (port 3001, exposé Freebox port 50010)
+- **Serveur** : `storeflow-proxy/server.js` — Express + SQLite + WebSocket + Mistral proxy + fichiers statiques
+- **Fichiers statiques** : servis depuis `../dist` (= `dist/` à la racine du projet)
 
-Le dossier `netlify/` et `netlify.toml` sont conservés mais non utilisés en production. Déployer = copier `dist/` vers `Z:\storeflow`.
+**Déployer** :
+```bash
+npm run build
+sudo systemctl restart storeflow-proxy
+```
+
+Le dossier `netlify/` et `netlify.toml` sont conservés mais non utilisés en production.
 
 ### Recipes feature — ingredient scaling & UX
 

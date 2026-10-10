@@ -60,6 +60,13 @@ interface RecipeImportPreviewProps {
   onTagsChange?: (tags: string[]) => void;
 }
 
+function getUnitOptions(name: string, catalog: CatalogProduct[]): string[] {
+  const match = catalog.find((p) => normalize(p.name) === normalize(name) || (p.aliases ?? []).some((a) => normalize(a) === normalize(name)));
+  if (match) return [match.defaultUnit];
+  const all = [...new Set(catalog.map((p) => p.defaultUnit))].sort();
+  return all;
+}
+
 function resolveStatus(name: string, catalog: CatalogProduct[]): CatalogStatus {
   const normName = normalize(name);
   for (const p of catalog) {
@@ -377,12 +384,17 @@ export function RecipeImportPreview({
                       sx={{ width: 80 }}
                       slotProps={{ htmlInput: { min: 0, step: 0.1 } }}
                     />
-                    <TextField
+                    <Autocomplete
+                      freeSolo
                       size="small"
-                      label="Unité"
-                      value={ing.unit}
-                      onChange={(e) => updateField(idx, "unit", e.target.value)}
-                      sx={{ width: 90 }}
+                      options={getUnitOptions(ing.name, catalog)}
+                      inputValue={ing.unit}
+                      onInputChange={(_, v) => updateField(idx, "unit", v)}
+                      onChange={(_, v) => { if (v) updateField(idx, "unit", v as string); }}
+                      sx={{ width: 110 }}
+                      renderInput={(params) => (
+                        <TextField {...params} size="small" label="Unité" />
+                      )}
                     />
                     <Select
                       size="small"

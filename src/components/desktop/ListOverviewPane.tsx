@@ -1,34 +1,46 @@
 import { Box, Typography } from "@mui/material";
 import { RayonSection } from "../list/RayonSection";
-import type { DisplayItem, EssentialItem, ListItem, Rayon } from "../../types";
+import type { CatalogProduct, DisplayItem, EssentialItem, ListItem, Rayon } from "../../types";
+import { normalize } from "../../utils/recipeUtils";
 
 interface ListOverviewPaneProps {
   items: ListItem[];
   essentials: EssentialItem[];
+  catalog: CatalogProduct[];
   rayons: Rayon[];
-  onToggle: (id: string) => Promise<void>;
+  onToggle: (id: string) => void;
   onDelete: (id: string) => Promise<void>;
-  onToggleEssential: (id: string) => Promise<void>;
+  onToggleEssential: (id: string) => void;
   isSaving: boolean;
 }
 
 export function ListOverviewPane({
   items,
   essentials,
+  catalog,
   rayons,
   onToggle,
   onDelete,
   onToggleEssential,
   isSaving,
 }: ListOverviewPaneProps) {
+  const getPrice = (name: string, itemPrice?: number) => {
+    if (itemPrice !== undefined) return itemPrice;
+    const norm = normalize(name);
+    return catalog.find((p) => normalize(p.name) === norm)?.pricePerUnit;
+  };
+
   const essentialItems: DisplayItem[] = essentials
     .filter((e) => e.checked)
     .map((e) => ({
       id: e.id,
       name: e.name,
+      quantity: e.quantity,
+      unit: e.unit,
       rayonId: e.rayonId,
       checked: false,
       isEssential: true,
+      pricePerUnit: getPrice(e.name, e.pricePerUnit),
     }));
 
   const listItems: DisplayItem[] = items.map((i) => ({
@@ -39,6 +51,8 @@ export function ListOverviewPane({
     rayonId: i.rayonId,
     checked: i.checked,
     isEssential: false,
+    order: i.order,
+    pricePerUnit: getPrice(i.name, i.pricePerUnit),
   }));
 
   const allItems = [...essentialItems, ...listItems];

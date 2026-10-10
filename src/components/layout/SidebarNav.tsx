@@ -1,5 +1,5 @@
-import AddCircleIcon from "@mui/icons-material/AddCircle";
 import ChecklistIcon from "@mui/icons-material/Checklist";
+import HistoryIcon from "@mui/icons-material/History";
 import LogoutIcon from "@mui/icons-material/Logout";
 import MenuBookIcon from "@mui/icons-material/MenuBook";
 import ShoppingBagIcon from "@mui/icons-material/ShoppingBag";
@@ -21,12 +21,12 @@ import type { SyncStatus as SyncStatusType } from "../../types";
 const NAV_ITEMS = [
   { label: "Indispensables", icon: <ChecklistIcon />, path: "/essentials" },
   { label: "Ma Liste", icon: <ShoppingBagIcon />, path: "/list" },
-  { label: "Ajouter", icon: <AddCircleIcon />, path: "/add" },
   { label: "Recettes", icon: <MenuBookIcon />, path: "/recipes" },
 ];
 
 const SETTINGS_ITEMS = [
-  { label: "Rayons", icon: <TuneIcon />, path: "/rayons" },
+  { label: "Historique", icon: <HistoryIcon />, path: "/history" },
+  { label: "Réglages", icon: <TuneIcon />, path: "/rayons" },
 ];
 
 interface SidebarNavProps {

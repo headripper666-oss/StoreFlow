@@ -6,8 +6,17 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
+  Button,
+  Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
   InputAdornment,
+  List,
+  ListItem,
+  ListItemText,
   MenuItem,
   Select,
   TextField,
@@ -15,12 +24,13 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import type { CatalogProduct, EssentialItem, ListItem, Rayon, Recipe } from "../../types";
-import { normalize } from "../../utils/recipeUtils";
+import type { CatalogProduct, EssentialItem, ListItem as AppListItem, Rayon, Recipe } from "../../types";
+import { DEFAULT_TAGS, normalize } from "../../utils/recipeUtils";
+import { RecipeImportPreview } from "../recipes/RecipeImportPreview";
 
 interface ArticlesRayonManagerProps {
   essentials: EssentialItem[];
-  personalList: ListItem[];
+  personalList: AppListItem[];
   catalog: CatalogProduct[];
   recipes: Recipe[];
   rayons: Rayon[];
@@ -38,6 +48,7 @@ interface ArticlesRayonManagerProps {
   onUpdateListItemUnit: (id: string, unit: string) => Promise<void>;
   onUpdateCatalogProductUnit: (id: string, unit: string) => Promise<void>;
   onUpdateRecipeIngredientUnit: (name: string, unit: string) => Promise<void>;
+  onUpdateRecipe: (recipe: Recipe) => Promise<void>;
 }
 
 interface IngredientEntry {
@@ -47,7 +58,7 @@ interface IngredientEntry {
   caloriesPerUnit?: number;
   unit: string;
   conflicted: boolean;
-  recipeCount: number;
+  relatedRecipes: Recipe[];
 }
 
 function dedupe<T extends { id: string }>(
@@ -115,44 +126,48 @@ export function ArticlesRayonManager({
   onUpdateListItemUnit,
   onUpdateCatalogProductUnit,
   onUpdateRecipeIngredientUnit,
+  onUpdateRecipe,
 }: ArticlesRayonManagerProps) {
   const [search, setSearch] = useState("");
+  const [recipeListIngredient, setRecipeListIngredient] = useState<IngredientEntry | null>(null);
+  const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null);
 
   const q = normalize(search.trim());
   const matches = (name: string) => !q || normalize(name).includes(q);
 
-  // Build unique ingredient list from all recipes
+  // Build unique ingredient list from all recipes — one entry per unique name
   const ingredientMap = new Map<string, IngredientEntry>();
   const ingredientRayons = new Map<string, Set<string>>();
+  const ingredientRecipeMap = new Map<string, Map<string, Recipe>>(); // normName → recipe id → Recipe
   for (const recipe of recipes) {
     for (const ing of recipe.ingredients) {
       const normName = normalize(ing.name);
-      const key = `${normName}||${ing.rayonId}||${normalize(ing.unit)}`;
-      const existing = ingredientMap.get(key);
-      if (!existing) {
+      if (!ingredientRecipeMap.has(normName)) ingredientRecipeMap.set(normName, new Map());
+      ingredientRecipeMap.get(normName)!.set(recipe.id, recipe);
+
+      if (!ingredientRayons.has(normName)) ingredientRayons.set(normName, new Set());
+      ingredientRayons.get(normName)!.add(ing.rayonId);
+
+      if (!ingredientMap.has(normName)) {
         // Resolve: essential > catalog > ingredient's own data
         const essentialMatch = essentials.find((e) => normalize(e.name) === normName);
         const catalogMatch = catalog.find(
           (p) => normalize(p.name) === normName || (p.aliases ?? []).some((a) => normalize(a) === normName),
         );
-        ingredientMap.set(key, {
+        ingredientMap.set(normName, {
           name: ing.name,
           rayonId: essentialMatch?.rayonId ?? catalogMatch?.rayonId ?? ing.rayonId,
           pricePerUnit: essentialMatch?.pricePerUnit ?? catalogMatch?.pricePerUnit ?? ing.pricePerUnit,
           caloriesPerUnit: ing.caloriesPerUnit,
           unit: essentialMatch?.unit ?? catalogMatch?.defaultUnit ?? ing.unit,
           conflicted: false,
-          recipeCount: 1,
+          relatedRecipes: [],
         });
-      } else {
-        existing.recipeCount++;
       }
-      if (!ingredientRayons.has(normName)) ingredientRayons.set(normName, new Set());
-      ingredientRayons.get(normName)!.add(ing.rayonId);
     }
   }
-  for (const [key, entry] of ingredientMap) {
-    const normName = key.split("||")[0];
+  for (const [normName, entry] of ingredientMap) {
+    entry.relatedRecipes = [...(ingredientRecipeMap.get(normName)?.values() ?? [])];
     const rayonSet = ingredientRayons.get(normName);
     if (rayonSet && rayonSet.size > 1) entry.conflicted = true;
   }
@@ -247,12 +262,22 @@ export function ArticlesRayonManager({
                   onUnitChange={(u) => onUpdateRecipeIngredientUnit(ing.name, u)}
                   badge={
                     ing.conflicted ? (
-                      <Tooltip title={`Rayon différent dans certaines recettes (${ing.recipeCount} recettes)`}>
+                      <Tooltip title={`Rayon différent dans certaines recettes (${ing.relatedRecipes.length} recettes)`}>
                         <WarningAmberIcon sx={{ fontSize: 16, color: "warning.main", flexShrink: 0 }} />
                       </Tooltip>
                     ) : undefined
                   }
-                  sublabel={`${ing.recipeCount} recette${ing.recipeCount > 1 ? "s" : ""}`}
+                  recipeChip={
+                    <Chip
+                      label={`${ing.relatedRecipes.length} recette${ing.relatedRecipes.length > 1 ? "s" : ""}`}
+                      size="small"
+                      variant="outlined"
+                      color="primary"
+                      clickable
+                      onClick={() => setRecipeListIngredient(ing)}
+                      sx={{ fontSize: "0.7rem", height: 22, flexShrink: 0 }}
+                    />
+                  }
                 />
                 {idx < filteredIngredients.length - 1 && <Divider sx={{ ml: 2 }} />}
               </Box>
@@ -328,6 +353,71 @@ export function ArticlesRayonManager({
           )}
         </AccordionDetails>
       </Accordion>
+
+      {/* Dialog : liste des recettes d'un ingrédient */}
+      <Dialog
+        open={recipeListIngredient !== null && editingRecipe === null}
+        onClose={() => setRecipeListIngredient(null)}
+        maxWidth="xs"
+        fullWidth
+      >
+        <DialogTitle>
+          Recettes avec « {recipeListIngredient?.name} »
+        </DialogTitle>
+        <DialogContent sx={{ p: 0 }}>
+          <List disablePadding>
+            {recipeListIngredient?.relatedRecipes.map((r, idx) => (
+              <Box key={r.id}>
+                <ListItem
+                  secondaryAction={
+                    <Button
+                      size="small"
+                      variant="outlined"
+                      onClick={() => setEditingRecipe(r)}
+                    >
+                      Modifier
+                    </Button>
+                  }
+                >
+                  <ListItemText primary={r.name} secondary={`${r.servings} pers.`} />
+                </ListItem>
+                {idx < (recipeListIngredient?.relatedRecipes.length ?? 0) - 1 && <Divider />}
+              </Box>
+            ))}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setRecipeListIngredient(null)}>Fermer</Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Dialog : édition d'une recette */}
+      {editingRecipe && (
+        <Dialog
+          open
+          onClose={() => setEditingRecipe(null)}
+          maxWidth="md"
+          fullWidth
+          fullScreen={false}
+        >
+          <RecipeImportPreview
+            parsed={editingRecipe}
+            rayons={rayons}
+            catalog={catalog}
+            isSaving={isSaving}
+            allTags={[...DEFAULT_TAGS]}
+            initialTags={editingRecipe.tags ?? []}
+            title={`Modifier « ${editingRecipe.name} »`}
+            confirmLabel="Sauvegarder"
+            showCatalogStatus={false}
+            onConfirm={async (updated) => {
+              await onUpdateRecipe({ ...updated, id: editingRecipe.id, createdAt: editingRecipe.createdAt });
+              setEditingRecipe(null);
+            }}
+            onCancel={() => setEditingRecipe(null)}
+          />
+        </Dialog>
+      )}
     </Box>
   );
 }
@@ -345,6 +435,7 @@ function Row({
   onCaloriesChange,
   onUnitChange,
   badge,
+  recipeChip,
   sublabel,
 }: {
   name: string;
@@ -359,6 +450,7 @@ function Row({
   onCaloriesChange?: (c: number | undefined) => void;
   onUnitChange: (u: string) => void;
   badge?: React.ReactNode;
+  recipeChip?: React.ReactNode;
   sublabel?: string;
 }) {
   const [localPrice, setLocalPrice] = useState(pricePerUnit?.toString() ?? "");
@@ -399,6 +491,7 @@ function Row({
         )}
       </Box>
       {badge}
+      {recipeChip}
       <TextField
         size="small"
         placeholder="Unité"

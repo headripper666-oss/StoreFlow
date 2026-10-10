@@ -1,5 +1,6 @@
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import AddIcon from "@mui/icons-material/Add";
+import CasinoIcon from "@mui/icons-material/Casino";
 import ClearIcon from "@mui/icons-material/Clear";
 import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
@@ -18,9 +19,11 @@ import {
   TextField,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useState, useMemo } from "react";
+import { RandomMealDialog } from "../components/recipes/RandomMealDialog";
 import { RecipeCard } from "../components/recipes/RecipeCard";
 import { RecipeImportPreview } from "../components/recipes/RecipeImportPreview";
 import { RecipeUsageDialog } from "../components/recipes/RecipeUsageDialog";
@@ -33,7 +36,7 @@ import type {
   Recipe,
   RecipeIngredient,
 } from "../types";
-import { DEFAULT_TAGS, tagDisplay } from "../utils/recipeUtils";
+import { DEFAULT_TAGS, computeRecipeCalories, tagDisplay } from "../utils/recipeUtils";
 
 interface RecipesPageProps {
   recipes: Recipe[];
@@ -46,6 +49,7 @@ interface RecipesPageProps {
   onSaveRecipe: (recipe: Recipe) => Promise<void>;
   onUpdateRecipe: (recipe: Recipe) => Promise<void>;
   onDeleteRecipe: (id: string) => Promise<void>;
+  onRecordHistory?: (entry: import("../types").RecipeHistoryEntry) => Promise<void>;
   onDesktopSelect?: (recipe: Recipe) => void;
   onDesktopEdit?: (recipe: Recipe) => void;
 }
@@ -74,6 +78,7 @@ export function RecipesPage({
   onSaveRecipe,
   onUpdateRecipe,
   onDeleteRecipe,
+  onRecordHistory,
   onDesktopSelect,
   onDesktopEdit,
 }: RecipesPageProps) {
@@ -83,10 +88,12 @@ export function RecipesPage({
   const [selectedRecipe, setSelectedRecipe] = useState<Recipe | null>(null);
   const [usageDialogOpen, setUsageDialogOpen] = useState(false);
   const [deleteTarget, setDeleteTarget] = useState<Recipe | null>(null);
+  const [randomDialogOpen, setRandomDialogOpen] = useState(false);
 
   // Filter state
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTags, setActiveTags] = useState<string[]>([]);
+  const [maxKcalPerPerson, setMaxKcalPerPerson] = useState<string>("");
 
   // Import tab state
   const [importText, setImportText] = useState("");
@@ -111,6 +118,7 @@ export function RecipesPage({
   }, [recipes, allTags]);
 
   const filteredRecipes = useMemo(() => {
+    const kcalLimit = parseFloat(maxKcalPerPerson);
     return recipes
       .filter(
         (r) =>
@@ -124,10 +132,16 @@ export function RecipesPage({
           normalize(r.name).includes(q) ||
           r.ingredients.some((i) => normalize(i.name).includes(q))
         );
+      })
+      .filter((r) => {
+        if (!kcalLimit || isNaN(kcalLimit)) return true;
+        const total = computeRecipeCalories(r.ingredients, r.servings, r.servings);
+        if (total === null) return true;
+        return Math.round(total / r.servings) <= kcalLimit;
       });
-  }, [recipes, activeTags, searchQuery]);
+  }, [recipes, activeTags, searchQuery, maxKcalPerPerson]);
 
-  const hasActiveFilter = searchQuery !== "" || activeTags.length > 0;
+  const hasActiveFilter = searchQuery !== "" || activeTags.length > 0 || maxKcalPerPerson !== "";
 
   const toggleTag = (tag: string) => {
     setActiveTags((prev) =>
@@ -273,6 +287,7 @@ export function RecipesPage({
   const handleClearFilters = () => {
     setSearchQuery("");
     setActiveTags([]);
+    setMaxKcalPerPerson("");
   };
 
   return (
@@ -318,6 +333,17 @@ export function RecipesPage({
           >
             Créer manuellement
           </Button>
+          {recipes.length > 0 && (
+            <Button
+              variant="outlined"
+              startIcon={<CasinoIcon />}
+              onClick={() => setRandomDialogOpen(true)}
+              size="small"
+              color="secondary"
+            >
+              Tirage aléatoire
+            </Button>
+          )}
         </Box>
         {recipes.length === 0 ? (
           <Box
@@ -368,6 +394,28 @@ export function RecipesPage({
                 },
               }}
             />
+
+            {/* Calorie filter */}
+            <Tooltip title="Masque les recettes dont les calories par personne (base) sont connues et dépassent cette valeur. Les recettes sans données calories restent affichées." placement="top">
+              <TextField
+                size="small"
+                type="number"
+                placeholder="Max kcal/pers"
+                value={maxKcalPerPerson}
+                onChange={(e) => setMaxKcalPerPerson(e.target.value)}
+                sx={{ mb: 1.5, width: 160 }}
+                slotProps={{
+                  htmlInput: { min: 0, step: 50 },
+                  input: {
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <Typography variant="caption" color="text.secondary">kcal</Typography>
+                      </InputAdornment>
+                    ),
+                  },
+                }}
+              />
+            </Tooltip>
 
             {/* Tag filter chips */}
             {availableTags.length > 0 && (
@@ -586,6 +634,7 @@ export function RecipesPage({
         isSaving={isSavingList || isSavingRecipes}
         onAddToList={onAddToList}
         onUpdateRecipe={onUpdateRecipe}
+        onRecordHistory={onRecordHistory}
         onClose={() => {
           setUsageDialogOpen(false);
           setSelectedRecipe(null);
@@ -600,6 +649,18 @@ export function RecipesPage({
         confirmLabel="Supprimer"
         onConfirm={handleConfirmDelete}
         onCancel={() => setDeleteTarget(null)}
+      />
+
+      {/* Random meal picker */}
+      <RandomMealDialog
+        open={randomDialogOpen}
+        recipes={recipes}
+        availableTags={availableTags}
+        onClose={() => setRandomDialogOpen(false)}
+        onUse={(recipe) => {
+          setRandomDialogOpen(false);
+          handleUseRecipe(recipe);
+        }}
       />
     </Container>
   );

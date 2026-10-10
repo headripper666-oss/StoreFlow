@@ -1,0 +1,51 @@
+name: Deploy secours (GitHub Pages)
+
+# Publie une version de secours de l'app qui lit/écrit directement sur GitHub,
+# utilisable quand le N150 est éteint : https://headripper666-oss.github.io/StoreFlow/
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          VITE_BASE: /StoreFlow/
+          VITE_GITHUB_ONLY: "true"
+          VITE_API_URL: ""
+
+      - name: Nom distinct sur l'écran d'accueil
+        run: sed -i 's/"short_name": "StoreFlow"/"short_name": "StoreFlow Secours"/' dist/manifest.json
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+      - id: deployment
+        uses: actions/deploy-pages@v4

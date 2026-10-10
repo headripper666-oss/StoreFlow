@@ -72,6 +72,11 @@ export default function App() {
 
   const { recordUsage } = useRecipeHistory(config);
 
+  const updateItemQuantityWithRayon = async (id: string, quantity: number, unit: string, price: number | undefined, rayonId?: string) => {
+    await updateItemQuantity(id, quantity, unit, price);
+    if (rayonId) await updateListItemRayon(id, rayonId);
+  };
+
   const {
     recipes,
     isSaving: isSavingRecipes,
@@ -135,16 +140,34 @@ export default function App() {
           unit: ing.unit,
           rayonId: ing.rayonId,
           productId: undefined,
+          pricePerUnit: ing.pricePerUnit,
         })),
       );
     },
     [addItems],
   );
 
+  const handleSyncIngredientToCatalog = useCallback(
+    async (name: string, price?: number, calories?: number) => {
+      await Promise.all([
+        updateRecipeIngredientPrice(name, price),
+        updateRecipeIngredientCalories(name, calories),
+      ]);
+      const match = catalog.find(
+        (p) => p.name.toLowerCase().trim() === name.toLowerCase().trim(),
+      );
+      if (match) {
+        await updateCatalogProductPrice(match.id, price);
+      }
+    },
+    [catalog, updateRecipeIngredientPrice, updateRecipeIngredientCalories, updateCatalogProductPrice],
+  );
+
   const listOverviewPane = (
     <ListOverviewPane
       items={data?.personalList ?? []}
       essentials={data?.essentials ?? []}
+      catalog={catalog}
       rayons={rayons}
       onToggle={toggleItem}
       onDelete={removeItem}
@@ -174,6 +197,7 @@ export default function App() {
                 onConfirmEdit={handleDesktopEditConfirm}
                 onCancelEdit={handleDesktopEditCancel}
                 onUpdateEditingRecipe={setDesktopEditingRecipe}
+                onSyncIngredientToCatalog={handleSyncIngredientToCatalog}
               />
             );
           default:
@@ -226,11 +250,12 @@ export default function App() {
             essentials={data?.essentials ?? []}
             rayons={rayons}
             catalog={catalog}
+            recipes={recipes}
             onToggle={toggleItem}
             onDelete={removeItem}
             onClearChecked={clearChecked}
             onToggleEssential={toggleEssential}
-            onUpdateQuantity={updateItemQuantity}
+            onUpdateQuantity={updateItemQuantityWithRayon}
             onUpdateEssentialQuantity={updateEssentialQuantity}
             onToggleAll={toggleAllItems}
             onReorderItem={reorderItem}
@@ -279,6 +304,7 @@ export default function App() {
             onUpdateListItemUnit={updateListItemUnit}
             onUpdateCatalogProductUnit={updateCatalogProductUnit}
             onUpdateRecipeIngredientUnit={updateRecipeIngredientUnit}
+            onUpdateRecipe={updateRecipe}
           />
         }
       />

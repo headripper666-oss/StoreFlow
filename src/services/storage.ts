@@ -5,6 +5,7 @@ const AUTH_KEY = "storeflow_auth";
 const PENDING_KEY = "storeflow_pending";
 const ETAG_KEY = "storeflow_etag";
 const SHA_KEY = "storeflow_sha";
+const ITEM_ORDER_KEY = "storeflow_item_order";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 interface CacheEntry {
@@ -106,4 +107,27 @@ export function getPendingChanges(): PendingChange[] {
 
 export function clearPendingChanges(): void {
   localStorage.removeItem(PENDING_KEY);
+}
+
+// --- Item order map (localStorage — persists across sessions) ---
+// Maps rayonId -> ordered array of normalized item names
+
+type ItemOrderMap = Record<string, string[]>;
+
+export function getItemOrderMap(): ItemOrderMap {
+  try {
+    const raw = localStorage.getItem(ITEM_ORDER_KEY);
+    if (!raw) return {};
+    return JSON.parse(raw) as ItemOrderMap;
+  } catch {
+    return {};
+  }
+}
+
+export function setItemOrderMap(map: ItemOrderMap): void {
+  try {
+    localStorage.setItem(ITEM_ORDER_KEY, JSON.stringify(map));
+  } catch {
+    // Storage full — skip
+  }
 }

@@ -6,6 +6,7 @@ import {
   saveAuthConfig,
 } from "../services/storage";
 import { fetchShoppingData, initDataRepo } from "../services/github";
+import { initApiServer, resetServerCheck } from "../services/api";
 
 interface UseAuthReturn {
   config: AuthConfig | null;
@@ -21,12 +22,13 @@ export function useAuth(): UseAuthReturn {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Restore session on mount
+  // Restore session on mount — attend que le serveur local soit prêt avant de déclencher les hooks
   useEffect(() => {
     const saved = loadAuthConfig();
-    if (saved) {
-      setConfig(saved);
-    }
+    if (!saved) return;
+    initApiServer(saved)
+      .catch(() => {})
+      .finally(() => setConfig(saved));
   }, []);
 
   const login = useCallback(
@@ -39,6 +41,7 @@ export function useAuth(): UseAuthReturn {
       try {
         await fetchShoppingData(cfg);
         initDataRepo(cfg).catch(() => {});
+        await initApiServer(cfg).catch(() => {}); // attend que la DB soit peuplée avant de charger les hooks
         saveAuthConfig(cfg);
         setConfig(cfg);
         return true;
@@ -57,6 +60,7 @@ export function useAuth(): UseAuthReturn {
           try {
             await initDataRepo(cfg);
             await fetchShoppingData(cfg);
+            await initApiServer(cfg).catch(() => {});
             saveAuthConfig(cfg);
             setConfig(cfg);
             return true;
@@ -78,6 +82,7 @@ export function useAuth(): UseAuthReturn {
 
   const logout = useCallback(() => {
     clearAuthConfig();
+    resetServerCheck();
     setConfig(null);
     setError(null);
   }, []);

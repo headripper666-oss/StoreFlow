@@ -4,6 +4,7 @@ import type {
   GitHubFileState,
   Rayon,
   Recipe,
+  RecipeHistoryEntry,
   ShoppingData,
 } from "../types";
 import { DEFAULT_RAYONS } from "../constants/defaultRayons";
@@ -71,6 +72,20 @@ export async function fetchShoppingData(
   return { sha: json.sha, etag, content };
 }
 
+// SHA actuel d'un fichier (sans ETag) — utilisé quand on bascule en mode secours
+export async function fetchFileSha(
+  config: AuthConfig,
+  file: string,
+): Promise<string> {
+  const { pat, dataOwner, dataRepo } = config;
+  const res = await fetch(contentUrl(dataOwner, dataRepo, file), {
+    headers: githubHeaders(pat),
+  });
+  if (!res.ok) return "";
+  const json = await res.json();
+  return json.sha as string;
+}
+
 // Write lists.json with updated content
 export async function saveShoppingData(
   config: AuthConfig,
@@ -130,18 +145,51 @@ export async function fetchRayons(config: AuthConfig): Promise<Rayon[]> {
 // Fetch products.json (catalog)
 export async function fetchCatalog(
   config: AuthConfig,
-): Promise<CatalogProduct[]> {
+): Promise<{ products: CatalogProduct[]; sha: string }> {
   const { pat, dataOwner, dataRepo } = config;
   const url = contentUrl(dataOwner, dataRepo, "products.json");
 
   try {
     const res = await fetch(url, { headers: githubHeaders(pat) });
-    if (!res.ok) return [];
+    if (!res.ok) return { products: [], sha: "" };
     const json = await res.json();
-    return decodeContent(json.content) as CatalogProduct[];
+    return {
+      products: decodeContent(json.content) as CatalogProduct[],
+      sha: json.sha as string,
+    };
   } catch {
-    return [];
+    return { products: [], sha: "" };
   }
+}
+
+// Save products.json (catalog)
+export async function saveCatalog(
+  config: AuthConfig,
+  products: CatalogProduct[],
+  currentSha: string,
+): Promise<string> {
+  const { pat, dataOwner, dataRepo } = config;
+  const url = contentUrl(dataOwner, dataRepo, "products.json");
+
+  const body: Record<string, unknown> = {
+    message: `chore: update catalog [${new Date().toISOString()}]`,
+    content: encodeContent(products),
+  };
+  if (currentSha) body.sha = currentSha;
+
+  const res = await fetch(url, {
+    method: "PUT",
+    headers: githubHeaders(pat),
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    if (res.status === 409) throw new Error("CONFLICT");
+    throw new Error(`GitHub API error: ${res.status}`);
+  }
+
+  const json = await res.json();
+  return json.content.sha as string;
 }
 
 // Save rayons.json (overwrites current content)
@@ -222,6 +270,56 @@ export async function saveRecipes(
   return json.content.sha as string;
 }
 
+// Fetch history.json
+export async function fetchHistory(
+  config: AuthConfig,
+): Promise<{ history: RecipeHistoryEntry[]; sha: string }> {
+  const { pat, dataOwner, dataRepo } = config;
+  const url = contentUrl(dataOwner, dataRepo, "history.json");
+
+  try {
+    const res = await fetch(url, { headers: githubHeaders(pat) });
+    if (!res.ok) return { history: [], sha: "" };
+    const json = await res.json();
+    return {
+      history: decodeContent(json.content) as RecipeHistoryEntry[],
+      sha: json.sha as string,
+    };
+  } catch {
+    return { history: [], sha: "" };
+  }
+}
+
+// Save history.json
+export async function saveHistory(
+  config: AuthConfig,
+  history: RecipeHistoryEntry[],
+  currentSha: string,
+): Promise<string> {
+  const { pat, dataOwner, dataRepo } = config;
+  const url = contentUrl(dataOwner, dataRepo, "history.json");
+
+  const body: Record<string, unknown> = {
+    message: `chore: update recipe history [${new Date().toISOString()}]`,
+    content: encodeContent(history),
+  };
+  if (currentSha) body.sha = currentSha;
+
+  const res = await fetch(url, {
+    method: "PUT",
+    headers: githubHeaders(pat),
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    if (res.status === 409) throw new Error("CONFLICT");
+    throw new Error(`GitHub API error: ${res.status}`);
+  }
+
+  const json = await res.json();
+  return json.content.sha as string;
+}
+
 // Initialize the data repo with default files if they don't exist
 export async function initDataRepo(config: AuthConfig): Promise<void> {
   const { pat, dataOwner, dataRepo } = config;
@@ -258,4 +356,5 @@ export async function initDataRepo(config: AuthConfig): Promise<void> {
   await createFileIfMissing("rayons.json", DEFAULT_RAYONS);
   await createFileIfMissing("products.json", []);
   await createFileIfMissing("recipes.json", []);
+  await createFileIfMissing("history.json", []);
 }
