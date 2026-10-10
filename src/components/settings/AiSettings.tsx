@@ -79,7 +79,12 @@ export function AiSettings() {
     fetch("https://openrouter.ai/api/v1/models")
       .then((r) => r.json())
       .then((json) =>
-        setModels((json.data as OpenRouterModel[]).sort((a, b) => a.name.localeCompare(b.name))),
+        setModels(
+          (json.data as OpenRouterModel[])
+            // Variantes ":batch" = traitement différé, inutilisables pour une réponse immédiate
+            .filter((m) => !m.id.endsWith(":batch"))
+            .sort((a, b) => a.name.localeCompare(b.name)),
+        ),
       )
       .catch(() => {});
   }, []);
@@ -203,6 +208,11 @@ export function AiSettings() {
               )}
               {!settings.model && (
                 <Alert severity="info">Choisis un modèle : en attendant, c'est Mistral qui est utilisé.</Alert>
+              )}
+              {settings.model && models.length > 0 && !selectedModel && (
+                <Alert severity="warning">
+                  Le modèle enregistré ({settings.model}) n'est pas utilisable : choisis-en un autre.
+                </Alert>
               )}
             </>
           )}
