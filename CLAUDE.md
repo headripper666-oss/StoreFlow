@@ -13,6 +13,17 @@ npm run preview   # Serve the production build locally
 
 No test suite is configured. TypeScript compilation (`tsc -b`) acts as the primary correctness check — always run `npm run build` before declaring work done.
 
+### Commandes autorisées (4) — reprises dans `recette.html`
+
+| Usage | Commande | Machine |
+|---|---|---|
+| Tests | `npm run build` + `npm run lint` (appli Android : `cd apk && node --test`) | N150 |
+| Revue de code | `/code-review` | Claude Code |
+| Documentation | mise à jour de ce `CLAUDE.md` | Claude Code |
+| Déploiement | `npm run build` (+ `sudo systemctl restart storeflow-proxy` si `storeflow-proxy/` a changé) | N150 |
+
+Recette : ouvrir `recette.html` dans un navigateur.
+
 ## Architecture
 
 StoreFlow is a mobile-first React PWA for collaborative shopping lists and meal planning. All persistent data lives in a **GitHub repository** owned by the user. There is no backend beyond Netlify serverless functions.

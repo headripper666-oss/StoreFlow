@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Recette StoreFlow</title>
+<style>
+  :root { --bg:#f3f7f4; --ink:#1c3d30; --muted:#5a7066; --line:#d3e0d8; --accent:#2e7d32; --card:#ffffff; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0f1a15; --ink:#e4efe8; --muted:#93a89d; --line:#26382f; --accent:#66bb6a; --card:#16241d; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 system-ui, sans-serif; padding:24px 16px 64px; }
+  main { max-width:720px; margin:0 auto; }
+  h1 { font-size:1.6rem; margin:0 0 4px; }
+  .sub { color:var(--muted); margin:0 0 24px; }
+  section { background:var(--card); border:1px solid var(--line); border-radius:8px; padding:16px; margin-bottom:16px; }
+  h2 { font-size:1.05rem; margin:0 0 8px; display:flex; justify-content:space-between; gap:8px; }
+  h2 .count { color:var(--muted); font-weight:400; font-size:.9rem; }
+  label { display:flex; gap:10px; align-items:flex-start; padding:6px 0; cursor:pointer; }
+  input[type=checkbox] { width:20px; height:20px; margin-top:2px; accent-color:var(--accent); flex:none; }
+  input:checked + span { color:var(--muted); text-decoration:line-through; }
+  code { background:var(--bg); padding:1px 5px; border-radius:4px; font-size:.9em; }
+  table { width:100%; border-collapse:collapse; font-size:.95rem; }
+  td, th { text-align:left; padding:6px 4px; border-bottom:1px solid var(--line); vertical-align:top; }
+  button { font:inherit; color:var(--ink); background:none; border:1px solid var(--line); border-radius:6px; padding:6px 12px; cursor:pointer; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Recette StoreFlow</h1>
+  <p class="sub">Cocher chaque point une fois vérifié. L'état est mémorisé dans ce navigateur.</p>
+
+  <section>
+    <h2>Commandes autorisées</h2>
+    <table>
+      <tr><th>Usage</th><th>Commande</th><th>Machine</th></tr>
+      <tr><td>Tests</td><td><code>npm run build</code> (vérification TypeScript) et <code>npm run lint</code> ; APK : <code>cd apk &amp;&amp; node --test</code></td><td>N150</td></tr>
+      <tr><td>Revue</td><td><code>/code-review</code></td><td>Claude Code</td></tr>
+      <tr><td>Doc</td><td>CLAUDE.md</td><td>Claude Code</td></tr>
+      <tr><td>Déploiement</td><td><code>npm run build</code> (+ <code>sudo systemctl restart storeflow-proxy</code> si <code>storeflow-proxy/</code> a changé)</td><td>N150</td></tr>
+    </table>
+  </section>
+
+  <section data-group>
+    <h2>1. Connexion &amp; synchro <span class="count"></span></h2>
+    <label><input type="checkbox" id="s1-login"><span>Connexion avec utilisateur, dépôt de données et jeton GitHub</span></label>
+    <label><input type="checkbox" id="s1-session"><span>Session conservée après fermeture et réouverture</span></label>
+    <label><input type="checkbox" id="s1-realtime"><span>Modification sur un appareil visible sur l'autre en quelques secondes (WebSocket)</span></label>
+    <label><input type="checkbox" id="s1-github"><span>Dépôt <code>storeflow-data</code> mis à jour ~1 min après une modification</span></label>
+    <label><input type="checkbox" id="s1-offline"><span>Coupure réseau : la modification est gardée puis envoyée au retour du réseau</span></label>
+  </section>
+
+  <section data-group>
+    <h2>2. Liste &amp; indispensables <span class="count"></span></h2>
+    <label><input type="checkbox" id="s2-add"><span>Ajouter un produit (autocomplétion du catalogue, quantité, unité, rayon)</span></label>
+    <label><input type="checkbox" id="s2-rayons"><span>Liste regroupée par rayon, dans l'ordre des rayons</span></label>
+    <label><input type="checkbox" id="s2-check"><span>Cocher / décocher un article</span></label>
+    <label><input type="checkbox" id="s2-essentials"><span>Indispensables : cocher, puis remise à zéro pour une nouvelle course</span></label>
+    <label><input type="checkbox" id="s2-rayon-settings"><span>Réglages des rayons : modifier l'ordre et les libellés</span></label>
+  </section>
+
+  <section data-group>
+    <h2>3. Recettes <span class="count"></span></h2>
+    <label><input type="checkbox" id="s3-guests"><span>« Utiliser » une recette : compteur de convives, quantités recalculées</span></label>
+    <label><input type="checkbox" id="s3-uncheck"><span>Décocher un ingrédient déjà à la maison : il n'est pas ajouté</span></label>
+    <label><input type="checkbox" id="s3-add"><span>« Ajouter à la liste » : ingrédients ajoutés, recette inchangée</span></label>
+    <label><input type="checkbox" id="s3-save"><span>« Ajouter + sauvegarder la recette » : modifications enregistrées</span></label>
+    <label><input type="checkbox" id="s3-edit"><span>« Modifier » une recette existante</span></label>
+  </section>
+
+  <section data-group>
+    <h2>4. IA <span class="count"></span></h2>
+    <label><input type="checkbox" id="s4-products"><span>Texte libre analysé en produits (Mistral ou OpenRouter)</span></label>
+    <label><input type="checkbox" id="s4-recipe"><span>Import de recette depuis un texte</span></label>
+    <label><input type="checkbox" id="s4-settings"><span>Réglages &gt; IA : configuration partagée entre appareils, crédits affichés</span></label>
+  </section>
+
+  <section data-group>
+    <h2>5. Ordinateur (≥ 1024 px) <span class="count"></span></h2>
+    <label><input type="checkbox" id="s5-sidebar"><span>Barre latérale de navigation, sans barre du bas</span></label>
+    <label><input type="checkbox" id="s5-split"><span>Écrans partagés (Indispensables, Ajout, Recettes) redimensionnables, taille mémorisée</span></label>
+  </section>
+
+  <section data-group>
+    <h2>6. Version de secours (GitHub Pages) <span class="count"></span></h2>
+    <label><input type="checkbox" id="s6-deploy"><span>Push sur <code>main</code> : workflow « Deploy secours » au vert</span></label>
+    <label><input type="checkbox" id="s6-open"><span><code>https://headripper666-oss.github.io/StoreFlow/</code> s'ouvre, lecture et écriture directes sur GitHub</span></label>
+    <label><input type="checkbox" id="s6-import"><span>Modification faite en secours importée par le N150 à son retour</span></label>
+  </section>
+
+  <section data-group>
+    <h2>7. Appli Android (APK) <span class="count"></span></h2>
+    <label><input type="checkbox" id="s7-tests"><span><code>cd apk &amp;&amp; node --test</code> au vert</span></label>
+    <label><input type="checkbox" id="s7-publish"><span><code>apk/publish.sh</code> puis <code>npm run build</code> : <code>apk-version.json</code> et <code>StoreFlow-x.y.apk</code> en ligne</span></label>
+    <label><input type="checkbox" id="s7-install"><span>Installation depuis <code>/StoreFlow.apk</code> : icône caddie vert, plein écran</span></label>
+    <label><input type="checkbox" id="s7-wifi"><span>Wi-Fi maison sans WireGuard : l'appli s'ouvre (192.168.1.200:3001)</span></label>
+    <label><input type="checkbox" id="s7-wg"><span>Extérieur avec WireGuard : l'appli s'ouvre (192.168.27.65:3001)</span></label>
+    <label><input type="checkbox" id="s7-fallback"><span>N150 injoignable : bascule automatique sur GitHub Pages</span></label>
+    <label><input type="checkbox" id="s7-update"><span>Nouvelle version publiée : proposée au lancement, « Installer » télécharge <code>StoreFlow-x.y.apk</code> dans Chrome</span></label>
+    <label><input type="checkbox" id="s7-later"><span>« Plus tard » ouvre l'appli ; la proposition revient au lancement suivant</span></label>
+  </section>
+
+  <button id="reset">Tout décocher</button>
+</main>
+<script>
+  const KEY = 'storeflow-recette';
+  let state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch (e) {}
+  const boxes = document.querySelectorAll('input[type=checkbox]');
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+  function counts() {
+    document.querySelectorAll('[data-group]').forEach(g => {
+      const all = g.querySelectorAll('input[type=checkbox]');
+      const done = [...all].filter(b => b.checked).length;
+      g.querySelector('.count').textContent = done + ' / ' + all.length;
+    });
+  }
+  boxes.forEach(b => {
+    b.checked = !!state[b.id];
+    b.addEventListener('change', () => { state[b.id] = b.checked; save(); counts(); });
+  });
+  document.getElementById('reset').addEventListener('click', () => {
+    if (!confirm('Tout décocher ?')) return;
+    state = {}; save(); boxes.forEach(b => b.checked = false); counts();
+  });
+  counts();
+</script>
+</body>
+</html>
