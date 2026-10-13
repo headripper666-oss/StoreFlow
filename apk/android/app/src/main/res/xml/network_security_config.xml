@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- HTTP non chiffré autorisé uniquement vers le serveur StoreFlow (N150) :
+     192.168.1.200 en Wi-Fi à la maison, 192.168.27.65 via WireGuard -->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">192.168.1.200</domain>
+        <domain includeSubdomains="false">192.168.27.65</domain>
+        <domain includeSubdomains="false">localhost</domain>
+    </domain-config>
+</network-security-config>

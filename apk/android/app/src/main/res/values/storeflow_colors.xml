@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fond de l'appli StoreFlow (background_color du manifest web) -->
+    <color name="storeflow_background">#FFFFFF</color>
+</resources>

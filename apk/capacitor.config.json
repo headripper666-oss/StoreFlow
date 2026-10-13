@@ -1,0 +1,10 @@
+{
+  "appId": "fr.renaud.storeflow",
+  "appName": "StoreFlow",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "http",
+    "cleartext": true,
+    "allowNavigation": ["192.168.1.200", "192.168.27.65", "headripper666-oss.github.io"]
+  }
+}

@@ -33,3 +33,6 @@ Api.txt
 storeflow-api/*.db*
 .backup_ux_*/
 .superpowers/brainstorm/
+
+# APK Android (générés par apk/publish.sh)
+*.apk

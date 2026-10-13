@@ -121,6 +121,28 @@ Le dossier `netlify/` et `netlify.toml` sont conservés mais non utilisés en pr
 
 **Assets** : `/assets/*` servis compressés en gzip avec `Cache-Control: immutable` (1 an). Le polling client est coupé tant que le WebSocket est connecté.
 
+### Appli Android (`apk/`)
+
+Coquille Capacitor 8 (procédé de la skill globale `webapp-to-apk`, modèle CongeFlow). La page de démarrage locale `apk/www/index.html` :
+
+- essaie `http://192.168.1.200:3001` (Wi-Fi maison) et `http://192.168.27.65:3001` (WireGuard), vérifie via `/health` (`ok` + `githubRepo`) que c'est bien StoreFlow, puis ouvre l'appli depuis le N150 ;
+- si le N150 ne répond pas : bascule sur la version de secours GitHub Pages (si internet répond) ;
+- propose les mises à jour au lancement : `www/app-version.json` (version installée) comparé à `/apk-version.json` du serveur, téléchargement de `StoreFlow-x.y.apk` confié à Chrome (`MainActivity.java`).
+
+Chaque adresse (maison, WireGuard, GitHub Pages) a son propre `localStorage` : une connexion GitHub par adresse dans l'appli. Après un changement de réseau (maison ↔ extérieur), fermer complètement l'appli et la rouvrir.
+
+**Installer** : Chrome sur le téléphone → `http://192.168.1.200:3001/StoreFlow.apk` (ou `http://192.168.27.65:3001/StoreFlow.apk` en WireGuard).
+
+**Publier une nouvelle version de l'APK** (seulement si `apk/` change ; les évolutions de la web app arrivent sans réinstaller) :
+
+```bash
+# 1. augmenter versionCode (+ versionName) dans apk/www/app-version.json
+cd apk && ./publish.sh      # tests node --test, compilation, copie dans public/
+cd .. && npm run build      # met StoreFlow-x.y.apk, StoreFlow.apk et apk-version.json en ligne
+```
+
+Tests de la page de démarrage : `cd apk && node --test`. Prérequis N150 : Java 21, SDK Android dans `~/Android/sdk` (chemin dans `apk/android/local.properties`, non versionné). Signature : clé debug `~/.android/debug.keystore` du N150, à conserver (sinon désinstallation nécessaire sur les téléphones). Les `*.apk` sont ignorés par Git ; anciens APK rangés dans `apk/anciennes-versions/`. Icône : `apk/icon.svg` → `make_icons.py` de la skill.
+
 ### Version de secours (GitHub Pages)
 
 `https://headripper666-oss.github.io/StoreFlow/` — déployée par `.github/workflows/pages.yml` à chaque push sur `main`. Build avec `VITE_GITHUB_ONLY=true` (lecture/écriture directe sur GitHub, pas de serveur) et `VITE_BASE=/StoreFlow/`. Service worker `public/sw.js` : l'app s'ouvre hors-ligne (HTTPS uniquement, donc inactif sur l'URL N150 en HTTP). L'analyse IA n'y fonctionne pas (elle passe par le N150).

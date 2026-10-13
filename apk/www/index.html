@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StoreFlow</title>
+  <style>
+    body { margin: 0; min-height: 100vh; background: #ffffff; color: #1c3d30; font-family: sans-serif; }
+    main { min-height: 100vh; display: flex; flex-direction: column; align-items: center;
+           justify-content: center; text-align: center; padding: 24px; box-sizing: border-box; }
+    button { margin: 8px; padding: 12px 24px; font-size: 16px; border: 0; border-radius: 12px;
+             background: #2e7d32; color: #ffffff; }
+    button.secondary { background: transparent; color: #2e7d32; border: 2px solid #2e7d32; }
+  </style>
+</head>
+<body>
+  <main>
+    <p id="message">Connexion à StoreFlow…</p>
+    <div id="buttons"></div>
+  </main>
+
+  <script src="logic.js"></script>
+  <script>
+    // Serveur StoreFlow (N150) : Wi-Fi de la maison, puis WireGuard à l'extérieur
+    const SERVERS = ['http://192.168.1.200:3001', 'http://192.168.27.65:3001'];
+    // Version de secours (lecture/écriture directe sur GitHub, sans l'IA) si le N150 ne répond pas
+    const PAGES_URL = 'https://headripper666-oss.github.io/StoreFlow/';
+    const TIMEOUT_MS = 4000;
+
+    const $ = (id) => document.getElementById(id);
+
+    async function fetchJson(url) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), TIMEOUT_MS);
+      try {
+        const res = await fetch(url, { signal: controller.signal, cache: 'no-store' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.json();
+      } finally {
+        clearTimeout(timer);
+      }
+    }
+
+    // Première adresse où c'est bien StoreFlow qui répond
+    function findServer() {
+      return Promise.any(SERVERS.map(async (server) => {
+        if (!StoreLogic.isStoreFlowHealth(await fetchJson(server + '/health'))) throw new Error('pas StoreFlow');
+        return server;
+      }));
+    }
+
+    // Version disponible sur le serveur si elle est plus récente que celle installée, sinon null
+    async function checkUpdate(server) {
+      const [installed, available] = await Promise.all([
+        fetchJson('app-version.json'),
+        fetchJson(server + '/apk-version.json'),
+      ]);
+      return StoreLogic.isNewer(installed, available) ? { installed, available } : null;
+    }
+
+    function showScreen(message, buttons) {
+      $('message').textContent = message;
+      $('buttons').replaceChildren(...buttons.map(([label, onClick, secondary]) => {
+        const button = document.createElement('button');
+        button.textContent = label;
+        if (secondary) button.className = 'secondary';
+        button.addEventListener('click', onClick);
+        return button;
+      }));
+    }
+
+    function openApp(url) {
+      window.location.replace(url);
+    }
+
+    function showUpdate(server, { installed, available }) {
+      showScreen(`Nouvelle version ${available.versionName} disponible (installée : ${installed.versionName}).`, [
+        ['Installer', () => {
+          // Le téléchargement est confié à Chrome (voir MainActivity.java)
+          window.location.href = server + '/' + StoreLogic.apkFileName(available);
+          showScreen('Le téléchargement s\'ouvre dans Chrome. Une fois terminé, touchez le fichier pour installer la mise à jour.',
+            [['Continuer vers StoreFlow', () => openApp(server + '/')]]);
+        }],
+        ['Plus tard', () => openApp(server + '/'), true],
+      ]);
+    }
+
+    // N150 injoignable : bascule sur la version de secours GitHub Pages si internet répond
+    async function openFallback() {
+      showScreen('N150 injoignable, ouverture de la version de secours…', []);
+      try {
+        await fetchJson(PAGES_URL + 'manifest.json');
+        setTimeout(() => openApp(PAGES_URL), 1500);
+      } catch {
+        showScreen('StoreFlow injoignable : ni le N150 (Wi-Fi maison ou WireGuard) ni la version de secours (internet).',
+          [['Réessayer', start]]);
+      }
+    }
+
+    async function start() {
+      showScreen('Connexion à StoreFlow…', []);
+      let server;
+      try {
+        server = await findServer();
+      } catch {
+        openFallback();
+        return;
+      }
+      let update = null;
+      try { update = await checkUpdate(server); } catch { /* pas de mise à jour connue : on ouvre l'appli */ }
+      if (update) {
+        showUpdate(server, update);
+      } else {
+        openApp(server + '/');
+      }
+    }
+
+    start();
+  </script>
+</body>
+</html>

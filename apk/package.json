@@ -1,0 +1,13 @@
+{
+  "name": "storeflow-apk",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Coquille Android (Capacitor) qui ouvre StoreFlow depuis le N150, ou la version de secours GitHub Pages",
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/core": "^8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.2"
+  }
+}
