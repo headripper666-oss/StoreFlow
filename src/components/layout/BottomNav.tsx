@@ -39,6 +39,7 @@ export function BottomNav() {
         backgroundColor: "background.paper",
         borderTop: "1px solid",
         borderColor: "divider",
+        pb: "var(--sab)",
       }}
     >
       <Box

@@ -447,7 +447,7 @@ export function EssentialsPage({
         aria-label="Ajouter un indispensable"
         onClick={handleOpenAdd}
         disabled={isSaving}
-        sx={{ position: "fixed", bottom: { xs: 80, lg: 24 }, right: { xs: 20, lg: "max(20px, calc((100vw - 220px) / 2 + 20px))" } }}
+        sx={{ position: "fixed", bottom: { xs: "calc(80px + var(--sab))", lg: 24 }, right: { xs: 20, lg: "max(20px, calc((100vw - 220px) / 2 + 20px))" } }}
       >
         <AddIcon />
       </Fab>

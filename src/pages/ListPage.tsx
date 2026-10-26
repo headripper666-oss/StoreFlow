@@ -292,7 +292,7 @@ export function ListPage({
         color="primary"
         aria-label="Ajouter des articles"
         onClick={() => navigate("/add")}
-        sx={{ position: "fixed", bottom: { xs: 80, lg: 24 }, right: { xs: 20, lg: "max(20px, calc((100vw - 220px - 600px) / 2 + 20px))" } }}
+        sx={{ position: "fixed", bottom: { xs: "calc(80px + var(--sab))", lg: 24 }, right: { xs: 20, lg: "max(20px, calc((100vw - 220px - 600px) / 2 + 20px))" } }}
       >
         <AddIcon />
       </Fab>

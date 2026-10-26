@@ -34,7 +34,7 @@ export function AppShell({
 }: AppShellProps) {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100dvh" }}>
-      <AppBar position="fixed" elevation={1}>
+      <AppBar position="fixed" elevation={1} sx={{ pt: "var(--sat)" }}>
         <Toolbar sx={{ minHeight: 56, gap: 1 }}>
           <ShoppingCartIcon sx={{ fontSize: 20, opacity: 0.85 }} />
           <Typography
@@ -67,8 +67,8 @@ export function AppShell({
         sx={{
           flex: 1,
           overflowY: "auto",
-          pt: "56px",
-          pb: "64px",
+          pt: "calc(56px + var(--sat))",
+          pb: "calc(64px + var(--sab))",
           backgroundColor: "background.default",
         }}
       >
@@ -86,7 +86,7 @@ export function AppShell({
         message={error}
         autoHideDuration={5000}
         anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        sx={{ bottom: 80 }}
+        sx={{ bottom: "calc(80px + var(--sab))" }}
       />
     </Box>
   );
