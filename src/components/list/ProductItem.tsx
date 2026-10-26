@@ -12,7 +12,13 @@ interface ProductItemProps {
   item: DisplayItem;
   onToggle: () => void;
   onDelete: () => void;
-  onUpdateQuantity?: (quantity: number, unit: string, price: number | undefined, rayonId?: string) => void;
+  onUpdateQuantity?: (
+    quantity: number,
+    unit: string,
+    price: number | undefined,
+    rayonId?: string,
+    extras?: { name?: string; comment: string },
+  ) => void;
   onReorder?: (direction: -1 | 1) => void;
   rayons?: Rayon[];
   isFirst?: boolean;
@@ -52,6 +58,7 @@ export function ProductItem({
             checked={item.checked}
             label={item.name}
             sublabel={sublabel}
+            comment={item.comment}
             onToggle={onToggle}
             disabled={disabled}
             badge={totalPrice ? `${totalPrice} €` : undefined}
@@ -77,13 +84,13 @@ export function ProductItem({
             </IconButton>
           </Box>
         )}
-        {!item.isEssential && onUpdateQuantity && (
+        {onUpdateQuantity && (
           <IconButton
             onClick={() => setEditOpen(true)}
             disabled={disabled}
             size="small"
             sx={{ color: "text.disabled", flexShrink: 0 }}
-            aria-label={`Modifier la quantité de ${item.name}`}
+            aria-label={`Modifier ${item.name}`}
           >
             <EditIcon fontSize="small" />
           </IconButton>
@@ -107,10 +114,12 @@ export function ProductItem({
           initialUnit={item.unit ?? "pcs"}
           initialPrice={item.pricePerUnit}
           initialRayonId={item.rayonId}
-          rayons={rayons}
-          onConfirm={(qty, unit, price, newRayonId) => {
+          rayons={item.isEssential ? undefined : rayons}
+          initialName={item.isEssential ? undefined : item.name}
+          initialComment={item.comment}
+          onConfirm={(qty, unit, price, newRayonId, extras) => {
             setEditOpen(false);
-            onUpdateQuantity(qty, unit, price, newRayonId);
+            onUpdateQuantity(qty, unit, price, item.isEssential ? undefined : newRayonId, extras);
           }}
           onCancel={() => setEditOpen(false)}
         />

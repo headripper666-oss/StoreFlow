@@ -36,6 +36,7 @@ export interface ListItem {
   checkedAt?: string;
   order?: number;
   pricePerUnit?: number;
+  comment?: string;
 }
 
 // An essential item (always present, resets each trip)
@@ -48,6 +49,7 @@ export interface EssentialItem {
   checked: boolean;
   order?: number;
   pricePerUnit?: number;
+  comment?: string; // temporaire : effacé quand l'indispensable est décoché
 }
 
 // Root data structure stored in lists.json
@@ -94,6 +96,7 @@ export interface DisplayItem {
   isEssential: boolean;
   order?: number;
   pricePerUnit?: number;
+  comment?: string;
 }
 
 // Sync status

@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import type { SyncStatus as SyncStatusType } from "../../types";
+import { UndoButton } from "../shared/UndoButton";
 import { SyncStatus } from "../shared/SyncStatus";
 import { BottomNav } from "./BottomNav";
 
@@ -17,6 +18,8 @@ interface AppShellProps {
   syncStatus: SyncStatusType;
   lastSyncAt: Date | null;
   error: string | null;
+  undoCount: number;
+  onUndo: () => void;
   onLogout: () => void;
 }
 
@@ -25,6 +28,8 @@ export function AppShell({
   syncStatus,
   lastSyncAt,
   error,
+  undoCount,
+  onUndo,
   onLogout,
 }: AppShellProps) {
   return (
@@ -44,6 +49,7 @@ export function AppShell({
           >
             StoreFlow
           </Typography>
+          <UndoButton count={undoCount} onUndo={onUndo} color="rgba(255,255,255,0.8)" />
           <SyncStatus status={syncStatus} lastSyncAt={lastSyncAt} />
           <IconButton
             onClick={onLogout}

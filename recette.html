@@ -35,10 +35,10 @@
     <h2>Commandes autorisées</h2>
     <table>
       <tr><th>Usage</th><th>Commande</th><th>Machine</th></tr>
-      <tr><td>Tests</td><td><code>npm run build</code> (vérification TypeScript) et <code>npm run lint</code> ; APK : <code>cd apk &amp;&amp; node --test</code></td><td>N150</td></tr>
+      <tr><td>Tests</td><td><code>pnpm build</code> (vérification TypeScript) et <code>pnpm lint</code> ; APK : <code>cd apk &amp;&amp; node --test</code></td><td>N150</td></tr>
       <tr><td>Revue</td><td><code>/code-review</code></td><td>Claude Code</td></tr>
       <tr><td>Doc</td><td>CLAUDE.md</td><td>Claude Code</td></tr>
-      <tr><td>Déploiement</td><td><code>npm run build</code> (+ <code>sudo systemctl restart storeflow-proxy</code> si <code>storeflow-proxy/</code> a changé)</td><td>N150</td></tr>
+      <tr><td>Déploiement</td><td><code>pnpm build</code> (+ <code>sudo systemctl restart storeflow-proxy</code> si <code>storeflow-proxy/</code> a changé)</td><td>N150</td></tr>
     </table>
   </section>
 
@@ -92,7 +92,7 @@
   <section data-group>
     <h2>7. Appli Android (APK) <span class="count"></span></h2>
     <label><input type="checkbox" id="s7-tests"><span><code>cd apk &amp;&amp; node --test</code> au vert</span></label>
-    <label><input type="checkbox" id="s7-publish"><span><code>apk/publish.sh</code> puis <code>npm run build</code> : <code>apk-version.json</code> et <code>StoreFlow-x.y.apk</code> en ligne</span></label>
+    <label><input type="checkbox" id="s7-publish"><span><code>apk/publish.sh</code> puis <code>pnpm build</code> : <code>apk-version.json</code> et <code>StoreFlow-x.y.apk</code> en ligne</span></label>
     <label><input type="checkbox" id="s7-install"><span>Installation depuis <code>/StoreFlow.apk</code> : icône caddie vert, plein écran</span></label>
     <label><input type="checkbox" id="s7-wifi"><span>Wi-Fi maison sans WireGuard : l'appli s'ouvre (192.168.1.200:3001)</span></label>
     <label><input type="checkbox" id="s7-wg"><span>Extérieur avec WireGuard : l'appli s'ouvre (192.168.27.65:3001)</span></label>

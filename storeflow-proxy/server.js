@@ -405,7 +405,8 @@ app.patch('/lists/toggle/:id', (req, res) => {
     lists.essentials = lists.essentials.map((e) => {
       if (e.id !== id) return e;
       changed = true;
-      return { ...e, checked: !e.checked };
+      const { comment: _comment, ...rest } = e;
+      return e.checked ? { ...rest, checked: false } : { ...e, checked: true };
     });
   }
 

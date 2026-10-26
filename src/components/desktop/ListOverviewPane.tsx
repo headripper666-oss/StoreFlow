@@ -40,6 +40,7 @@ export function ListOverviewPane({
       rayonId: e.rayonId,
       checked: false,
       isEssential: true,
+      comment: e.comment,
       pricePerUnit: getPrice(e.name, e.pricePerUnit),
     }));
 
@@ -52,6 +53,7 @@ export function ListOverviewPane({
     checked: i.checked,
     isEssential: false,
     order: i.order,
+    comment: i.comment,
     pricePerUnit: getPrice(i.name, i.pricePerUnit),
   }));
 

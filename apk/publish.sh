@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Construit l'APK StoreFlow et le prépare pour la publication (sur le N150).
 # Version : modifier www/app-version.json (versionCode +1) avant de lancer ce script.
-# Ensuite : npm run build (à la racine de StoreFlow) pour mettre l'APK et apk-version.json en ligne.
+# Ensuite : pnpm build (à la racine de StoreFlow) pour mettre l'APK et apk-version.json en ligne.
 set -euo pipefail
 
 APK_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -35,4 +35,4 @@ node -e "
 const v = require('./www/app-version.json');
 require('fs').writeFileSync(process.argv[1], JSON.stringify({ ...v, file: process.argv[2] }, null, 2) + '\n');
 " "$PUBLIC/apk-version.json" "$APK_FILE"
-echo "APK $VERSION_NAME (code $VERSION_CODE) prêt dans public/ ($APK_FILE) → lancer npm run build à la racine de StoreFlow pour le publier"
+echo "APK $VERSION_NAME (code $VERSION_CODE) prêt dans public/ ($APK_FILE) → lancer pnpm build à la racine de StoreFlow pour le publier"

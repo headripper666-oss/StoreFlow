@@ -43,11 +43,14 @@ export default function App() {
     syncStatus,
     lastSyncAt,
     error,
+    undoCount,
+    undo,
     toggleEssential,
     resetEssentials,
     addEssential,
     removeEssential,
     updateEssentialQuantity,
+    updateEssentialComment,
     updateEssentialRayon,
     reorderEssential,
     reorderItem,
@@ -72,8 +75,15 @@ export default function App() {
 
   const { recordUsage } = useRecipeHistory(config);
 
-  const updateItemQuantityWithRayon = async (id: string, quantity: number, unit: string, price: number | undefined, rayonId?: string) => {
-    await updateItemQuantity(id, quantity, unit, price);
+  const updateItemQuantityWithRayon = async (
+    id: string,
+    quantity: number,
+    unit: string,
+    price: number | undefined,
+    rayonId?: string,
+    extras?: { name?: string; comment: string },
+  ) => {
+    await updateItemQuantity(id, quantity, unit, price, extras);
     if (rayonId) await updateListItemRayon(id, rayonId);
   };
 
@@ -235,6 +245,7 @@ export default function App() {
             onDelete={removeEssential}
             onUpdateQuantity={updateEssentialQuantity}
             onUpdateRayon={updateEssentialRayon}
+            onUpdateComment={updateEssentialComment}
             onReorder={reorderEssential}
             onMigrate={migrateData}
             isLoading={isLoading}
@@ -348,6 +359,8 @@ export default function App() {
         syncStatus={syncStatus}
         lastSyncAt={lastSyncAt}
         error={combinedError}
+        undoCount={undoCount}
+        onUndo={undo}
         onLogout={logout}
         rightPane={desktopRightPane}
         splitStorageKey={splitStorageKey}
@@ -362,6 +375,8 @@ export default function App() {
       syncStatus={syncStatus}
       lastSyncAt={lastSyncAt}
       error={combinedError}
+      undoCount={undoCount}
+      onUndo={undo}
       onLogout={logout}
     >
       {routes}

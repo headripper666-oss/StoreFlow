@@ -8,6 +8,8 @@ interface AppShellDesktopProps {
   syncStatus: SyncStatusType;
   lastSyncAt: Date | null;
   error: string | null;
+  undoCount: number;
+  onUndo: () => void;
   onLogout: () => void;
   rightPane: React.ReactNode | null;
   splitStorageKey?: string;
@@ -18,6 +20,8 @@ export function AppShellDesktop({
   syncStatus,
   lastSyncAt,
   error,
+  undoCount,
+  onUndo,
   onLogout,
   rightPane,
   splitStorageKey = "storeflow-split-default",
@@ -34,6 +38,8 @@ export function AppShellDesktop({
       <SidebarNav
         syncStatus={syncStatus}
         lastSyncAt={lastSyncAt}
+        undoCount={undoCount}
+        onUndo={onUndo}
         onLogout={onLogout}
       />
 

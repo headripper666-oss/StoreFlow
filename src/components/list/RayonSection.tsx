@@ -16,7 +16,14 @@ interface RayonSectionProps {
   allRayons?: Rayon[];
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
-  onUpdateQuantity?: (id: string, quantity: number, unit: string, price: number | undefined, rayonId?: string) => void;
+  onUpdateQuantity?: (
+    id: string,
+    quantity: number,
+    unit: string,
+    price: number | undefined,
+    rayonId?: string,
+    extras?: { name?: string; comment: string },
+  ) => void;
   onReorder?: (id: string, direction: -1 | 1) => void;
   disabled?: boolean;
 }
@@ -96,7 +103,8 @@ export function RayonSection({
               onDelete={() => onDelete(item.id)}
               onUpdateQuantity={
                 onUpdateQuantity
-                  ? (qty, unit, price, newRayonId) => onUpdateQuantity(item.id, qty, unit, price, newRayonId)
+                  ? (qty, unit, price, newRayonId, extras) =>
+                      onUpdateQuantity(item.id, qty, unit, price, newRayonId, extras)
                   : undefined
               }
               rayons={allRayons}

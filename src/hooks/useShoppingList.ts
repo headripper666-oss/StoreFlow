@@ -50,7 +50,14 @@ interface UseShoppingListReturn {
   resetEssentials: () => Promise<void>;
   addEssential: (name: string, rayonId: string) => Promise<void>;
   removeEssential: (id: string) => Promise<void>;
-  updateEssentialQuantity: (id: string, quantity: number, unit: string, price: number | undefined) => Promise<void>;
+  updateEssentialQuantity: (
+    id: string,
+    quantity: number,
+    unit: string,
+    price: number | undefined,
+    extras?: { comment: string },
+  ) => Promise<void>;
+  updateEssentialComment: (id: string, comment: string) => Promise<void>;
   updateEssentialRayon: (id: string, rayonId: string) => Promise<void>;
   reorderEssential: (id: string, direction: -1 | 1) => Promise<void>;
   reorderItem: (id: string, direction: -1 | 1) => Promise<void>;
@@ -68,11 +75,19 @@ interface UseShoppingListReturn {
   ) => Promise<void>;
   addFromParsed: (parsed: ParsedProduct[]) => Promise<void>;
   toggleItem: (id: string) => void;
-  updateItemQuantity: (id: string, quantity: number, unit: string, price: number | undefined) => Promise<void>;
+  updateItemQuantity: (
+    id: string,
+    quantity: number,
+    unit: string,
+    price: number | undefined,
+    extras?: { name?: string; comment: string },
+  ) => Promise<void>;
   toggleAllItems: (checked: boolean) => Promise<void>;
   removeItem: (id: string) => Promise<void>;
   clearChecked: () => Promise<void>;
   migrateData: () => Promise<{ addedEssentials: number }>;
+  undoCount: number;
+  undo: () => Promise<void>;
 }
 
 // Preserves positions of historical items not in the current reordered set
@@ -90,6 +105,8 @@ function mergeOrderMap(existingNames: string[], newOrderNames: string[]): string
   existingIndices.forEach((pos, i) => { result[pos] = newOrderNames[i]; });
   return result;
 }
+
+const UNDO_LIMIT = 10;
 
 function isNetworkError(err: unknown): boolean {
   if (!navigator.onLine) return true;
@@ -120,6 +137,13 @@ export function useShoppingList(
   const pendingDataRef = useRef<ShoppingData | null>(null);
   const configRef = useRef(config);
   const dataRef = useRef<ShoppingData | null>(null);
+  // Annulation : copies de la liste avant chaque action (10 max, en mémoire seulement)
+  const undoStackRef = useRef<ShoppingData[]>([]);
+  const [undoCount, setUndoCount] = useState(0);
+  const pushUndo = useCallback((snapshot: ShoppingData) => {
+    undoStackRef.current = [...undoStackRef.current, snapshot].slice(-UNDO_LIMIT);
+    setUndoCount(undoStackRef.current.length);
+  }, []);
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pendingUpdaterRef = useRef<((d: ShoppingData) => ShoppingData) | null>(null);
   useEffect(() => {
@@ -214,7 +238,7 @@ export function useShoppingList(
         ...cur,
         essentials: cur.essentials.map((e) => ({ ...e, name: capitalize(e.name) })),
         personalList: cur.personalList.map((i) => ({ ...i, name: capitalize(i.name) })),
-      }));
+      }), { undoable: false });
       if (catalog.length > 0) {
         const capCatalog = catalog.map((p) => ({
           ...p,
@@ -310,11 +334,16 @@ export function useShoppingList(
   // Reads dataRef.current (not closure `data`) so it stays stable across renders
   // and always sees the latest state even after rapid successive calls.
   const saveData = useCallback(
-    async (updater: (current: ShoppingData) => ShoppingData): Promise<void> => {
+    async (
+      updater: (current: ShoppingData) => ShoppingData,
+      opts?: { undoable?: boolean },
+    ): Promise<void> => {
       const cfg = configRef.current;
       const current = dataRef.current;
       if (!cfg || !current || !shaRef.current) return;
 
+      const undoable = opts?.undoable !== false;
+      if (undoable) pushUndo(current);
       const prevData = current;
       const prevSha = shaRef.current;
       const updated = updater(current);
@@ -341,6 +370,10 @@ export function useShoppingList(
           setSyncStatus("offline");
         } else {
           // Non-network error (conflict, auth): rollback
+          if (undoable) {
+            undoStackRef.current = undoStackRef.current.slice(0, -1);
+            setUndoCount(undoStackRef.current.length);
+          }
           setData(prevData);
           shaRef.current = prevSha;
           setSyncStatus("error");
@@ -351,7 +384,7 @@ export function useShoppingList(
         setIsSaving(false);
       }
     },
-    [],
+    [pushUndo],
   );
 
   // Debounced variant: applies the optimistic update immediately but batches
@@ -377,21 +410,30 @@ export function useShoppingList(
         const composedUpdater = pendingUpdaterRef.current;
         pendingUpdaterRef.current = null;
         debounceTimerRef.current = null;
-        if (composedUpdater) saveData(composedUpdater);
+        if (composedUpdater) saveData(composedUpdater, { undoable: false });
       }, 300);
     },
     [saveData],
   );
+
+  const undo = useCallback(async () => {
+    const snapshot = undoStackRef.current[undoStackRef.current.length - 1];
+    if (!snapshot) return;
+    undoStackRef.current = undoStackRef.current.slice(0, -1);
+    setUndoCount(undoStackRef.current.length);
+    await saveData(() => snapshot, { undoable: false });
+  }, [saveData]);
 
   const toggleEssential = useCallback(
     (id: string): void => {
       // Optimistic update immediately
       const current = dataRef.current;
       if (!current) return;
+      pushUndo(current);
       const updated = {
         ...current,
         essentials: current.essentials.map((e: EssentialItem) =>
-          e.id === id ? { ...e, checked: !e.checked } : e,
+          e.id === id ? { ...e, checked: !e.checked, ...(e.checked && { comment: undefined }) } : e,
         ),
       };
       setData(updated);
@@ -408,13 +450,13 @@ export function useShoppingList(
           saveDataDebounced((d) => ({
             ...d,
             essentials: d.essentials.map((e: EssentialItem) =>
-              e.id === id ? { ...e, checked: !e.checked } : e,
+              e.id === id ? { ...e, checked: !e.checked, ...(e.checked && { comment: undefined }) } : e,
             ),
           }));
         }
       });
     },
-    [saveDataDebounced],
+    [saveDataDebounced, pushUndo],
   );
 
   const resetEssentials = useCallback(async () => {
@@ -423,6 +465,7 @@ export function useShoppingList(
       essentials: current.essentials.map((e: EssentialItem) => ({
         ...e,
         checked: false,
+        comment: undefined,
       })),
     }));
   }, [saveData]);
@@ -680,6 +723,7 @@ export function useShoppingList(
       // Optimistic update immediately
       const current = dataRef.current;
       if (!current) return;
+      pushUndo(current);
       const updated = {
         ...current,
         personalList: current.personalList.map((item: ListItem) =>
@@ -718,15 +762,32 @@ export function useShoppingList(
         }
       });
     },
-    [saveDataDebounced],
+    [saveDataDebounced, pushUndo],
   );
 
   const updateItemQuantity = useCallback(
-    async (id: string, quantity: number, unit: string, price: number | undefined) => {
+    async (
+      id: string,
+      quantity: number,
+      unit: string,
+      price: number | undefined,
+      extras?: { name?: string; comment: string },
+    ) => {
       await saveData((current) => ({
         ...current,
         personalList: current.personalList.map((item: ListItem) =>
-          item.id === id ? { ...item, quantity, unit, pricePerUnit: price } : item,
+          item.id === id
+            ? {
+                ...item,
+                quantity,
+                unit,
+                pricePerUnit: price,
+                ...(extras && {
+                  name: extras.name ? capitalize(extras.name) : item.name,
+                  comment: extras.comment || undefined,
+                }),
+              }
+            : item,
         ),
       }));
     },
@@ -734,11 +795,25 @@ export function useShoppingList(
   );
 
   const updateEssentialQuantity = useCallback(
-    async (id: string, quantity: number, unit: string, price: number | undefined) => {
+    async (id: string, quantity: number, unit: string, price: number | undefined, extras?: { comment: string }) => {
       await saveData((current) => ({
         ...current,
         essentials: current.essentials.map((e: EssentialItem) =>
-          e.id === id ? { ...e, quantity, unit, pricePerUnit: price } : e,
+          e.id === id
+            ? { ...e, quantity, unit, pricePerUnit: price, ...(extras && { comment: extras.comment || undefined }) }
+            : e,
+        ),
+      }));
+    },
+    [saveData],
+  );
+
+  const updateEssentialComment = useCallback(
+    async (id: string, comment: string) => {
+      await saveData((current) => ({
+        ...current,
+        essentials: current.essentials.map((e: EssentialItem) =>
+          e.id === id ? { ...e, comment: comment.trim() || undefined } : e,
         ),
       }));
     },
@@ -945,6 +1020,7 @@ export function useShoppingList(
     addEssential,
     removeEssential,
     updateEssentialQuantity,
+    updateEssentialComment,
     updateEssentialRayon,
     updateEssentialPrice,
     updateEssentialUnit,
@@ -965,5 +1041,7 @@ export function useShoppingList(
     updateListItemPrice,
     updateListItemUnit,
     migrateData,
+    undoCount,
+    undo,
   };
 }

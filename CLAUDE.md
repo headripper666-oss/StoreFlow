@@ -5,22 +5,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev       # Start dev server (Vite HMR)
-npm run build     # Type-check + production build → dist/
-npm run lint      # ESLint
-npm run preview   # Serve the production build locally
+pnpm dev       # Start dev server (Vite HMR)
+pnpm build     # Type-check + production build → dist/
+pnpm lint      # ESLint
+pnpm preview   # Serve the production build locally
 ```
 
-No test suite is configured. TypeScript compilation (`tsc -b`) acts as the primary correctness check — always run `npm run build` before declaring work done.
+No test suite is configured. TypeScript compilation (`tsc -b`) acts as the primary correctness check — always run `pnpm build` before declaring work done.
 
 ### Commandes autorisées (4) — reprises dans `recette.html`
 
 | Usage | Commande | Machine |
 |---|---|---|
-| Tests | `npm run build` + `npm run lint` (appli Android : `cd apk && node --test`) | N150 |
+| Tests | `pnpm build` + `pnpm lint` (appli Android : `cd apk && node --test`) | N150 |
 | Revue de code | `/code-review` | Claude Code |
 | Documentation | mise à jour de ce `CLAUDE.md` | Claude Code |
-| Déploiement | `npm run build` (+ `sudo systemctl restart storeflow-proxy` si `storeflow-proxy/` a changé) | N150 |
+| Déploiement | `pnpm build` (+ `sudo systemctl restart storeflow-proxy` si `storeflow-proxy/` a changé) | N150 |
 
 Recette : ouvrir `recette.html` dans un navigateur.
 
@@ -122,7 +122,7 @@ L'application est hébergée sur le **N150** (SOYO M4 Plus2), accessible via Fre
 
 **Déployer** :
 ```bash
-npm run build
+pnpm build
 sudo systemctl restart storeflow-proxy
 ```
 
@@ -149,7 +149,7 @@ Chaque adresse (maison, WireGuard, GitHub Pages) a son propre `localStorage` : u
 ```bash
 # 1. augmenter versionCode (+ versionName) dans apk/www/app-version.json
 cd apk && ./publish.sh      # tests node --test, compilation, copie dans public/
-cd .. && npm run build      # met StoreFlow-x.y.apk, StoreFlow.apk et apk-version.json en ligne
+cd .. && pnpm build      # met StoreFlow-x.y.apk, StoreFlow.apk et apk-version.json en ligne
 ```
 
 Tests de la page de démarrage : `cd apk && node --test`. Prérequis N150 : Java 21, SDK Android dans `~/Android/sdk` (chemin dans `apk/android/local.properties`, non versionné). Signature : clé debug `~/.android/debug.keystore` du N150, à conserver (sinon désinstallation nécessaire sur les téléphones). Les `*.apk` sont ignorés par Git ; anciens APK rangés dans `apk/anciennes-versions/`. Icône : `apk/icon.svg` → `make_icons.py` de la skill.
@@ -169,6 +169,12 @@ Réglages > onglet **IA** (`src/components/settings/AiSettings.tsx`). Config **s
 ### Serveur versionné
 
 `storeflow-proxy/` est dans le dépôt (sauf `.env`, `*.db*`, `*.bak*`, `node_modules`). Après un clone : `cd storeflow-proxy && npm ci && cp .env.example .env`.
+
+### Commentaires, édition et annulation
+
+- `comment?: string` sur `ListItem` et `EssentialItem`. Pour un indispensable, le commentaire est **temporaire** : effacé au décochage (`toggleEssential` + `PATCH /lists/toggle/:id` côté serveur) et à `resetEssentials`. Affiché en petit sous le nom (`CheckButton`).
+- `QuantityEditDialog` : champs Nom (articles de liste seulement) et Commentaire ; `CommentDialog` pour les indispensables (menu ⋮).
+- Annulation : `undoStackRef` dans `useShoppingList` (10 copies de `ShoppingData`, en mémoire). `saveData` empile avant chaque action (`undoable: false` pour l'annulation et la migration) ; `undo()` réécrit la copie. Bouton `UndoButton` dans `AppShell` (mobile) et `SidebarNav` (desktop).
 
 ### Recipes feature — ingredient scaling & UX
 

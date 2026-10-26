@@ -1,5 +1,6 @@
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import DriveFileMoveOutlinedIcon from "@mui/icons-material/DriveFileMoveOutlined";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -14,6 +15,7 @@ interface EssentialItemProps {
   onDelete?: () => void;
   onUpdateQuantity?: (quantity: number, unit: string) => void;
   onChangeRayon?: () => void;
+  onEditComment?: () => void;
   onActionsToggle?: (open: boolean) => void;
   disabled?: boolean;
   isLast?: boolean;
@@ -25,6 +27,7 @@ export function EssentialItem({
   onDelete,
   onUpdateQuantity,
   onChangeRayon,
+  onEditComment,
   onActionsToggle,
   disabled,
   isLast,
@@ -64,6 +67,7 @@ export function EssentialItem({
             checked={item.checked}
             label={item.name}
             sublabel={sublabel}
+            comment={item.comment}
             onToggle={onToggle}
             disabled={disabled}
             strikeThrough={false}
@@ -125,10 +129,21 @@ export function EssentialItem({
           </Box>
         )}
 
-        {(onChangeRayon || onDelete) && (
+        {(onChangeRayon || onDelete || onEditComment) && (
           <>
             {actionsOpen && (
               <>
+                {onEditComment && (
+                  <IconButton
+                    onClick={() => { onEditComment(); setActionsOpen(false); }}
+                    disabled={disabled}
+                    size="small"
+                    sx={{ color: item.comment ? "primary.main" : "text.disabled", flexShrink: 0, p: 0.5 }}
+                    aria-label={`Commentaire pour ${item.name}`}
+                  >
+                    <ChatBubbleOutlineIcon fontSize="small" />
+                  </IconButton>
+                )}
                 {onChangeRayon && (
                   <IconButton
                     onClick={() => { onChangeRayon(); setActionsOpen(false); }}

@@ -28,8 +28,21 @@ interface ListPageProps {
   onDelete: (id: string) => Promise<void>;
   onClearChecked: () => Promise<void>;
   onToggleEssential: (id: string) => void;
-  onUpdateQuantity: (id: string, quantity: number, unit: string, price: number | undefined, rayonId?: string) => Promise<void>;
-  onUpdateEssentialQuantity: (id: string, quantity: number, unit: string, price: number | undefined) => Promise<void>;
+  onUpdateQuantity: (
+    id: string,
+    quantity: number,
+    unit: string,
+    price: number | undefined,
+    rayonId?: string,
+    extras?: { name?: string; comment: string },
+  ) => Promise<void>;
+  onUpdateEssentialQuantity: (
+    id: string,
+    quantity: number,
+    unit: string,
+    price: number | undefined,
+    extras?: { comment: string },
+  ) => Promise<void>;
   onToggleAll: (checked: boolean) => Promise<void>;
   onReorderItem: (id: string, direction: -1 | 1) => Promise<void>;
   isLoading: boolean;
@@ -79,6 +92,7 @@ export function ListPage({
       rayonId: e.rayonId,
       checked: false,
       isEssential: true,
+      comment: e.comment,
       pricePerUnit: getPrice(e.name, e.pricePerUnit),
     }));
 
@@ -91,6 +105,7 @@ export function ListPage({
     checked: i.checked,
     isEssential: false,
     order: i.order,
+    comment: i.comment,
     pricePerUnit: getPrice(i.name, i.pricePerUnit),
   }));
 
@@ -142,12 +157,19 @@ export function ListPage({
     if (!isEssential) await onDelete(id);
   };
 
-  const handleUpdateQuantity = async (id: string, quantity: number, unit: string, price: number | undefined, rayonId?: string) => {
+  const handleUpdateQuantity = async (
+    id: string,
+    quantity: number,
+    unit: string,
+    price: number | undefined,
+    rayonId?: string,
+    extras?: { name?: string; comment: string },
+  ) => {
     const isEssential = essentialItems.some((e) => e.id === id);
     if (isEssential) {
-      await onUpdateEssentialQuantity(id, quantity, unit, price);
+      await onUpdateEssentialQuantity(id, quantity, unit, price, extras);
     } else {
-      await onUpdateQuantity(id, quantity, unit, price, rayonId);
+      await onUpdateQuantity(id, quantity, unit, price, rayonId, extras);
     }
   };
 

@@ -16,6 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import { UndoButton } from "../shared/UndoButton";
 import type { SyncStatus as SyncStatusType } from "../../types";
 
 const NAV_ITEMS = [
@@ -32,12 +33,16 @@ const SETTINGS_ITEMS = [
 interface SidebarNavProps {
   syncStatus: SyncStatusType;
   lastSyncAt: Date | null;
+  undoCount: number;
+  onUndo: () => void;
   onLogout: () => void;
 }
 
 export function SidebarNav({
   syncStatus,
   lastSyncAt,
+  undoCount,
+  onUndo,
   onLogout,
 }: SidebarNavProps) {
   const navigate = useNavigate();
@@ -186,6 +191,7 @@ export function SidebarNav({
         <Box sx={{ flex: 1 }}>
           <SyncStatusSidebar status={syncStatus} lastSyncAt={lastSyncAt} />
         </Box>
+        <UndoButton count={undoCount} onUndo={onUndo} color="text.disabled" />
         <Tooltip title="Se déconnecter" placement="top">
           <IconButton
             onClick={onLogout}

@@ -7,6 +7,7 @@ interface CheckButtonProps {
   checked: boolean;
   label: string;
   sublabel?: string;
+  comment?: string;
   badge?: string;
   onToggle: () => void;
   disabled?: boolean;
@@ -18,6 +19,7 @@ export function CheckButton({
   checked,
   label,
   sublabel,
+  comment,
   badge,
   onToggle,
   disabled,
@@ -141,6 +143,23 @@ export function CheckButton({
             }}
           >
             {sublabel}
+          </Typography>
+        )}
+        {comment && (
+          <Typography
+            variant="caption"
+            sx={{
+              display: "block",
+              color: "text.secondary",
+              fontStyle: "italic",
+              opacity: isStruckThrough ? 0.6 : 0.85,
+              lineHeight: 1.3,
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {comment}
           </Typography>
         )}
       </Box>

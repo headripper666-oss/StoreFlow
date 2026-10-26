@@ -35,6 +35,7 @@ import { EssentialItem as EssentialItemComponent } from "../components/essential
 import { ConfirmDialog } from "../components/shared/ConfirmDialog";
 import type { CatalogProduct, EssentialItem, Rayon } from "../types";
 import { normalize } from "../utils/recipeUtils";
+import { CommentDialog } from "../components/shared/CommentDialog";
 
 interface EssentialsPageProps {
   essentials: EssentialItem[];
@@ -46,6 +47,7 @@ interface EssentialsPageProps {
   onDelete: (id: string) => Promise<void>;
   onUpdateQuantity: (id: string, quantity: number, unit: string, price: number | undefined) => Promise<void>;
   onUpdateRayon: (id: string, rayonId: string) => Promise<void>;
+  onUpdateComment: (id: string, comment: string) => Promise<void>;
   onReorder: (id: string, direction: -1 | 1) => Promise<void>;
   onMigrate: () => Promise<{ addedEssentials: number }>;
   isLoading: boolean;
@@ -62,6 +64,7 @@ export function EssentialsPage({
   onDelete,
   onUpdateQuantity,
   onUpdateRayon,
+  onUpdateComment,
   onReorder,
   onMigrate,
   isLoading,
@@ -93,6 +96,7 @@ export function EssentialsPage({
   const [newName, setNewName] = useState("");
   const [newRayonId, setNewRayonId] = useState("autre");
   const [rayonEditItem, setRayonEditItem] = useState<EssentialItem | null>(null);
+  const [commentEditItem, setCommentEditItem] = useState<EssentialItem | null>(null);
   const [openActionsItemId, setOpenActionsItemId] = useState<string | null>(null);
 
   const checkedCount = essentials.filter((e) => e.checked).length;
@@ -324,6 +328,7 @@ export function EssentialsPage({
                         onDelete={() => onDelete(item.id)}
                         onUpdateQuantity={(qty, unit) => onUpdateQuantity(item.id, qty, unit, item.pricePerUnit)}
                         onChangeRayon={() => setRayonEditItem(item)}
+                        onEditComment={() => setCommentEditItem(item)}
                         onActionsToggle={(open) => setOpenActionsItemId(open ? item.id : null)}
                         disabled={isSaving}
                         isLast={idx === sorted.length - 1}
@@ -397,6 +402,7 @@ export function EssentialsPage({
                 onDelete={() => onDelete(item.id)}
                 onUpdateQuantity={(qty, unit) => onUpdateQuantity(item.id, qty, unit, item.pricePerUnit)}
                 onChangeRayon={() => setRayonEditItem(item)}
+                        onEditComment={() => setCommentEditItem(item)}
                 onActionsToggle={(open) => setOpenActionsItemId(open ? item.id : null)}
                 disabled={isSaving}
                 isLast={idx === orphanItems.length - 1}
@@ -565,6 +571,18 @@ export function EssentialsPage({
           </Button>
         </DialogActions>
       </Dialog>
+
+      <CommentDialog
+        open={commentEditItem !== null}
+        title={commentEditItem?.name ?? ""}
+        initialComment={commentEditItem?.comment}
+        onCancel={() => setCommentEditItem(null)}
+        onConfirm={async (comment) => {
+          const target = commentEditItem;
+          setCommentEditItem(null);
+          if (target) await onUpdateComment(target.id, comment);
+        }}
+      />
 
       {/* Change rayon dialog */}
       <Dialog
