@@ -21,6 +21,12 @@
       rel="stylesheet"
     />
     <title>StoreFlow</title>
+    <style>
+      /* Zone sûre en bas (barre de navigation Android) : env() ou variable injectée par Capacitor. La barre d'état est masquée côté APK. */
+      :root {
+        --sab: max(env(safe-area-inset-bottom, 0px), var(--safe-area-inset-bottom, 0px));
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

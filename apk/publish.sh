@@ -16,7 +16,8 @@ sed -i -E "s/versionCode [0-9]+/versionCode $VERSION_CODE/; s/versionName \"[^\"
   android/app/build.gradle
 
 pnpm exec cap sync android
-(cd android && ./gradlew assembleDebug --console=plain -q)
+# Toujours signer avec la clé debug habituelle (~/.android), sinon Android refuse la mise à jour
+(cd android && ANDROID_USER_HOME="$HOME/.android" bash gradlew assembleDebug --console=plain -q)
 
 cp android/app/build/outputs/apk/debug/app-debug.apk StoreFlow.apk
 
